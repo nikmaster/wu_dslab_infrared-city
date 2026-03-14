@@ -22,7 +22,23 @@ Nina Salnikow (h12109432) \\
 
 \section{Project Description}
 
-TODO A refined descriptionand definition of the now agreed upon project. Particularly explain what isin scopeand also what isout of scopeof your planned work.
+\subsection{Motivation and Project Overview}
+
+As urban areas are expanding and global temperatures rise due to climate change, being able to understand how trees can help cool cities has become increasingly important (EU, 2023). Furthermore, trees reduce the risk of flooding in cities and promote health and wellbeing (Woodland Trust, 2023). Our project aims at taking the first step in the direction of better tree coverage in urban areas by creating a model which is able to predict tree locations using satellite imagery of densely populated areas. 
+
+\subsection{Data Sources}
+
+For our project we use publicly available Sentinel-2 satellite images with 10-meter spatial resolution and four color channels, namely red, green, blue and near infrared. The images are retrieved via the API of the Copernicus Programme and are provided by the European Space Agency (Copernicus Programme, 2025). As seasonality has a great impact on the appearance of trees, imagery of different seasons will be used to train the model. Additionally, we will use the publicly available data set on every tree in the city of Vienna “Baumkataster” to train our model on exact tree locations (Baumkataster, 2025).
+
+\subsection{Model}
+
+The model used to predict the tree locations is the U-Net deep learning model which is designed for image segmentation. It is a special type of Convolutional Neural Network and consists of a contracting path and an expanding path.  In the contracting path convolution and pooling layers are used to extract features from the original imagery – which in this project will consist of four pictures for each season and four color channels each as described above. The expanding path consists of the same structure of convolution and pooling layers but used in the other direction to up-sample the before contracted imagery (Aramendia, 2024). As suggested in similar work this project will use skip connections between the expanding and contracting path as well as a temporal attention algorithm to prioritize more meaningful images (Garnot & Landrieu, 2021). The Binary Cross-Entropy loss between the predicted locations and the actual locations from the “Baumkataster” will be used to train the model.
+
+
+\subsection{Project Scope}
+
+Further analysis on the impact of trees on, for example, heat regulation in cities and flooding prevention are out of the scope of this project and could be the topic of future research. 
+
 
 \section{BEAM}
 
@@ -90,6 +106,12 @@ Besides of this persons we also have additionall support from people which are r
 
 \section{Literature}
 
-TODO list of liturate
+EU 2023, https://environment.ec.europa.eu/news/increasing-tree-coverage-30-european-cities-could-reduce-deaths-linked-urban-heat-island-effect-2023-06-21_en 
+Woodland Trust 2023, https://www.woodlandtrust.org.uk/protecting-trees-and-woods/benefits-of-urban-trees/ 
+Baumkataster 2025, https://www.data.gv.at/datasets/c91a4635-8b7d-43fe-9b27-d95dec8392a7?locale=de 
+Copernicus Programme 2025, https://browser.dataspace.copernicus.eu/ 
+Aramendia 2024, https://medium.com/@alejandro.itoaramendia/decoding-the-u-net-a-complete-guide-810b1c6d56d8 
+Garnot, V. S. F., & Landrieu, L. (2021). Panoptic segmentation of satellite image time series with convolutional temporal attention networks. In Proceedings of the IEEE/CVF International Conference on Computer Vision (ICCV), 4872–4881.
+
 
 \end{document}
