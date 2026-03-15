@@ -1,0 +1,246 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" version="29.6.1">
+  <diagram name="Page-1" id="-PmrL9FaVoBGDhiy-Vh2">
+    <mxGraphModel dx="1104" dy="828" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="820" pageHeight="710" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <object label="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;System: Tree detection&lt;br&gt;&lt;/h1&gt;&lt;p&gt;A model that predicts tree locations in urban areas using Sentinel-2 satellite imagery and a U-Net segmentation model trained on labeled tree location data from Vienna’s Baumkataster. The dataset is split into training and evaluation subsets.&lt;/p&gt;" element="system_description" id="mip4N_xzQzePNPyzoY4W-1">
+          <mxCell parent="1" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;strokeColor=#82b366;fillColor=#F0FFED;" vertex="1">
+            <mxGeometry height="120" width="360" x="40.00001220703126" y="40.00001220703126" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="Inference Process" element="container" sensitive="False" id="mip4N_xzQzePNPyzoY4W-3">
+          <mxCell parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;startSize=40;" vertex="1">
+            <mxGeometry height="240" width="160" x="640.0000122070312" y="190.00001220703126" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="Sentinel-2 Satellite Image&lt;br&gt;(unseen Test Data)" element="data" sensitive="False" id="mip4N_xzQzePNPyzoY4W-4">
+          <mxCell parent="mip4N_xzQzePNPyzoY4W-3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#cdeb8b;strokeColor=#97D077;" vertex="1">
+            <mxGeometry height="40" width="140" x="10" y="60" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="Predict Tree Locations" element="inference" sensitive="False" id="mip4N_xzQzePNPyzoY4W-5">
+          <mxCell parent="mip4N_xzQzePNPyzoY4W-3" style="rounded=1;whiteSpace=wrap;html=1;arcSize=50;fillColor=#F4F5E4;strokeColor=#e5a50a;treeFolding=0;" vertex="1">
+            <mxGeometry height="40" width="120" x="20" y="120" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="Predicted Tree Locations Data" element="data" sensitive="False" id="mip4N_xzQzePNPyzoY4W-6">
+          <mxCell parent="mip4N_xzQzePNPyzoY4W-3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#cdeb8b;strokeColor=#97D077;" vertex="1">
+            <mxGeometry height="40" width="140" x="10" y="180" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="" element="workflow_connector" sensitive="False" id="mip4N_xzQzePNPyzoY4W-7">
+          <mxCell edge="1" parent="mip4N_xzQzePNPyzoY4W-3" source="mip4N_xzQzePNPyzoY4W-4" style="endArrow=classic;html=1;rounded=0;ignoreEdge=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="mip4N_xzQzePNPyzoY4W-5">
+            <mxGeometry height="50" relative="1" width="50" as="geometry">
+              <mxPoint x="-150" y="350" as="sourcePoint" />
+              <mxPoint x="-150" y="370" as="targetPoint" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object label="" element="workflow_connector" sensitive="False" id="mip4N_xzQzePNPyzoY4W-8">
+          <mxCell edge="1" parent="mip4N_xzQzePNPyzoY4W-3" source="mip4N_xzQzePNPyzoY4W-5" style="endArrow=classic;html=1;rounded=0;ignoreEdge=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="mip4N_xzQzePNPyzoY4W-6">
+            <mxGeometry height="50" relative="1" width="50" as="geometry">
+              <mxPoint x="-140" y="360" as="sourcePoint" />
+              <mxPoint x="-140" y="380" as="targetPoint" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object label="ML Model Architecture" element="container" sensitive="False" id="mip4N_xzQzePNPyzoY4W-9">
+          <mxCell parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;startSize=40;" vertex="1">
+            <mxGeometry height="240" width="160" x="440" y="190" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;U-&lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;Net &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;Segmentation &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;Model&lt;/span&gt;" element="stat_model" sensitive="False" id="mip4N_xzQzePNPyzoY4W-10">
+          <mxCell parent="mip4N_xzQzePNPyzoY4W-9" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;fillColor=#b1ddf0;strokeColor=#10739e;" vertex="1">
+            <mxGeometry height="60" width="140" x="10" y="110" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="Fetching Data" element="container" sensitive="False" id="mip4N_xzQzePNPyzoY4W-11">
+          <mxCell parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;startSize=40;" vertex="1">
+            <mxGeometry height="240" width="160" x="40.00001220703126" y="190.00001220703126" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;Sentinel-&lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;2 &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;Satellite &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;Images&lt;/span&gt;" element="data" sensitive="False" id="mip4N_xzQzePNPyzoY4W-12">
+          <mxCell parent="mip4N_xzQzePNPyzoY4W-11" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#cdeb8b;strokeColor=#97D077;" vertex="1">
+            <mxGeometry height="40" width="140" x="10" y="60" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;OpenStreetMap &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;Urban &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;Features&lt;/span&gt;" element="data" sensitive="False" id="mip4N_xzQzePNPyzoY4W-13">
+          <mxCell parent="mip4N_xzQzePNPyzoY4W-11" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#cdeb8b;strokeColor=#97D077;" vertex="1">
+            <mxGeometry height="40" width="140" x="10" y="120" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;Vienna &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;Baumkataster&lt;/span&gt;&lt;div&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;(Training&amp;nbsp;&lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;Dataset)&lt;/span&gt;&lt;/div&gt;" element="data" sensitive="False" id="mip4N_xzQzePNPyzoY4W-14">
+          <mxCell parent="mip4N_xzQzePNPyzoY4W-11" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#cdeb8b;strokeColor=#97D077;" vertex="1">
+            <mxGeometry height="40" width="140" x="10" y="180" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="Evaluation Process" element="container" sensitive="False" id="mip4N_xzQzePNPyzoY4W-15">
+          <mxCell parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;startSize=40;" vertex="1">
+            <mxGeometry height="220" width="160" x="640" y="470" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;Vienna &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;Baumkataster (&lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;Validation &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;Dataset)&lt;/span&gt;" element="data" sensitive="False" id="mip4N_xzQzePNPyzoY4W-16">
+          <mxCell parent="mip4N_xzQzePNPyzoY4W-15" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#cdeb8b;strokeColor=#97D077;" vertex="1">
+            <mxGeometry height="40" width="140" x="10" y="170" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="Evaluate Model" element="engineering" sensitive="False" id="mip4N_xzQzePNPyzoY4W-17">
+          <mxCell parent="mip4N_xzQzePNPyzoY4W-15" style="rounded=1;whiteSpace=wrap;html=1;arcSize=50;fillColor=#D6ABDF;strokeColor=#9673a6;" vertex="1">
+            <mxGeometry height="40" width="120" x="20.000000000000227" y="110" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="" element="workflow_connector" sensitive="False" id="mip4N_xzQzePNPyzoY4W-18">
+          <mxCell edge="1" parent="mip4N_xzQzePNPyzoY4W-15" source="mip4N_xzQzePNPyzoY4W-16" style="endArrow=classic;html=1;rounded=0;ignoreEdge=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" target="mip4N_xzQzePNPyzoY4W-17">
+            <mxGeometry height="50" relative="1" width="50" as="geometry">
+              <mxPoint x="-230" y="-130" as="sourcePoint" />
+              <mxPoint x="-150" y="-170" as="targetPoint" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object label="Predicted Tree Locations of Vienna" element="data" sensitive="False" id="kD_fPCVEGjT7k4vJ_mZJ-3">
+          <mxCell parent="mip4N_xzQzePNPyzoY4W-15" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#cdeb8b;strokeColor=#97D077;" vertex="1">
+            <mxGeometry height="40" width="140" x="10" y="50" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="" element="workflow_connector" sensitive="False" id="kD_fPCVEGjT7k4vJ_mZJ-4">
+          <mxCell edge="1" parent="mip4N_xzQzePNPyzoY4W-15" source="kD_fPCVEGjT7k4vJ_mZJ-3" style="endArrow=classic;html=1;rounded=0;ignoreEdge=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="mip4N_xzQzePNPyzoY4W-17">
+            <mxGeometry height="50" relative="1" width="50" as="geometry">
+              <mxPoint x="120" y="110" as="sourcePoint" />
+              <mxPoint x="120" y="90" as="targetPoint" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object label="Training Process" element="container" sensitive="False" id="mip4N_xzQzePNPyzoY4W-20">
+          <mxCell parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;startSize=40;" vertex="1">
+            <mxGeometry height="240" width="160" x="240.00001220703126" y="190.00001220703126" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="Train U-Net Model" element="engineering" sensitive="False" id="mip4N_xzQzePNPyzoY4W-21">
+          <mxCell parent="mip4N_xzQzePNPyzoY4W-20" style="rounded=1;whiteSpace=wrap;html=1;arcSize=50;fillColor=#D6ABDF;strokeColor=#9673a6;" vertex="1">
+            <mxGeometry height="40" width="125" x="17.5" y="120" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="" element="workflow_connector" sensitive="False" id="mip4N_xzQzePNPyzoY4W-23">
+          <mxCell edge="1" parent="1" source="mip4N_xzQzePNPyzoY4W-10" style="endArrow=classic;html=1;rounded=0;ignoreEdge=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="mip4N_xzQzePNPyzoY4W-5">
+            <mxGeometry height="50" relative="1" width="50" as="geometry">
+              <mxPoint x="390.00001220703126" y="390.00001220703126" as="sourcePoint" />
+              <mxPoint x="470.0000122070312" y="350.00001220703126" as="targetPoint" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object label="" element="workflow_connector" sensitive="False" id="mip4N_xzQzePNPyzoY4W-24">
+          <mxCell edge="1" parent="1" source="mip4N_xzQzePNPyzoY4W-12" style="endArrow=classic;html=1;rounded=0;ignoreEdge=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="mip4N_xzQzePNPyzoY4W-21">
+            <mxGeometry height="50" relative="1" width="50" as="geometry">
+              <mxPoint x="390.00001220703126" y="390.00001220703126" as="sourcePoint" />
+              <mxPoint x="470.0000122070312" y="350.00001220703126" as="targetPoint" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object label="" element="workflow_connector" sensitive="False" id="mip4N_xzQzePNPyzoY4W-25">
+          <mxCell edge="1" parent="1" source="mip4N_xzQzePNPyzoY4W-13" style="endArrow=classic;html=1;rounded=0;ignoreEdge=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="mip4N_xzQzePNPyzoY4W-21">
+            <mxGeometry height="50" relative="1" width="50" as="geometry">
+              <mxPoint x="390.00001220703126" y="390.00001220703126" as="sourcePoint" />
+              <mxPoint x="470.0000122070312" y="350.00001220703126" as="targetPoint" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object label="" element="workflow_connector" sensitive="False" id="mip4N_xzQzePNPyzoY4W-26">
+          <mxCell edge="1" parent="1" source="mip4N_xzQzePNPyzoY4W-14" style="endArrow=classic;html=1;rounded=0;ignoreEdge=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="mip4N_xzQzePNPyzoY4W-21">
+            <mxGeometry height="50" relative="1" width="50" as="geometry">
+              <mxPoint x="390.00001220703126" y="390.00001220703126" as="sourcePoint" />
+              <mxPoint x="470.0000122070312" y="350.00001220703126" as="targetPoint" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object label="Risk Control:&amp;nbsp;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;Multi-&lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;Season &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;Training &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;Data&lt;/span&gt;" element="risk_control" sensitive="False" id="mip4N_xzQzePNPyzoY4W-28">
+          <mxCell parent="1" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1">
+            <mxGeometry height="120" width="160" x="240.00001220703126" y="470.00001220703126" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;Using &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;multi-&lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;season &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;satellite &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;imagery could&amp;nbsp;&lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;improve&amp;nbsp;&lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;tree &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;detection&lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;.&lt;/span&gt;" element="list_item" id="mip4N_xzQzePNPyzoY4W-29">
+          <mxCell parent="mip4N_xzQzePNPyzoY4W-28" style="text;strokeColor=#82B366;fillColor=default;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1">
+            <mxGeometry height="90" width="160" y="30" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="Risk:&amp;nbsp;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;Incorrect &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;Tree &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;Detection&lt;/span&gt;" element="risk" sensitive="False" id="mip4N_xzQzePNPyzoY4W-31">
+          <mxCell parent="1" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1">
+            <mxGeometry height="120" width="160" x="440.00001220703126" y="470.00001220703126" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;The &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;model &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;may &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;misclassify &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;or &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;miss &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;trees &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;in &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;dense &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;urban &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;areas.&lt;/span&gt;" element="list_item" id="mip4N_xzQzePNPyzoY4W-32">
+          <mxCell parent="mip4N_xzQzePNPyzoY4W-31" style="text;strokeColor=#D79B00;fillColor=default;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1">
+            <mxGeometry height="90" width="160" y="30" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="" element="workflow_connector" sensitive="False" id="mip4N_xzQzePNPyzoY4W-33">
+          <mxCell edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;ignoreEdge=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" target="mip4N_xzQzePNPyzoY4W-31">
+            <mxGeometry height="50" relative="1" width="50" as="geometry">
+              <Array as="points">
+                <mxPoint x="120.00001220703126" y="630.0000122070312" />
+                <mxPoint x="520.0000122070312" y="630.0000122070312" />
+              </Array>
+              <mxPoint x="120.00001220703126" y="590.0000122070312" as="sourcePoint" />
+              <mxPoint x="530.0000122070312" y="630.0000122070312" as="targetPoint" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object label="Risk Source: Satellite Image Quality" element="risk_source" sensitive="False" id="mip4N_xzQzePNPyzoY4W-35">
+          <mxCell parent="1" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#FBFFD1;strokeColor=#b46504;" vertex="1">
+            <mxGeometry height="120" width="160" x="40.00001220703126" y="470.00001220703126" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;Sentinel-&lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;2 &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;imagery &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;may &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;contain &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;clouds &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;or &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;seasonal &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;effects &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;that &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;reduce &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;tree &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;visibility.&lt;/span&gt;" element="list_item" id="mip4N_xzQzePNPyzoY4W-36">
+          <mxCell parent="mip4N_xzQzePNPyzoY4W-35" style="text;strokeColor=#B46504;fillColor=default;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1">
+            <mxGeometry height="90" width="160" y="30" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;Context: Infrared.city project&amp;nbsp;&lt;br&gt;&lt;/h1&gt;&lt;p&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;The &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;system &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;operates &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;in &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;the &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;context &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;of &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;urban &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;environmental &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;analysis &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;and &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;uses &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;Sentinel-&lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;2 &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;multispectral &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;satellite &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;imagery &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;together &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;with &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;urban &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;geometry &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;data &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;from &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;OpenStreetMap &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;such &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;as &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;buildings&amp;nbsp;&lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;and&amp;nbsp;&lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;roads&amp;nbsp;&lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;information.&lt;/span&gt;&lt;/p&gt;" element="context_description" id="mip4N_xzQzePNPyzoY4W-2">
+          <mxCell parent="1" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;strokeColor=#666666;fillColor=#f5f5f5;fontColor=#333333;" vertex="1">
+            <mxGeometry height="120" width="360" x="440.00001220703126" y="40.00001220703126" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="" element="annotation_connector" sensitive="False" id="kD_fPCVEGjT7k4vJ_mZJ-1">
+          <mxCell edge="1" parent="1" source="mip4N_xzQzePNPyzoY4W-28" style="endArrow=oval;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;rounded=0;endFill=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" target="mip4N_xzQzePNPyzoY4W-21">
+            <mxGeometry height="50" relative="1" width="50" as="geometry">
+              <mxPoint x="370" y="450" as="sourcePoint" />
+              <mxPoint x="450" y="410" as="targetPoint" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object label="" element="annotation_connector" sensitive="False" id="kD_fPCVEGjT7k4vJ_mZJ-2">
+          <mxCell edge="1" parent="1" source="mip4N_xzQzePNPyzoY4W-36" style="endArrow=oval;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;rounded=0;endFill=1;exitX=-0.005;exitY=0.393;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="mip4N_xzQzePNPyzoY4W-12">
+            <mxGeometry height="50" relative="1" width="50" as="geometry">
+              <Array as="points">
+                <mxPoint x="20" y="535" />
+                <mxPoint x="20" y="270" />
+              </Array>
+              <mxPoint x="370" y="450" as="sourcePoint" />
+              <mxPoint x="450" y="410" as="targetPoint" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object label="" element="annotation_connector" sensitive="False" id="kD_fPCVEGjT7k4vJ_mZJ-5">
+          <mxCell edge="1" parent="1" source="mip4N_xzQzePNPyzoY4W-32" style="endArrow=oval;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;rounded=0;endFill=1;exitX=1;exitY=0.411;exitDx=0;exitDy=0;exitPerimeter=0;">
+            <mxGeometry height="50" relative="1" width="50" as="geometry">
+              <Array as="points">
+                <mxPoint x="620" y="537" />
+                <mxPoint x="620" y="390" />
+              </Array>
+              <mxPoint x="370" y="450" as="sourcePoint" />
+              <mxPoint x="650" y="390" as="targetPoint" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object label="" element="annotation_connector" sensitive="False" id="kD_fPCVEGjT7k4vJ_mZJ-7">
+          <mxCell edge="1" parent="1" source="mip4N_xzQzePNPyzoY4W-21" style="endArrow=oval;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;rounded=0;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;">
+            <mxGeometry height="50" relative="1" width="50" as="geometry">
+              <mxPoint x="370" y="450" as="sourcePoint" />
+              <mxPoint x="440" y="330" as="targetPoint" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
