@@ -5,6 +5,8 @@
 \usepackage{longtable}
 \usepackage{titlesec}
 \usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{float}
 \titleformat{\section}{\normalfont\large\bfseries}{\thesection}{1em}{}
 %nina note: strg,alt,b to build
 
@@ -47,7 +49,7 @@ The figure below presents the BEAM representation \cite{wu2023beam} of the propo
 illustrating the data sources, training and inference processes, model architecture, 
 evaluation pipeline, and associated risks.
 
-\begin{figure}[h]
+\begin{figure}[H] 
     \centering
     \includegraphics[width=\textwidth]{beam_treeDetection_infraredCity.pdf}
     \caption{BEAM model of the proposed tree detection system.}
@@ -59,96 +61,92 @@ evaluation pipeline, and associated risks.
 
 The project will be conducted between March and June and is structured into several phases corresponding to the course milestones and deliverables.
 
-\subsection{Phase 1:  Project Setup \& Planning}
-\textbf{March 9 – March 19}
+\subsection{Phase 1: Project Setup \& Planning (March 9 – March 19)}
+This initial phase focuses on defining the project scope, exploring available data sources, and establishing a solid project plan.
 
-\textbf{Tasks}
-\begin{itemize}
-\item Kick-off session and first meeting with data coaches (March 9)
-\item Define project objective and research question
-\item Explore available datasets (Sentinel-2, OpenStreetMap, etc.)
-\item Decide on modelling approach
-\item Assign team roles
-\item Draft project plan
-\end{itemize}
+\begin{description}[style=multiline, leftmargin=3cm, font=\normalfont\textbf]
+    \item[Tasks:] 
+    \begin{itemize}[nosep, leftmargin=*]
+        \item Kick-off session and first meeting with data coaches (March 9)
+        \item Define project objective and research question
+        \item Explore available datasets (Sentinel-2, OpenStreetMap, etc.)
+        \item Decide on modelling approach
+        \item Assign team roles
+        \item Draft project plan
+    \end{itemize}
+    \item[Deliverable:] Project Plan -- March 19
+\end{description}
 
-\textbf{Deliverable}
-\begin{itemize}
-\item Project Plan – March 19
-\end{itemize}
+\vspace{0.5cm}
 
+\subsection{Phase 2: Methodology Development (March 20 – March 29)}
+During this phase, the primary goal is to acquire the necessary data and establish the foundational methodology for feature extraction.
 
-\subsection{Phase 2:  Methodology Development}
-\textbf{March 20 – March 29}
+\begin{description}[style=multiline, leftmargin=3cm, font=\normalfont\textbf]
+    \item[Tasks:] 
+    \begin{itemize}[nosep, leftmargin=*]
+        \item Data collection and preprocessing
+        \item Feature extraction (spectral indices, vegetation signals)
+        \item Define modelling pipeline
+        \item Improve project plan based on feedback
+    \end{itemize}
+    \item[Deliverable:] Refined Project Plan -- March 29
+\end{description}
 
-\textbf{Tasks}
-\begin{itemize}
-\item Data collection and preprocessing
-\item Feature extraction (spectral indices, vegetation signals)
-\item Define modelling pipeline
-\item Improve project plan based on feedback
-\end{itemize}
+\vspace{0.5cm}
 
-\textbf{Deliverable}
-\begin{itemize}
-\item Refined Project Plan – March 29
-\end{itemize}
+\subsection{Phase 3: Data Processing \& Initial Modelling (March 30 – April 21)}
+This period is dedicated to executing the data processing pipeline and training the first iteration of machine learning models.
 
+\begin{description}[style=multiline, leftmargin=3cm, font=\normalfont\textbf]
+    \item[Tasks:] 
+    \begin{itemize}[nosep, leftmargin=*]
+        \item Implement data processing pipeline
+        \item Train initial machine learning models
+        \item Evaluate early results
+        \item Prepare intermediate analysis
+        \item Create presentation slides
+    \end{itemize}
+    \item[Deliverable:] Intermediate Report and Slides -- April 21
+\end{description}
 
-\subsection{Phase 3: Data Processing \& Initial Modelling}
-\textbf{March 30 – April 21}
+\vspace{0.5cm}
 
-\textbf{Tasks}
-\begin{itemize}
-\item Implement data processing pipeline
-\item Train initial machine learning models
-\item Evaluate early results
-\item Prepare intermediate analysis
-\item Create presentation slides
-\end{itemize}
+\subsection{Phase 4: Model Improvement \& Validation (April 22 – June 6)}
+Focus now shifts towards optimizing model performance through rigorous validation, error analysis, and peer feedback.
 
-\textbf{Deliverable}
-\begin{itemize}
-\item Intermediate Report and Slides – April 21
-\end{itemize}
+\begin{description}[style=multiline, leftmargin=3cm, font=\normalfont\textbf]
+    \item[Tasks:] 
+    \begin{itemize}[nosep, leftmargin=*]
+        \item Intermediate consultations (April 22–24)
+        \item Improve model performance
+        \item Perform validation and error analysis
+        \item Conduct sparring group meetings
+        \item Prepare final report draft
+    \end{itemize}
+    \item[Deliverable:] Draft Final Report \& Slides -- June 7
+\end{description}
 
+\vspace{0.5cm}
 
-\subsection{Phase 4:  Model Improvement \& Validation}
-\textbf{April 22 – June 6}
+\subsection{Phase 5: Finalization \& Presentation (June 8 – June 28)}
+The final phase encompasses the conclusive evaluation of the models and the preparation of the final deliverables and class presentations.
 
-\textbf{Tasks}
-\begin{itemize}
-\item Intermediate consultations (April 22–24)
-\item Improve model performance
-\item Perform validation and error analysis
-\item Conduct sparring group meetings
-\item Prepare final report draft
-\end{itemize}
-
-\textbf{Deliverable}
-\begin{itemize}
-\item Draft Final Report \& Slides – June 7
-\end{itemize}
-
-
-\subsection{Phase 5:  Finalization \& Presentation}
-\textbf{June 8 – June 28}
-
-\textbf{Tasks}
-\begin{itemize}
-\item Final model evaluation
-\item Prepare final presentation
-\item Final presentation in class (June 18–19)
-\item Final report writing and revisions
-\item Submit sparring group minutes
-\end{itemize}
-
-\textbf{Deliverables}
-\begin{itemize}
-\item Final Report – June 28
-\item Sparring Group Minutes – June 28
-\end{itemize}
-
+\begin{description}[style=multiline, leftmargin=3cm, font=\normalfont\textbf]
+    \item[Tasks:] 
+    \begin{itemize}[nosep, leftmargin=*]
+        \item Final model evaluation
+        \item Prepare final presentation
+        \item Final presentation in class (June 18–19)
+        \item Final report writing and revisions
+        \item Submit sparring group minutes
+    \end{itemize}
+    \item[Deliverables:] 
+    \begin{itemize}[nosep, leftmargin=*]
+        \item Final Report -- June 28
+        \item Sparring Group Minutes -- June 28
+    \end{itemize}
+\end{description}
 
 \section{Communication outline}
 
