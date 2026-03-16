@@ -7,6 +7,7 @@
 \usepackage{graphicx}
 \usepackage{enumitem}
 \usepackage{float}
+\usepackage{booktabs} % Neu für das professionelle Tabellen-Design
 \titleformat{\section}{\normalfont\large\bfseries}{\thesection}{1em}{}
 %nina note: strg,alt,b to build
 
@@ -25,11 +26,11 @@ Nina Salnikow (h12109432) \\
 
 \section{Project Description}
 
-This chapter outlines the motivation, methods used, data sources and the scope of this project. 
+This chapter outlines the motivation, methods used, data sources and the scope of this project.
 
 \subsection{Motivation and Project Overview}
 
-As urban areas are expanding and global temperatures rise due to climate change, being able to understand how trees can help cool cities has become increasingly important \cite{eu2023tree}. Furthermore, trees reduce the risk of flooding in cities and promote health and wellbeing \cite{woodlandtrust2023}. Our project aims at taking the first step in the direction of better tree coverage in urban areas by creating a model which is able to predict tree locations using satellite imagery of densely populated areas. 
+As urban areas are expanding and global temperatures rise due to climate change, being able to understand how trees can help cool cities has become increasingly important \cite{eu2023tree}. Furthermore, trees reduce the risk of flooding in cities and promote health and wellbeing \cite{woodlandtrust2023}. Our project aims at taking the first step in the direction of better tree coverage in urban areas by creating a model which is able to predict tree locations using satellite imagery of densely populated areas.
 
 \subsection{Data Sources}
 
@@ -37,11 +38,11 @@ For our project we use publicly available Sentinel-2 satellite images with 10-me
 
 \subsection{Model}
 
-Former papers suggest that for image segmentation with satellite data the U-Net deep learning model is the most accurate \cite{pesek2024convolution} and will therefore also be used in this paper to predict tree locations. It is a special type of Convolutional Neural Network and consists of a contracting path and an expanding path.  In the contracting path convolution and pooling layers are used to extract features from the original imagery, which in this project will consist of four pictures for each season and four color channels each as described above. The expanding path consists of the same structure of convolution and pooling layers but used in the other direction to up-sample the before contracted imagery \cite{aramendia2024}. As suggested in similar work this project will use skip connections between the expanding and contracting path as well as a temporal attention algorithm to prioritize more meaningful images \cite{garnot2021panoptic}. The Binary Cross-Entropy loss between the predicted locations will be used and the actual locations from the “Baumkataster” will be split into a train and test set.
+Former papers suggest that for image segmentation with satellite data the U-Net deep learning model is the most accurate \cite{pesek2024convolution} and will therefore also be used in this paper to predict tree locations. It is a special type of Convolutional Neural Network and consists of a contracting path and an expanding path. In the contracting path convolution and pooling layers are used to extract features from the original imagery, which in this project will consist of four pictures for each season and four color channels each as described above. The expanding path consists of the same structure of convolution and pooling layers but used in the other direction to up-sample the before contracted imagery \cite{aramendia2024}. As suggested in similar work this project will use skip connections between the expanding and contracting path as well as a temporal attention algorithm to prioritize more meaningful images \cite{garnot2021panoptic}. The Binary Cross-Entropy loss between the predicted locations will be used and the actual locations from the “Baumkataster” will be split into a train and test set.
 
 \subsection{Project Scope}
 
-The model in this paper is trained only on satellite images of urban areas and therefore also only supposed to be used for tree detection within city environments. Also, the model focuses on tree detection in the temperate climate zone as this is the vegetation it is trained to observe. Further analysis on the impact of trees on, for example, heat regulation in cities and flooding prevention are out of the scope of this project and could be the topic of future research. 
+The model in this paper is trained only on satellite images of urban areas and therefore also only supposed to be used for tree detection within city environments. Also, the model focuses on tree detection in the temperate climate zone as this is the vegetation it is trained to observe. Further analysis on the impact of trees on, for example, heat regulation in cities and flooding prevention are out of the scope of this project and could be the topic of future research.
 
 \section{BEAM}
 
@@ -61,7 +62,7 @@ evaluation pipeline, and associated risks.
 
 The project will be conducted between March and June and is structured into several phases corresponding to the course milestones and deliverables.
 
-\subsection{Phase 1: Project Setup \& Planning \\  (March 9 – March 19)}
+\subsection[Phase 1: Project Setup \& Planning]{Phase 1: Project Setup \& Planning \\ \normalsize March 9 – March 19}
 This initial phase focuses on defining the project scope, exploring available data sources, and establishing a solid project plan.
 
 \begin{description}[style=multiline, leftmargin=3cm, font=\normalfont\textbf]
@@ -77,7 +78,9 @@ This initial phase focuses on defining the project scope, exploring available da
     \item[Deliverable:] Project Plan -- March 19
 \end{description}
 
-\subsection{Phase 2: Methodology Development \\ (March 20 – March 29)}
+\vspace{0.5cm}
+
+\subsection[Phase 2: Methodology Development]{Phase 2: Methodology Development \\ \normalsize March 20 – March 29}
 During this phase, the primary goal is to acquire the necessary data and establish the foundational methodology for feature extraction.
 
 \begin{description}[style=multiline, leftmargin=3cm, font=\normalfont\textbf]
@@ -91,7 +94,9 @@ During this phase, the primary goal is to acquire the necessary data and establi
     \item[Deliverable:] Refined Project Plan -- March 29
 \end{description}
 
-\subsection{Phase 3: Data Processing \& Initial Modelling \\ (March 30 – April 21)}
+\vspace{0.5cm}
+
+\subsection[Phase 3: Data Processing \& Initial Modelling]{Phase 3: Data Processing \& Initial Modelling \\ \normalsize March 30 – April 21}
 This period is dedicated to executing the data processing pipeline and training the first iteration of machine learning models.
 
 \begin{description}[style=multiline, leftmargin=3cm, font=\normalfont\textbf]
@@ -106,7 +111,9 @@ This period is dedicated to executing the data processing pipeline and training 
     \item[Deliverable:] Intermediate Report and Slides -- April 21
 \end{description}
 
-\subsection{Phase 4: Model Improvement \& Validation \\ (April 22 – June 6)}
+\vspace{0.5cm}
+
+\subsection[Phase 4: Model Improvement \& Validation]{Phase 4: Model Improvement \& Validation \\ \normalsize April 22 – June 6}
 Focus now shifts towards optimizing model performance through rigorous validation, error analysis, and peer feedback.
 
 \begin{description}[style=multiline, leftmargin=3cm, font=\normalfont\textbf]
@@ -121,7 +128,9 @@ Focus now shifts towards optimizing model performance through rigorous validatio
     \item[Deliverable:] Draft Final Report \& Slides -- June 7
 \end{description}
 
-\subsection{Phase 5: Finalization \& Presentation \\ (June 8 – June 28)}
+\vspace{0.5cm}
+
+\subsection[Phase 5: Finalization \& Presentation]{Phase 5: Finalization \& Presentation \\ \normalsize\ June 8 – June 28}
 The final phase encompasses the conclusive evaluation of the models and the preparation of the final deliverables and class presentations.
 
 \begin{description}[style=multiline, leftmargin=3cm, font=\normalfont\textbf]
@@ -140,61 +149,64 @@ The final phase encompasses the conclusive evaluation of the models and the prep
     \end{itemize}
 \end{description}
 
+
 \section{Communication outline}
 
-This section describes the communication stiles we are commited to use over the project.
+This section describes the communication styles we are committed to use over the project.
 
 \subsection{Written communication}
 
 We will use two Teams in Microsoft Teams for our basic communication.
 
-1. \textbf{DsLab26S\_infrared.city\_1}: This Team contains two channels for two different approaches. The \textbf{General} Channel is used as communication level with Kavita Surana (our connection to the Lecture and the WU). The other channel (\textbf{team intern}) is only accessable by the team itself and is our main chat for communication over the project.
-
-2. \textbf{DsLab\_infrared.city\_1-coaches}: This Team is the basic for communication with the data coaches from infrared-city. We were asked to separate this from the main communication source, but still keep an Microsoft Team Teams for this. So we created an different Team
+\begin{enumerate}
+    \item \textbf{DsLab26S\_infrared.city\_1}: This Team contains two channels for two different approaches. The \textbf{General} Channel is used as communication level with Kavita Surana (our connection to the Lecture and the WU). The other channel (\textbf{team intern}) is only accessible by the team itself and is our main chat for communication over the project.
+    \item \textbf{DsLab\_infrared.city\_1-coaches}: This Team is the basic for communication with the data coaches from infrared-city. We were asked to separate this from the main communication source, but still keep a Microsoft Teams Team for this. So we created a different Team.
+\end{enumerate}
 
 \subsection{Regular Meetings}
 
-Our Meetings will be hold via Microsoft Teams in most cases. Possible that we are able to meet in person for the one or other defined meeting. But regulary we plan to keep the communication remote or at least hibrate.
+Our meetings will be held via Microsoft Teams in most cases. It is possible that we are able to meet in person for one or another defined meeting. But regularly we plan to keep the communication remote or at least hybrid. We organized already two regular weekly meetings for basic communication.
 
-We organized already two regulary weekly meetings for basic communication.
-
-1. \textbf{Regular Team Meeting}: On Thursdays 19:00 we will meet as a team remote and talk about how to continue the work over the next week.
-
-2. \textbf{Meeting with Data Coaches from infrared.city} On Fridays 12:30 we scheduled a short regulary meeting with the data coaches from infrared.city.
-
-3. \textbf{Irregular Meetings with Kavita Surana}: In cases we need feedback for something from the WU site we schedule a meeting with her. To easily schedule the meeting we got an booking site for her time.
+\begin{enumerate}
+    \item \textbf{Regular Team Meeting}: On Thursdays 19:00 we will meet as a team remotely and talk about how to continue the work over the next week.
+    \item \textbf{Meeting with Data Coaches from infrared.city}: On Fridays 12:30 we scheduled a short regular meeting with the data coaches from infrared.city.
+    \item \textbf{Irregular Meetings with Kavita Surana}: In cases we need feedback for something from the WU site we schedule a meeting with her. To easily schedule the meeting we got a booking site for her time.
+\end{enumerate}
 
 \subsection{Documentation of Meetings}
 
-Because of the many meetings it is possible that the one or other person is not able to partizipate every time. To still be able to communicate with absent people we want to write meeting notes and documentation of the meeting output after every meeting.
+Because of the many meetings it is possible that one or another person is not able to participate every time. To still be able to communicate with absent people we want to write meeting notes and documentation of the meeting output after every meeting.
 
 \subsection{File and Code Repository}
 
-Every written result (documenation and project related) will be added to an already created GitHub repository. The repository is accessable by the team. See \url{https://github.com/nikmaster/wu_dslab_infrared-city}.
+Every written result (documentation and project related) will be added to an already created GitHub repository. The repository is accessible by the team. See \url{https://github.com/nikmaster/wu_dslab_infrared-city}.
 
 
 \section{Team Roles}
 
-The main project team consist of 4 persons which are responsible for different focus points. But still commit to the project and in case one person will be stucked the focus has to be to work together and find a way to tackle the issue.
+The main project team consists of 4 persons which are responsible for different focus points. But still commit to the project and in case one person gets stuck, the focus has to be to work together and find a way to tackle the issue.
 
-\begin{table}[h]
-\begin{tabular}{|l|l|p{6cm}|}
-\hline
+\begin{table}[htbp]
+\centering
+\begin{tabular}{@{}llp{6cm}@{}}
+\toprule
 \textbf{Person} & \textbf{Role} & \textbf{Tasks} \\
-\hline
+\midrule
 \textbf{Dominik Oberhumer} & Organisation of Team & Preparation of Tools, Reminding of Deliverables and Timeplan \\
 \textbf{Moritz Hörmansdorfer} & Data Scientist & Machine Learning Training of Model \\
 \textbf{Nina Salnikow} & Data Engineer & Fetching and Preparation of Data  \\
 \textbf{Sara Klasová} & Data Scientist & EDA (Exploratory Data Analysis)  \\
-\hline
+\bottomrule
 \end{tabular}
 \end{table}
 
-Besides of this persons we also have additionall support from people which are related to the project:
+Besides these persons, we also have additional support from people which are related to the project:
 
-1. \textbf{Kavita Surana}: is our supervisor from WU. And will help us regarding infrastructure and gives the needed points for grading at the university
+\begin{enumerate}
+    \item \textbf{Kavita Surana}: is our supervisor from WU. She will help us regarding infrastructure and gives the needed points for grading at the university.
+    \item \textbf{Oana Taut} and \textbf{Vasiliki Fragkia} are our data coaches from infrared.city. They will support us with different approaches and sources how we can use the data to achieve our goal.
+\end{enumerate}
 
-2. \textbf{Oana Taut} and \textbf{Vasiliki Fragkia} are our data coaches from infrared.city. They will support us with different approaches and sources how we can use the data to archive our goal.
 
 \section{Literature}
 
