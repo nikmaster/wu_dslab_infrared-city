@@ -23,7 +23,7 @@ Nina Salnikow (h12109432) \\
 
 \section{Project Description}
 
-tbw (moritz)
+This chapter outlines the motivation, methods used, data sources and the scope of this project. 
 
 \subsection{Motivation and Project Overview}
 
@@ -35,16 +35,11 @@ For our project we use publicly available Sentinel-2 satellite images with 10-me
 
 \subsection{Model}
 
-The model used to predict the tree locations is the U-Net deep learning model which is designed for image segmentation. It is a special type of Convolutional Neural Network and consists of a contracting path and an expanding path.  In the contracting path convolution and pooling layers are used to extract features from the original imagery, which in this project will consist of four pictures for each season and four color channels each as described above. The expanding path consists of the same structure of convolution and pooling layers but used in the other direction to up-sample the before contracted imagery \cite{aramendia2024}. As suggested in similar work this project will use skip connections between the expanding and contracting path as well as a temporal attention algorithm to prioritize more meaningful images \cite{garnot2021panoptic}. The Binary Cross-Entropy loss between the predicted locations will be used and the actual locations from the “Baumkataster” will be split into a train and test set.
-
-tbw moritz why unet -  cite
-
+Former papers suggest that for image segmentation with satellite data the U-Net deep learning model is the most accurate \cite{pesek2024convolution} and will therefore also be used in this paper to predict tree locations. It is a special type of Convolutional Neural Network and consists of a contracting path and an expanding path.  In the contracting path convolution and pooling layers are used to extract features from the original imagery, which in this project will consist of four pictures for each season and four color channels each as described above. The expanding path consists of the same structure of convolution and pooling layers but used in the other direction to up-sample the before contracted imagery \cite{aramendia2024}. As suggested in similar work this project will use skip connections between the expanding and contracting path as well as a temporal attention algorithm to prioritize more meaningful images \cite{garnot2021panoptic}. The Binary Cross-Entropy loss between the predicted locations will be used and the actual locations from the “Baumkataster” will be split into a train and test set.
 
 \subsection{Project Scope}
 
-Further analysis on the impact of trees on, for example, heat regulation in cities and flooding prevention are out of the scope of this project and could be the topic of future research. 
-
-tbw moritz only urban; climate zone, 
+The model in this paper is trained only on satellite images of urban areas and therefore also only supposed to be used for tree detection within city environments. Also, the model focuses on tree detection in the temperate climate zone as this is the vegetation it is trained to observe. Further analysis on the impact of trees on, for example, heat regulation in cities and flooding prevention are out of the scope of this project and could be the topic of future research. 
 
 \section{BEAM}
 
