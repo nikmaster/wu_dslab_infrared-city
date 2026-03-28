@@ -24,34 +24,57 @@ Nina Salnikow (h12109432) \\
 \begin{document}
 
 \maketitle
+\thispagestyle{empty} % Keine Seitenzahl auf der Titelseite
+
+\clearpage
+\pagenumbering{Roman} % Große römische Zahlen (I, II, III) für Inhaltsverzeichnis
+
+\tableofcontents 
+\clearpage      
+
+\pagenumbering{arabic} % Normale Zahlen (1, 2, 3) ab dem Hauptteil
 
 \section{Project Description}
 
-This chapter outlines the motivation, methods used, data sources and the scope of this project.
+This chapter outlines the motivation, methods used, data sources, and the scope of this project.
 
 \subsection{Motivation and Project Overview}
 
-As urban areas are expanding and global temperatures rise due to climate change, being able to understand how trees can help cool cities has become increasingly important \cite{eu2023tree}. Furthermore, trees reduce the risk of flooding in cities and promote health and wellbeing \cite{woodlandtrust2023}. Our project aims at taking the first step in the direction of better tree coverage in urban areas by creating a model which is able to predict tree locations using satellite imagery of densely populated areas. \\
+As urban areas expand and global temperatures rise due to climate change, being able to understand how trees can help cool cities has become increasingly important \cite{eu2023tree}. Furthermore, trees reduce the risk of flooding in cities and promote health and wellbeing \cite{woodlandtrust2023}. Our project aims at taking the first step in the direction of better tree coverage in urban areas by creating a model that is able to predict tree locations using satellite imagery of densely populated areas. \\
 \\
-There is a recently very fast growing body of reasearch on urban tree detection using deep learning models. One of the most recent papers is by Gong et al. \cite{gong2024treedetector}, they use satellite data not only to detect trees but also to estimate their size and density. For that they use a slightly different model then the U-Net model used in this paper.
+Recently, there has been a rapidly growing body of research on urban tree detection using deep learning models. One of the most recent papers is by Gong et al. \cite{gong2024treedetector}, who use satellite data not only to detect trees but also to estimate their size and density. For this, they use a slightly different model than the U-Net model used in this paper.
 
 \subsection{Data Sources}
 
-For our project we use publicly available Sentinel-2 satellite images with 10-meter spatial resolution and four color channels, namely red, green, blue and near infrared. The images are retrieved via the API of the Copernicus Programme and are provided by the European Space Agency \cite{copernicus2025}. As seasonality has a great impact on the appearance of trees, imagery of different seasons will be used to train the model. \\
+For our project, we use publicly available Sentinel-2 satellite images with 10-meter spatial resolution and four color channels, namely red, green, blue, and near-infrared. The images are retrieved via the API of the Copernicus Programme and are provided by the European Space Agency \cite{copernicus2025}. As seasonality has a great impact on the appearance of trees, imagery of different seasons will be used to train the model. \\
 \\
-Additionally, we will use the publicly available data set on every tree in the city of Vienna “Baumkataster” to train and test our model on exact tree locations \cite{baumkataster2025}.
+Additionally, we will use the publicly available dataset on every tree in the city of Vienna, the ``Baumkataster'', to train and test our model on exact tree locations \cite{baumkataster2025}.
 
 \subsection{Model}
 
-Former papers suggest that for image segmentation with satellite data the U-Net deep learning model is the most accurate for detecting objects, for example street detection \cite{pesek2024convolution} as well as crop field detection \cite{garnot2021panoptic}. Furthermore, last year's project also tried implementing a U-Net architecture but failed to yield promising results and this paper tries to build on that, especially because the data coaches also deem it a well-fitting model. This architecture will therefore also be used in this paper to predict tree locations. \\
+Previous papers suggest that for image segmentation with satellite data, the U-Net deep learning model is the most accurate for detecting objects, such as in street detection \cite{pesek2024convolution} as well as crop field detection \cite{garnot2021panoptic}. Furthermore, last year's project also tried implementing a U-Net architecture but failed to yield promising results. This paper tries to build on that, especially because the data coaches also deem it a well-fitting model. This architecture will therefore also be used in this paper to predict tree locations. \\
 \\
-The U-Net model is a special type of Convolutional Neural Network and consists of a contracting path and an expanding path. In the contracting path convolution and pooling layers are used to extract features from the original imagery, which in this project will consist of four pictures for each season and four color channels each as described above. The expanding path consists of the same structure of convolution and pooling layers but used in the other direction to up-sample the before contracted imagery \cite{aramendia2024}. As suggested in similar work this project will use skip connections between the expanding and contracting path as well as a temporal attention algorithm to prioritize more meaningful images \cite{garnot2021panoptic}. The Binary Cross-Entropy loss between the predicted locations will be used and the actual locations from the “Baumkataster” will be split into a train and test set.
+The U-Net model is a special type of Convolutional Neural Network and consists of a contracting path and an expanding path. In the contracting path, convolution and pooling layers are used to extract features from the original imagery, which in this project will consist of four pictures for each season and four color channels each, as described above. The expanding path consists of the same structure of convolution and pooling layers, but used in the reverse direction to upsample the previously contracted imagery \cite{aramendia2024}. As suggested in similar work, this project will use skip connections between the expanding and contracting paths, as well as a temporal attention algorithm to prioritize more meaningful images \cite{garnot2021panoptic}. The Binary Cross-Entropy loss between the predicted and actual locations will be used, and the actual locations from the ``Baumkataster'' will be split into training and test sets.
 
 \subsection{Project Scope and Possible Limitations}
 
-The model in this paper is trained only on satellite images of urban areas and therefore also only supposed to be used for tree detection within city environments. Also, the model focuses on tree detection in the temperate climate zone as this is the vegetation it is trained to observe. Further analysis on the impact of trees on, for example, heat regulation in cities and flooding prevention are out of the scope of this project and could be the topic of future research. \\
+The model in this paper is trained only on satellite images of urban areas and is therefore only supposed to be used for tree detection within city environments. Additionally, the model focuses on tree detection in the temperate climate zone, as this is the vegetation it is trained to observe. Further analyses on the impact of trees on, for example, heat regulation in cities and flooding prevention are out of the scope of this project and could be the topic of future research. \\
 \\
-As this paper uses Sentinel-2 satellite images with 10-meter spatial resolution this could lead to issues as the images might not have a high enough resolution to detect trees reliably. Future work could therefore also focus on improving the image quality with better available satellite data.
+Since this paper uses Sentinel-2 satellite images with 10-meter spatial resolution, issues could arise, as the images might not have a high enough resolution to detect trees reliably. Future work could therefore also focus on improving image quality by using better available satellite data.
+
+\subsection{Additional helpful literature}
+
+The following additional papers are planned to be used as sources:
+
+1. A review of individual tree crown detection and delineation from optical remote sensing images \cite{zheng2023reviewindividualtreecrown}
+
+2. Integrating Traditional and Deep Learning Methods to Detect Tree Crowns in Satellite Images \cite{durgut2025integrating}
+
+3. A Sentinel-2 machine learning dataset for tree species classification in Germany \cite{freudenberg2025sentinel2}
+
+4. Object-based classification of urban plant species from very high-resolution satellite imagery \cite{sicard2023object}
+
+5. Improving Urban Tree Species Classification with High Resolution Satellite Imagery and Machine Learning \cite{wenger2024improving}
 
 \section{BEAM}
 
@@ -65,9 +88,73 @@ Figure~\ref{fig:beam} presents the BEAM representation of the proposed tree dete
 \end{figure}
 
 
+\section{Project Organisation}
+
+This chapter describes how the project is organised.
+
+\subsection{Team Roles}
+
+The main project team consists of 4 people, who are responsible for different focus points. All members commit to the project, and in case one person gets stuck, the focus is to work together and find a way to tackle the issue.
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{@{}llp{6cm}@{}}
+\toprule
+\textbf{Person} & \textbf{Role} & \textbf{Tasks} \\
+\midrule
+\textbf{Dominik Oberhumer} & Organisation of Team & Preparation of Tools, Reminding of Deliverables and Timeplan \\
+\textbf{Moritz Hörmansdorfer} & Data Scientist & Machine Learning Training of Model \\
+\textbf{Nina Salnikow} & Data Engineer & Fetching and Preparation of Data  \\
+\textbf{Sara Klasová} & Data Scientist & EDA (Exploratory Data Analysis)  \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Communication outline}
+
+This section describes the communication styles we are committed to using throughout the project.
+
+\subsubsection{Written communication}
+
+We will use two Teams in Microsoft Teams for our basic communication.
+
+\begin{enumerate}
+    \item \textbf{DsLab26S\_infrared.city\_1}: This Team contains two channels for two different approaches. The \textbf{General} channel is used as the communication channel with Kavita Surana (our connection to the lecture and the WU). The other channel (\textbf{team intern}) is accessible only by the team itself and is our main chat for communication throughout the project.
+    \item \textbf{DsLab\_infrared.city\_1-coaches}: This Team is the basis for communication with the data coaches from infrared.city. We were asked to separate this from the main communication source but still keep a Microsoft Teams Team for it. Thus, we created a different Team.
+\end{enumerate}
+
+\subsubsection{Regular Meetings and Communication}
+
+Our meetings will be held via Microsoft Teams in most cases. It is possible that we will be able to meet in person for specific meetings. However, we plan to keep the communication primarily remote or at least hybrid. We have already organized two regular weekly meetings for basic communication.
+
+\begin{enumerate}
+    \item \textbf{Regular Team Meeting}: On Thursdays at 19:00, we will meet as a team remotely and discuss how to continue the work over the coming week.
+    \item \textbf{Irregular Meetings with Kavita Surana}: In cases where we need feedback from the WU side, we will schedule a meeting with her. We will schedule at least one meeting before the major deliverables. To easily schedule these meetings, we have access to a booking site for her time.
+    \item \textbf{Communication with Data Coaches from infrared.city}: No regular meetings are scheduled with the data coaches. Instead, we will write weekly reports in the shared Teams channel. In most cases, this weekly report will be sent by Dominik after our regular weekly team meeting.
+\end{enumerate}
+
+\subsubsection{Documentation of Meetings}
+
+Because of the many meetings, it is possible that someone may not be able to participate every time. To ensure communication with absent team members, we will write meeting notes and document the meeting output after every session. This documentation is mainly for us to better remember previous decisions. The protocols will be committed to our Git repository, like every other written result, as simple text documents containing the date and time, attendees, discussed topics, and follow-up decisions.  
+
+\subsubsection{File and Code Repository}
+
+Every written result (documentation and project related) will be added to an already created GitHub repository. The repository is accessible by the team. See \url{https://github.com/nikmaster/wu_dslab_infrared-city}.
+
+\subsubsection{Ticket and Issue Tracking}
+
+We have a Project in GitHub to track our progress on an issue and ticket level. This allows us to specify who is doing what and when, and it also creates an easy graphical overview.
+
+Besides the core team members, we also have additional support from people related to the project:
+
+\begin{enumerate}
+    \item \textbf{Kavita Surana}: is our supervisor from WU. She will help us regarding the infrastructure and provides the necessary points for grading at the university.
+    \item \textbf{Oana Taut} and \textbf{Vasiliki Fragkia} are our data coaches from infrared.city. They will support us with different approaches and sources on how we can use the data to achieve our goal.
+\end{enumerate}
+
 \section{Timeplan}
 
-This chapter descripes our planned timeline
+This chapter describes our planned timeline.
 
 \subsection{Milestones}
 
@@ -154,9 +241,9 @@ The final phase encompasses the conclusive evaluation of the models and the prep
 
 \subsection{Tasks}
 
-Following in Table~\ref{tab:project_timeline} we have our first export of our current ticket. The export was done on 28. March 2026. 
-This tickets are our current state of plan who will do what and when. The table is structured by the major milestone phases.
-In some cases we dont have one specific assignee for tasks. In this cases we mentioned right now multiple persons for a specific task, and we have to descide at time how to split up this task on the given list of persons. For example the writting of the report can be structured as subtask by topic and everybody writtes different chapters. But right now we are not sure about the existing topics. So we desicded that in our current state it is enough to use multiple assignees.
+Table~\ref{tab:project_timeline} below shows the first export of our current tickets. The export was done on March 28, 2026. 
+These tickets represent our current plan regarding who will do what and when. The table is structured by the major milestone phases.
+In some cases, we do not have one specific assignee for a task. In these cases, we have currently assigned multiple people to a specific task, and we will decide later how to split up the work among them. For example, the writing of the report can be structured as subtasks by topic, with everybody writing different chapters. Since we are currently unsure about the exact topics, we decided that for now, it is sufficient to use multiple assignees.
 
 \begin{longtable}{@{} p{5.5cm} p{5cm} l l l @{}}
 \caption{Project Timeline and Task Assignments} \label{tab:project_timeline} \\
@@ -232,7 +319,7 @@ Improve model performance & Moritz Hörmansdorfer, Sara Klasová & Todo & 22.04.
 Define Resulted Database Structure & Moritz Hörmansdorfer, Dominik Oberhumer, Nina Salnikow, Sara Klasová & Todo & 22.04.2026 & 03.05.2026 \\
 Sparring group meetings & Moritz Hörmansdorfer, Dominik Oberhumer, Nina Salnikow, Sara Klasová & Todo & 22.04.2026 & 05.06.2026 \\
 Write Draft Final Report & Moritz Hörmansdorfer, Dominik Oberhumer, Nina Salnikow, Sara Klasová & Todo & 26.04.2026 & 07.06.2026 \\
-Perform validation and error anylsis & Sara Klasová & Todo & 28.04.2026 & 31.05.2026 \\
+Perform validation and error analysis & Sara Klasová & Todo & 28.04.2026 & 31.05.2026 \\
 Invite data coaches to presentation & Dominik Oberhumer & Todo & 03.05.2026 & 09.05.2026 \\
 Implement Resulted Database & Moritz Hörmansdorfer, Sara Klasová & Todo & 04.05.2026 & 31.05.2026 \\
 Prepare Slides for final presentation & Moritz Hörmansdorfer, Dominik Oberhumer, Nina Salnikow, Sara Klasová & Todo & 10.05.2026 & 07.06.2026 \\
@@ -249,7 +336,7 @@ Write final reports & Moritz Hörmansdorfer, Dominik Oberhumer, Nina Salnikow, S
 
 \subsection{GANTT}
 
-In Figure \ref{fig:gantt_chart} we have a GANTT chart showing the structure of the tasks.
+Figure~\ref{fig:gantt_chart} provides a GANTT chart showing the structure of the tasks.
 
 \begin{figure}[htbp]
     \centering
@@ -258,83 +345,22 @@ In Figure \ref{fig:gantt_chart} we have a GANTT chart showing the structure of t
     \label{fig:gantt_chart}
 \end{figure}
 
-\section{Communication outline}
+\clearpage
+\pagenumbering{roman} % Kleine römische Zahlen (i, ii, iii) für die Verzeichnisse
 
-This section describes the communication styles we are committed to use over the project.
-
-\subsection{Written communication}
-
-We will use two Teams in Microsoft Teams for our basic communication.
-
-\begin{enumerate}
-    \item \textbf{DsLab26S\_infrared.city\_1}: This Team contains two channels for two different approaches. The \textbf{General} Channel is used as communication level with Kavita Surana (our connection to the Lecture and the WU). The other channel (\textbf{team intern}) is only accessible by the team itself and is our main chat for communication over the project.
-    \item \textbf{DsLab\_infrared.city\_1-coaches}: This Team is the basic for communication with the data coaches from infrared-city. We were asked to separate this from the main communication source, but still keep a Microsoft Teams Team for this. So we created a different Team.
-\end{enumerate}
-
-\subsection{Regular Meetings and Communication}
-
-Our meetings will be held via Microsoft Teams in most cases. It is possible that we are able to meet in person for one or another defined meeting. But regularly we plan to keep the communication remote or at least hybrid. We organized already two regular weekly meetings for basic communication.
-
-\begin{enumerate}
-    \item \textbf{Regular Team Meeting}: On Thursdays 19:00 we will meet as a team remotely and talk about how to continue the work over the next week.
-    \item \textbf{Irregular Meetings with Kavita Surana}: In cases we need feedback for something from the WU site we schedule a meeting with her. At least we will schedule a meeting before the major deliverables. To easily schedule the meeting we got a booking site for her time.
-    \item \textbf{Communication with Data Coaches from infrared.city}: No regular meeting is scheduled with the data coaches. Instead we write weekly reports in the shared Teams channel. In most cases this weekly report will be send after our weekly regular team meeting by Dominik.
-\end{enumerate}
-
-\subsection{Documentation of Meetings}
-
-Because of the many meetings it is possible that one or another person is not able to participate every time. To still be able to communicate with absent people we want to write meeting notes and documentation of the meeting output after every meeting. This documenation is mainly for us to be able to better remember previous decisions. The protocolls are commited to our GIT Repository, like every other written result as simple text documents containing the date and time, attended people, discussed topics and the follup up decisions.  
-
-\subsection{File and Code Repository}
-
-Every written result (documentation and project related) will be added to an already created GitHub repository. The repository is accessible by the team. See \url{https://github.com/nikmaster/wu_dslab_infrared-city}.
-
-\subsection{Ticket and Issue Tracking}
-
-We have a Project in GitHub to track our progress on issue and ticket level. This allows us to specify who is doing what and when. And also creates an easy graphical overview
-
-\section{Team Roles}
-
-The main project team consists of 4 persons which are responsible for different focus points. But still commit to the project and in case one person gets stuck, the focus has to be to work together and find a way to tackle the issue.
-
-\begin{table}[htbp]
-\centering
-\begin{tabular}{@{}llp{6cm}@{}}
-\toprule
-\textbf{Person} & \textbf{Role} & \textbf{Tasks} \\
-\midrule
-\textbf{Dominik Oberhumer} & Organisation of Team & Preparation of Tools, Reminding of Deliverables and Timeplan \\
-\textbf{Moritz Hörmansdorfer} & Data Scientist & Machine Learning Training of Model \\
-\textbf{Nina Salnikow} & Data Engineer & Fetching and Preparation of Data  \\
-\textbf{Sara Klasová} & Data Scientist & EDA (Exploratory Data Analysis)  \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-Besides these persons, we also have additional support from people which are related to the project:
-
-\begin{enumerate}
-    \item \textbf{Kavita Surana}: is our supervisor from WU. She will help us regarding infrastructure and gives the needed points for grading at the university.
-    \item \textbf{Oana Taut} and \textbf{Vasiliki Fragkia} are our data coaches from infrared.city. They will support us with different approaches and sources how we can use the data to achieve our goal.
-\end{enumerate}
-
-
-\section{Literature}
-
-Following additional papers are planned to be used as sources:
-
-1. A review of individual tree crown detection and delineation from optical remote sensing images \cite{zheng2023reviewindividualtreecrown}
-
-2. Integrating Traditional and Deep Learning Methods to Detect Tree Crowns in Satellite Images \cite{durgut2025integrating}
-
-3. A Sentinel-2 machine learning dataset for tree species classification in Germany  \cite{freudenberg2025sentinel2}
-
-4. Object-based classification of urban plant species from very high-resolution satellite imagery \cite{sicard2023object}
-
-5. Improving Urban Tree Species Classification with High Resolution Satellite Imagery and Machine Learning \cite{wenger2024improving}
-
-
+\phantomsection
+\addcontentsline{toc}{section}{\refname}
 \bibliographystyle{ieeetr} 
 \bibliography{literature}
+
+\clearpage
+\phantomsection
+\addcontentsline{toc}{section}{\listfigurename}
+\listoffigures  
+
+\clearpage
+\phantomsection
+\addcontentsline{toc}{section}{\listtablename}
+\listoftables
 
 \end{document}
