@@ -55,7 +55,7 @@ As this paper uses Sentinel-2 satellite images with 10-meter spatial resolution 
 
 \section{BEAM}
 
-Figure~\ref{fig:beam} presents the BEAM representation \cite{wu2023beam} of the proposed tree detection system, illustrating the data sources, training and inference processes, model architecture, evaluation pipeline, and associated risks.
+Figure~\ref{fig:beam} presents the BEAM representation of the proposed tree detection system, illustrating the data sources, training and inference processes, model architecture, evaluation pipeline, and associated risks.
 
 \begin{figure}[H] 
     \centering
@@ -67,9 +67,13 @@ Figure~\ref{fig:beam} presents the BEAM representation \cite{wu2023beam} of the 
 
 \section{Timeplan}
 
+This chapter descripes our planned timeline
+
+\subsection{Milestones}
+
 The project will be conducted between March and June and is structured into several phases corresponding to the course milestones and deliverables.
 
-\subsection[Phase 1: Project Setup \& Planning]{Phase 1: Project Setup \& Planning \\ \normalsize March 9 – March 19}
+\subsubsection[Phase 1: Project Setup \& Planning]{Phase 1: Project Setup \& Planning \\ \normalsize March 9 – March 19}
 This initial phase focuses on defining the project scope, exploring available data sources, and establishing a solid project plan.
 
 \begin{description}[style=multiline, leftmargin=3cm, font=\normalfont\textbf]
@@ -85,7 +89,7 @@ This initial phase focuses on defining the project scope, exploring available da
     \item[Deliverable:] Project Plan -- March 19
 \end{description}
 
-\subsection[Phase 2: Methodology Development]{Phase 2: Methodology Development \\ \normalsize March 20 – March 29}
+\subsubsection[Phase 2: Methodology Development]{Phase 2: Methodology Development \\ \normalsize March 20 – March 29}
 During this phase, the primary goal is to acquire the necessary data and establish the foundational methodology for feature extraction.
 
 \begin{description}[style=multiline, leftmargin=3cm, font=\normalfont\textbf]
@@ -99,7 +103,7 @@ During this phase, the primary goal is to acquire the necessary data and establi
     \item[Deliverable:] Refined Project Plan -- March 29
 \end{description}
 
-\subsection[Phase 3: Data Processing \& Initial Modelling]{Phase 3: Data Processing \& Initial Modelling \\ \normalsize March 30 – April 21}
+\subsubsection[Phase 3: Data Processing \& Initial Modelling]{Phase 3: Data Processing \& Initial Modelling \\ \normalsize March 30 – April 21}
 This period is dedicated to executing the data processing pipeline and training the first iteration of machine learning models.
 
 \begin{description}[style=multiline, leftmargin=3cm, font=\normalfont\textbf]
@@ -114,7 +118,7 @@ This period is dedicated to executing the data processing pipeline and training 
     \item[Deliverable:] Intermediate Report and Slides -- April 21
 \end{description}
 
-\subsection[Phase 4: Model Improvement \& Validation]{Phase 4: Model Improvement \& Validation \\ \normalsize April 22 – June 6}
+\subsubsection[Phase 4: Model Improvement \& Validation]{Phase 4: Model Improvement \& Validation \\ \normalsize April 22 – June 6}
 Focus now shifts towards optimizing model performance through rigorous validation, error analysis, and peer feedback.
 
 \begin{description}[style=multiline, leftmargin=3cm, font=\normalfont\textbf]
@@ -129,7 +133,7 @@ Focus now shifts towards optimizing model performance through rigorous validatio
     \item[Deliverable:] Draft Final Report \& Slides -- June 7
 \end{description}
 
-\subsection[Phase 5: Finalization \& Presentation]{Phase 5: Finalization \& Presentation \\ \normalsize\ June 8 – June 28}
+\subsubsection[Phase 5: Finalization \& Presentation]{Phase 5: Finalization \& Presentation \\ \normalsize\ June 8 – June 28}
 The final phase encompasses the conclusive evaluation of the models and the preparation of the final deliverables and class presentations.
 
 \begin{description}[style=multiline, leftmargin=3cm, font=\normalfont\textbf]
@@ -148,6 +152,111 @@ The final phase encompasses the conclusive evaluation of the models and the prep
     \end{itemize}
 \end{description}
 
+\subsection{Tasks}
+
+Following in Table~\ref{tab:project_timeline} we have our first export of our current ticket. The export was done on 28. March 2026. 
+This tickets are our current state of plan who will do what and when. The table is structured by the major milestone phases.
+In some cases we dont have one specific assignee for tasks. In this cases we mentioned right now multiple persons for a specific task, and we have to descide at time how to split up this task on the given list of persons. For example the writting of the report can be structured as subtask by topic and everybody writtes different chapters. But right now we are not sure about the existing topics. So we desicded that in our current state it is enough to use multiple assignees.
+
+\begin{longtable}{@{} p{5.5cm} p{5cm} l l l @{}}
+\caption{Project Timeline and Task Assignments} \label{tab:project_timeline} \\
+\toprule
+\textbf{Task} & \textbf{Assignee(s)} & \textbf{Status} & \textbf{Start} & \textbf{End} \\
+\midrule
+\endfirsthead
+
+\multicolumn{5}{c}%
+{{\bfseries Table \thetable\ continued from previous page}} \\
+\toprule
+\textbf{Task} & \textbf{Assignee(s)} & \textbf{Status} & \textbf{Start} & \textbf{End} \\
+\midrule
+\endhead
+
+\midrule
+\multicolumn{5}{r}{{Continued on next page}} \\
+\endfoot
+
+\bottomrule
+\endlastfoot
+
+% --- Project Plan ---
+\multicolumn{5}{@{}l}{\textbf{Project Plan}} \\ \midrule
+Setup Git Repository & Dominik Oberhumer & Done & 10.03.2026 & 13.03.2026 \\
+Kickoff Session & Moritz Hörmansdorfer, Dominik Oberhumer, Nina Salnikow, Sara Klasová & Done & 13.03.2026 & 13.03.2026 \\
+Initialize Latex Template & Dominik Oberhumer & Done & 13.03.2026 & 14.03.2026 \\
+Explore Datasets & Nina Salnikow & Done & 13.03.2026 & 15.03.2026 \\
+Explore Modelling Approaches & Moritz Hörmansdorfer, Sara Klasová & Done & 13.03.2026 & 16.03.2026 \\
+Write Project Plan Project Description & Moritz Hörmansdorfer & Done & 14.03.2026 & 18.03.2026 \\
+Write Project Plan BEAM & Nina Salnikow & Done & 14.03.2026 & 18.03.2026 \\
+Write Project Plan Timeplan & Sara Klasová & Done & 14.03.2026 & 18.03.2026 \\
+Write Project Plan Communication & Dominik Oberhumer & Done & 14.03.2026 & 18.03.2026 \\
+Write Project Plan Team Roles & Dominik Oberhumer & Done & 14.03.2026 & 18.03.2026 \\
+Write Project Plan Literature & Sara Klasová & Done & 14.03.2026 & 18.03.2026 \\
+\addlinespace
+
+% --- Refined Project Plan ---
+\multicolumn{5}{@{}l}{\textbf{Refined Project Plan}} \\ \midrule
+Refine Project Plan Project Description & Moritz Hörmansdorfer & In Prog. & 19.03.2026 & 29.03.2026 \\
+Refine Project Plan BEAM & Nina Salnikow & In Prog. & 19.03.2026 & 29.03.2026 \\
+Refine Project Plan Timeplan & Dominik Oberhumer & In Prog. & 19.03.2026 & 29.03.2026 \\
+Refine Project Plan Communication & Dominik Oberhumer & In Prog. & 19.03.2026 & 29.03.2026 \\
+Refine Project Plan Team Roles & Dominik Oberhumer & In Prog. & 19.03.2026 & 29.03.2026 \\
+Refine Project Plan Literature & Sara Klasová & In Prog. & 19.03.2026 & 29.03.2026 \\
+Collect Data Baumkataster & Nina Salnikow & Done & 19.03.2026 & 28.03.2026 \\
+Collect Data from Copernicus & Nina Salnikow & Todo & 19.03.2026 & 28.03.2026 \\
+Collect Data additional Data sources? & Nina Salnikow & In Prog. & 19.03.2026 & 28.03.2026 \\
+Define modelling pipeline & Moritz Hörmansdorfer, Nina Salnikow, Sara Klasová & Todo & 19.03.2026 & 02.04.2026 \\
+Prepare Data Baumkataster (Features) & Nina Salnikow & Todo & 29.03.2026 & 02.04.2026 \\
+Prepare Data Copernicus (Features) & Nina Salnikow & Todo & 29.03.2026 & 02.04.2026 \\
+Prepare Data additional Data Sets? & Nina Salnikow & Todo & 29.03.2026 & 02.04.2026 \\
+\addlinespace
+
+% --- Intermediate Report ---
+\multicolumn{5}{@{}l}{\textbf{Intermediate Report}} \\ \midrule
+Schedule minutes with sparing team & Dominik Oberhumer & Todo & 30.03.2026 & 16.04.2026 \\
+Define structure of report & Dominik Oberhumer & Todo & 30.03.2026 & 04.04.2026 \\
+EDA & Sara Klasová & Todo & 03.04.2026 & 09.04.2026 \\
+Implement data processing pipeline & Moritz Hörmansdorfer, Nina Salnikow, Sara Klasová & Todo & 03.04.2026 & 09.04.2026 \\
+Create latex template for report & Dominik Oberhumer & Todo & 05.04.2026 & 08.04.2026 \\
+Write intermediate project report & Moritz Hörmansdorfer, Dominik Oberhumer, Nina Salnikow, Sara Klasová & Todo & 09.04.2026 & 21.04.2026 \\
+Prepare Slides for presentation & Moritz Hörmansdorfer, Dominik Oberhumer, Nina Salnikow, Sara Klasová & Todo & 09.04.2026 & 21.04.2026 \\
+Train initial machine learning models & Moritz Hörmansdorfer & Todo & 10.04.2026 & 17.04.2026 \\
+Evaluate early results & Moritz Hörmansdorfer & Todo & 10.04.2026 & 17.04.2026 \\
+Prepare intermediate analysis & Moritz Hörmansdorfer, Dominik Oberhumer, Nina Salnikow, Sara Klasová & Todo & 12.04.2026 & 17.04.2026 \\
+\addlinespace
+
+% --- Draft Final Report & Slides ---
+\multicolumn{5}{@{}l}{\textbf{Draft Final Report \& Slides}} \\ \midrule
+Prepare latex for Draft Final Report & Dominik Oberhumer & Todo & 21.04.2026 & 25.04.2026 \\
+Improve model performance & Moritz Hörmansdorfer, Sara Klasová & Todo & 22.04.2026 & 21.05.2026 \\
+Define Resulted Database Structure & Moritz Hörmansdorfer, Dominik Oberhumer, Nina Salnikow, Sara Klasová & Todo & 22.04.2026 & 03.05.2026 \\
+Sparring group meetings & Moritz Hörmansdorfer, Dominik Oberhumer, Nina Salnikow, Sara Klasová & Todo & 22.04.2026 & 05.06.2026 \\
+Write Draft Final Report & Moritz Hörmansdorfer, Dominik Oberhumer, Nina Salnikow, Sara Klasová & Todo & 26.04.2026 & 07.06.2026 \\
+Perform validation and error anylsis & Sara Klasová & Todo & 28.04.2026 & 31.05.2026 \\
+Invite data coaches to presentation & Dominik Oberhumer & Todo & 03.05.2026 & 09.05.2026 \\
+Implement Resulted Database & Moritz Hörmansdorfer, Sara Klasová & Todo & 04.05.2026 & 31.05.2026 \\
+Prepare Slides for final presentation & Moritz Hörmansdorfer, Dominik Oberhumer, Nina Salnikow, Sara Klasová & Todo & 10.05.2026 & 07.06.2026 \\
+\addlinespace
+
+% --- Final Report ---
+\multicolumn{5}{@{}l}{\textbf{Final Report}} \\ \midrule
+Prepare latex template for final report & Dominik Oberhumer & Todo & 06.06.2026 & 09.06.2026 \\
+Prepare official sparring group minutes & Nina Salnikow & Todo & 07.06.2026 & 28.06.2026 \\
+Final model evaluation & Moritz Hörmansdorfer, Dominik Oberhumer, Nina Salnikow, Sara Klasová & Todo & 08.06.2026 & 21.06.2026 \\
+Write final reports & Moritz Hörmansdorfer, Dominik Oberhumer, Nina Salnikow, Sara Klasová & Todo & 09.06.2026 & 28.06.2026 \\
+
+\end{longtable}
+
+\subsection{GANTT}
+
+In Figure \ref{fig:gantt_chart} we have a GANTT chart showing the structure of the tasks.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{GANTT.jpg} 
+    \caption{GANTT Diagramm}
+    \label{fig:gantt_chart}
+\end{figure}
 
 \section{Communication outline}
 
@@ -168,18 +277,21 @@ Our meetings will be held via Microsoft Teams in most cases. It is possible that
 
 \begin{enumerate}
     \item \textbf{Regular Team Meeting}: On Thursdays 19:00 we will meet as a team remotely and talk about how to continue the work over the next week.
-    \item \textbf{Irregular Meetings with Kavita Surana}: In cases we need feedback for something from the WU site we schedule a meeting with her. To easily schedule the meeting we got a booking site for her time.
-    \item \textbf{Communication with Data Coaches from infrared.city}: No regular meeting is scheduled with the data coaches. Instead we write weekly reports in the shared Teams channel.
+    \item \textbf{Irregular Meetings with Kavita Surana}: In cases we need feedback for something from the WU site we schedule a meeting with her. At least we will schedule a meeting before the major deliverables. To easily schedule the meeting we got a booking site for her time.
+    \item \textbf{Communication with Data Coaches from infrared.city}: No regular meeting is scheduled with the data coaches. Instead we write weekly reports in the shared Teams channel. In most cases this weekly report will be send after our weekly regular team meeting by Dominik.
 \end{enumerate}
 
 \subsection{Documentation of Meetings}
 
-Because of the many meetings it is possible that one or another person is not able to participate every time. To still be able to communicate with absent people we want to write meeting notes and documentation of the meeting output after every meeting.
+Because of the many meetings it is possible that one or another person is not able to participate every time. To still be able to communicate with absent people we want to write meeting notes and documentation of the meeting output after every meeting. This documenation is mainly for us to be able to better remember previous decisions. The protocolls are commited to our GIT Repository, like every other written result as simple text documents containing the date and time, attended people, discussed topics and the follup up decisions.  
 
 \subsection{File and Code Repository}
 
 Every written result (documentation and project related) will be added to an already created GitHub repository. The repository is accessible by the team. See \url{https://github.com/nikmaster/wu_dslab_infrared-city}.
 
+\subsection{Ticket and Issue Tracking}
+
+We have a Project in GitHub to track our progress on issue and ticket level. This allows us to specify who is doing what and when. And also creates an easy graphical overview
 
 \section{Team Roles}
 
