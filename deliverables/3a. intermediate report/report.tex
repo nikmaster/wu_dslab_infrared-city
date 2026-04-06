@@ -1,0 +1,73 @@
+\documentclass[12pt]{article}
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{lmodern}
+\usepackage{longtable}
+\usepackage{titlesec}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{float}
+\usepackage{booktabs} 
+\usepackage{hyperref}
+\titleformat{\section}{\normalfont\large\bfseries}{\thesection}{1em}{}
+\newcommand{\sectionbreak}{\clearpage}
+%nina note: strg,alt,b to build
+
+\title{Intermediate Project Report\\\large infrared.city-1: Tree detection}
+\author{
+Moritz Hörmansdorfer (h12417021) \\
+Sara Klasová (h12122714) \\
+Dominik Oberhumer (h01025454) \\
+Nina Salnikow (h12109432) \\
+}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\input{chapters/00_abstract}
+\thispagestyle{empty} 
+
+\clearpage
+\pagenumbering{Roman} 
+
+\tableofcontents 
+\clearpage      
+
+\pagenumbering{arabic} 
+
+\include{chapters/01_introduction}
+\include{chapters/02_related_work}
+\include{chapters/03_data_sources}
+\include{chapters/04_methodology}
+\include{chapters/05_implementation}
+\include{chapters/06_results}
+\include{chapters/07_discussion}
+\include{chapters/08_future_work}
+\include{chapters/09_conclusion}
+
+
+\clearpage
+\pagenumbering{roman} 
+
+\phantomsection
+\addcontentsline{toc}{section}{\refname}
+\bibliographystyle{ieeetr} 
+\bibliography{literature}
+
+\clearpage
+\phantomsection
+\addcontentsline{toc}{section}{\listfigurename}
+\listoffigures  
+
+\clearpage
+\phantomsection
+\addcontentsline{toc}{section}{\listtablename}
+\listoftables
+
+\clearpage
+\appendix
+\pagenumbering{arabic} 
+\renewcommand{\thepage}{\thesection-\arabic{page}}
+\include{chapters/10_appendix}
+
+\end{document}
