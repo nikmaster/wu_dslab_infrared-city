@@ -3,9 +3,10 @@
 
 \usetheme{Metropolis}
 \usecolortheme[RGB={0,100,50}]{structure}
- \usefonttheme{structurebold} 
-\metroset{numbering=fraction}
-\setbeamertemplate{frame footer}{\insertshortauthor: \insertshorttitle}
+ \usefonttheme{structurebold}
+ \metroset{numbering=fraction}
+\metroset{progressbar=frametitle}
+%\setbeamertemplate{frame footer}{\insertshortauthor: \insertshorttitle}
 
 
 \title[Tree detection]{infrared.city-1: Tree detection}
@@ -13,10 +14,41 @@
 \author[Team Infrared-City-1]{Moritz Hörmansdorfer, Sara Klasová, Dominik Oberhumer, Nina Salnikow}
 \date{}
 
+\makeatletter
+\setlength{\metropolis@progressinheadfoot@linewidth}{3pt} 
+\setlength{\metropolis@progressonsectionpage@linewidth}{3pt}
+\makeatother
+
 \begin{document}
 
 \begin{frame}
     \titlepage
+\end{frame}
+
+\begin{frame}{Introduction}
+    some text
+    \begin{itemize}
+        \item first point
+        \item second point
+    \end{itemize}
+\end{frame}
+
+\section{Test Section Slide}
+
+\begin{frame}{Introduction2}
+    some text
+    \begin{itemize}
+        \item first point
+        \item second point
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Introduction}
+    some text
+    \begin{itemize}
+        \item first point
+        \item second point
+    \end{itemize}
 \end{frame}
 
 \begin{frame}{Introduction}
