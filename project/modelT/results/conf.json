@@ -1,0 +1,42 @@
+{
+    "encoder_widths": [
+        16,
+        32,
+        32,
+        32
+    ],
+    "decoder_widths": [
+        16,
+        16,
+        32,
+        32
+    ],
+    "out_conv": 1,
+    "str_conv_k": 4,
+    "str_conv_s": 2,
+    "str_conv_p": 1,
+    "agg_mode": "att_group",
+    "encoder_norm": "group",
+    "n_head": 4,
+    "d_model": 32,
+    "d_k": 4,
+    "path_sentinel_data": "/home/jovyan/ideas-dslab-group1-shared/preprocessed data/satellite_patches_vie.npy",
+    "path_tree_data": "/home/jovyan/ideas-dslab-group1-shared/preprocessed data/tree_patches_vie.npy",
+    "path_date_data": "/home/jovyan/ideas-dslab-group1-shared/preprocessed data/date_patches_vie.npy",
+    "res_dir": "/home/jovyan/git/wu_dslab_infrared-city/project/modelT/results",
+    "num_workers": 4,
+    "rdm_seed": 1,
+    "device": "cpu",
+    "cache": false,
+    "epochs": 100,
+    "batch_size": 16,
+    "lr": 0.001,
+    "num_classes": 20,
+    "ignore_index": -1,
+    "pad_value": 0.0,
+    "padding_mode": "reflect",
+    "val_every": 1,
+    "val_after": 0,
+    "display_step": 1,
+    "fold": null
+}
