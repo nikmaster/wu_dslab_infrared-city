@@ -1,3 +1,30 @@
 \section{Introduction}
 
-Test text \cite{zheng2023reviewindividualtreecrown}
+This chapter outlines the motivation, methods used, data sources, and the scope of this project.
+
+\subsection{Motivation and Project Overview}
+
+As urban areas expand and global temperatures rise due to climate change, being able to understand how trees can help cool cities has become increasingly important \cite{eu2023tree}. Furthermore, trees reduce the risk of flooding in cities and promote health and wellbeing \cite{woodlandtrust2023}. Our project aims at taking the first step in the direction of better tree coverage in urban areas by creating a model that is able to predict tree locations using satellite imagery of densely populated areas. \\
+\\
+Recently, there has been a rapidly growing body of research on urban tree detection using deep learning models. One of the most recent papers is by Gong et al. \cite{gong2024treedetector}, who use satellite data not only to detect trees but also to estimate their size and density. For this, they use a slightly different model than the U-Net model used in this paper.
+
+\\TODO more why: Research Gap? Mehr kontext zu vorjahresprojekt, "Forschungsfrage", Faden zum "BEAM-Modell"
+
+\subsection{Proposed Approach and Data} \\TODO zusammenfassen von Datasources und Model
+\subsubsection{Data Sources}
+
+For our project, we use publicly available Sentinel-2 satellite images with 10-meter spatial resolution and four color channels, namely red, green, blue, and near-infrared. The images are retrieved via the API of the Copernicus Programme and are provided by the European Space Agency \cite{copernicus2025}. As seasonality has a great impact on the appearance of trees, imagery of different seasons will be used to train the model. \\
+\\
+Additionally, we will use the publicly available dataset on every tree in the city of Vienna, the ``Baumkataster'', to train and test our model on exact tree locations \cite{baumkataster2025}.
+
+\subsubsection{Model}
+
+Previous papers suggest that for image segmentation with satellite data, the U-Net deep learning model is the most accurate for detecting objects, such as in street detection \cite{pesek2024convolution} as well as crop field detection \cite{garnot2021panoptic}. Furthermore, last year's project also tried implementing a U-Net architecture but failed to yield promising results. This paper tries to build on that, especially because the data coaches also deem it a well-fitting model. This architecture will therefore also be used in this paper to predict tree locations. \\
+\\
+The U-Net model is a special type of Convolutional Neural Network and consists of a contracting path and an expanding path. In the contracting path, convolution and pooling layers are used to extract features from the original imagery, which in this project will consist of four pictures for each season and four color channels each, as described above. The expanding path consists of the same structure of convolution and pooling layers, but used in the reverse direction to upsample the previously contracted imagery \cite{aramendia2024}. As suggested in similar work, this project will use skip connections between the expanding and contracting paths, as well as a temporal attention algorithm to prioritize more meaningful images \cite{garnot2021panoptic}. The Binary Cross-Entropy loss between the predicted and actual locations will be used, and the actual locations from the ``Baumkataster'' will be split into training and test sets.
+
+\subsection{Scope and Limitations}
+
+The model in this paper is trained only on satellite images of urban areas and is therefore only supposed to be used for tree detection within city environments. Additionally, the model focuses on tree detection in the temperate climate zone, as this is the vegetation it is trained to observe. Further analyses on the impact of trees on, for example, heat regulation in cities and flooding prevention are out of the scope of this project and could be the topic of future research. \\
+\\
+Since this paper uses Sentinel-2 satellite images with 10-meter spatial resolution, issues could arise, as the images might not have a high enough resolution to detect trees reliably. Future work could therefore also focus on improving image quality by using better available satellite data.
