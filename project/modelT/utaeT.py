@@ -137,10 +137,12 @@ class UTAE(nn.Module):
         for i in range(self.n_stages - 1):
             out = self.down_blocks[i].smart_forward(feature_maps[-1])
             feature_maps.append(out)
+
         # TEMPORAL ENCODER
         out, att = self.temporal_encoder(
             feature_maps[-1], batch_positions=batch_positions, pad_mask=pad_mask
         )
+
         # SPATIAL DECODER
         for i in range(self.n_stages - 1):
             skip = self.temporal_aggregator(
@@ -149,7 +151,7 @@ class UTAE(nn.Module):
             out = self.up_blocks[i](out, skip)
 
         out = self.out_conv(out)
-        out = torch.nn.functional.softplus(out)
+        #out = torch.nn.functional.softplus(out)
         if return_att:
             return out, att
         else:
