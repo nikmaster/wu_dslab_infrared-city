@@ -1,1 +1,29 @@
 \section{Preliminary Results}
+
+The preliminary results of this project consist of an exploratory data analysis conducted across all three data sources: the Baumkataster, the Sentinel-2 satellite imagery and the OpensStreetMap (OSM) urban context layers. The goal of the analysis was to asses data quality, learn feature distributions and identify which indicators are likely to be useful for training the U-Net model.
+
+\subsection{Baumkataster Analysis}
+
+The cleaned Baumkataster data contain 226,998 trees for Vienna, 217,454 for Paris, 233,505 for Hamburg and 43,367 for Barcelona. Vienna, Paris, and Hamburg are roughly balanced in size and are suitable as training cities. However, Barcelona lacks size attributes and a geometry column and  therefore it will only be used as point locations for cross-city generalization testing. The available size attributes differ across cities. Vienna provides height categories, trunk circumference, and crown diameter. Paris provides height and circumference. Hamburg provides circumference and crown diameter.
+
+A minor data quality issue was identified within Vienna's height column: it stores ordinal category codes from 1 to 8, representing height ranges from 0--5\,m up to
+\textgreater35\,m, rather than continuous metre values. As a result the raw mean
+of 2.21 is not interpretable as metres. The planned fix is to decode these codes
+to midpoint values, which will be implemented before model training.
+
+Species diversity is high across all cities, with 671 unique species in Vienna,
+997 in Paris, 355 in Hamburg, and 330 in Barcelona. A total of 86 species appear
+in all four cities, dominated by \textit{Acer} and \textit{Aesculus} genera,
+reflecting the shared temperate climate zone. Species identity is not used as a
+model input but informs expectations about crown size variation across cities.
+
+A spatial cross-check with OSM landuse polygons revealed a significant difference
+in tree placement patterns between cities. In Vienna, 52.3\% of trees fall inside
+green landuse zones such as parks, forests, and grassland. In Paris the figure is
+42.2\%. In Hamburg, however, only 2.6\% of trees are located within green zones,
+indicating that Hamburg trees are almost entirely street-planted. This finding is
+relevant for model training: the U-Net cannot rely on park areas as a proxy for
+tree presence and must learn to detect both clustered park trees and linearly
+distributed street trees.
+
+\subsection{Sentinel-2 Analysis}
