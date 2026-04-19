@@ -15,15 +15,34 @@ Species diversity is high across all cities, with 671 unique species in Vienna,
 997 in Paris, 355 in Hamburg, and 330 in Barcelona. A total of 86 species appear
 in all four cities, dominated by \textit{Acer} and \textit{Aesculus} genera,
 reflecting the shared temperate climate zone. Species identity is not used as a
-model input but informs expectations about crown size variation across cities.
-
-A spatial cross-check with OSM landuse polygons revealed a significant difference
+model input but informs expectations about crown size variation across cities. A spatial cross-check with OSM landuse polygons revealed a significant difference
 in tree placement patterns between cities. In Vienna, 52.3\% of trees fall inside
-green landuse zones such as parks, forests, and grassland. In Paris the figure is
-42.2\%. In Hamburg, however, only 2.6\% of trees are located within green zones,
-indicating that Hamburg trees are almost entirely street-planted. This finding is
-relevant for model training: the U-Net cannot rely on park areas as a proxy for
-tree presence and must learn to detect both clustered park trees and linearly
-distributed street trees.
+green landuse zones such as forests, parks and grassland. In Paris the figure is
+42.2\%. In Hamburg, however, only 2.6\% of trees are located within green zones. This
+indicates that Hamburg trees are mostly street-planted. This will be relevant for model training because the U-Net can't rely on park areas as a proxy for tree presence and needs to learn to detect both park trees (clustered) and street trees (linearly
+distributed).
 
 \subsection{Sentinel-2 Analysis}
+
+All 12 city-season combinations were successfully loaded. Band statistics were computed across the seven available channels: B02 (blue), B03 (green), B04 (red), B08 (NIR), NDVI, EVI, and SAVI.
+
+NDVI values are highest in summer (August) across all cities, with Hamburg
+reaching a mean of 0.42 compared to approximately 0.29 in spring and autumn.
+This confirms that summer imagery carries the strongest vegetation signal. The
+seasonal contrast between summer and autumn NDVI is particularly valuable for
+distinguishing deciduous trees from other permanently green surfaces such as
+grass or artificial turf.
+
+Another data quality issue was identified with the SAVI indices. EVI values
+exceed 1.0 for all cities in summer, which is false as EVI is bounded between $-1$ and $+1$. This is a systematic issue across all cities. The root cause of this is that the index the formulas were applied to the raw pixel values stored in the satellite files, which are large integers, instead of the actual light reflectance values they represent. Converting raw values to reflectance requires dividing by 10,000. NDVI is unaffected here because its formula divides two numbers, so the scale cancels out either way. EVI is more complex and returns incorrect results when the input values are not in the expected range.
+
+\subsection{OSM Analysis}
+
+The OSM layers were loaded for all four cities across four feature types: roads, buildings, landuse, and water. Road networks are dominated by \texttt{footway}, \texttt{service}, and \texttt{residential} classes across all cities. Hamburg's OSM extract is noticeably sparser than the other cities, with 24,184 road features compared to 161,378 for Vienna, which will be investigated before using Hamburg as a training city.
+
+Building footprints are present for all cities and will serve as reliable negative
+labels during training mask generation, as no trees are expected on rooftop
+surfaces. Road classes such as \texttt{footway}, \texttt{path}, \texttt{steps},
+and \texttt{track} will not be used as hard negative masks, as these routes
+frequently pass through parks alongside trees and would introduce false negatives
+into the training labels.
