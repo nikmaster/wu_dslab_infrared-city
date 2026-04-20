@@ -4,7 +4,17 @@ The preliminary results of this project consist of an exploratory data analysis 
 
 \subsection{Baumkataster Analysis}
 
-The cleaned Baumkataster data contain 226,998 trees for Vienna, 217,454 for Paris, 233,505 for Hamburg and 43,367 for Barcelona. Vienna, Paris, and Hamburg are roughly balanced in size and are suitable as training cities. However, Barcelona lacks size attributes and a geometry column and  therefore it will only be used as point locations for cross-city generalization testing. The available size attributes differ across cities. Vienna provides height categories, trunk circumference, and crown diameter. Paris provides height and circumference. Hamburg provides circumference and crown diameter.
+The cleaned Baumkataster data contain 226,998 trees for Vienna, 217,454 for Paris, 233,505 for Hamburg and 43,367 for Barcelona, as shown in Figure~\ref{fig:tree_counts}. Vienna, Paris, and Hamburg are roughly balanced in size and are suitable as training cities. However, Barcelona lacks size attributes and a geometry column and  therefore it will only be used as point locations for cross-city generalization testing.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/fig_00.png}
+    \caption{Number of labeled trees per city (left) and their relative share of the
+    total dataset (right).}
+    \label{fig:tree_counts}
+\end{figure}
+
+The available size attributes differ across cities. Vienna provides height categories, trunk circumference, and crown diameter. Paris provides height and circumference. Hamburg provides circumference and crown diameter.
 
 A minor data quality issue was identified within Vienna's height column: it stores ordinal category codes from 1 to 8, representing height ranges from 0--5\,m up to
 \textgreater35\,m, rather than continuous metre values. As a result the raw mean
