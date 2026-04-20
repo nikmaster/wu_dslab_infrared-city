@@ -39,10 +39,7 @@ around 8\,m. The circumference distributions (same problem for Vienna)...
     \label{fig:size_histogram}
 \end{figure}
 
-A minor data quality issue was identified within Vienna's height column: it stores ordinal category codes from 1 to 8, representing height ranges from 0--5\,m up to
-\textgreater35\,m, rather than continuous metre values. As a result the raw mean
-of 2.21 is not interpretable as metres. The planned fix is to decode these codes
-to midpoint values, which will be implemented before model training.
+\subsubsection{Species Composition}
 
 Species diversity is high across all cities, with 671 unique species in Vienna,
 997 in Paris, 355 in Hamburg, and 330 in Barcelona. A total of 86 species appear
