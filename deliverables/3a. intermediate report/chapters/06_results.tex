@@ -41,16 +41,25 @@ around 8\,m. The circumference distributions (same problem for Vienna)...
 
 \subsubsection{Species Composition}
 
-Species diversity is high across all cities, with 671 unique species in Vienna,
-997 in Paris, 355 in Hamburg, and 330 in Barcelona. A total of 86 species appear
-in all four cities, dominated by \textit{Acer} and \textit{Aesculus} genera,
-reflecting the shared temperate climate zone. Species identity is not used as a
-model input but informs expectations about crown size variation across cities. A spatial cross-check with OSM landuse polygons revealed a significant difference
-in tree placement patterns between cities. In Vienna, 52.3\% of trees fall inside
-green landuse zones such as forests, parks and grassland. In Paris the figure is
-42.2\%. In Hamburg, however, only 2.6\% of trees are located within green zones. This
-indicates that Hamburg trees are mostly street-planted. This will be relevant for model training because the U-Net can't rely on park areas as a proxy for tree presence and needs to learn to detect both park trees (clustered) and street trees (linearly
-distributed).
+Species diversity is high across all cities, with 670 unique species in Vienna,
+996 in Paris, 354 in Hamburg, and 330 in Barcelona. Across all four cities,
+86 species are shared, predominantly from the \textit{Abies} and \textit{Acer} genera.
+Species identity will not be used as a direct model input, but the diversity and
+climate-specific composition inform expectations about canopy shape and size variation
+across cities. Figure~\ref{fig:species} shows the ten most common species in each city.
+Vienna is dominated by \textit{Acer platanoides} (Norway maple, 19,244 trees) and
+\textit{Aesculus hippocastanum} (horse chestnut, 11,661 trees), both classic central
+European street tree species. Paris is dominated by \textit{Platanus x hispanica}
+(London plane, 38,113 trees). Hamburg is dominated by \textit{Quercus robur} (English oak, 42,965 trees) and \textit{Tilia x europaea} (European lime, 33,852 trees). Barcelona shows a different composition with subtropical species such as \textit{Tipuana tipu} and \textit{Pinus pinea}, reflecting its Mediterranean climate. 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/fig_03.png}
+    \caption{Top 10 most common tree species per city. Species composition differs
+    substantially between climate zones, with Barcelona showing subtropical species
+    absent from the other cities.}
+    \label{fig:species}
+\end{figure}
 
 \subsection{Sentinel-2 Analysis}
 
