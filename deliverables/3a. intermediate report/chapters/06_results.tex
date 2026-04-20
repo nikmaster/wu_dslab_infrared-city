@@ -4,6 +4,8 @@ The preliminary results of this project consist of an exploratory data analysis 
 
 \subsection{Baumkataster Analysis}
 
+\subsubsection{Dataset Overview and Tree Counts}
+
 The cleaned Baumkataster data contain 226,998 trees for Vienna, 217,454 for Paris, 233,505 for Hamburg and 43,367 for Barcelona, as shown in Figure~\ref{fig:tree_counts}. Vienna, Paris, and Hamburg are roughly balanced in size and are suitable as training cities. However, Barcelona lacks size attributes and a geometry column and  therefore it will only be used as point locations for cross-city generalization testing.
 
 \begin{figure}[H]
@@ -15,6 +17,27 @@ The cleaned Baumkataster data contain 226,998 trees for Vienna, 217,454 for Pari
 \end{figure}
 
 The available size attributes differ across cities. Vienna provides height categories, trunk circumference, and crown diameter. Paris provides height and circumference. Hamburg provides circumference and crown diameter.
+
+\subsubsection{Tree Size Distributions}
+
+Figure~\ref{fig:size_histogram} shows the distributions of height, circumference, and crown
+diameter across cities. The height histogram reveals a data quality issue specific to
+Vienna. Its height column stores ordinal category codes from 1 to 8, representing height
+ranges from 0--5\,m up to \textgreater35\,m, rather than continuous metre values.
+This is confirmed by the raw mean of 2.21, which is not interpretable as metres but
+corresponds to the most frequent category (6--10\,m, midpoint 8.0\,m). The planned fix
+is to decode these codes to midpoint values before model training. Paris height values,
+by contrast, are stored in metres and show a realistic distribution with a median
+around 8\,m. The circumference distributions (same problem for Vienna)...
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/fig_01.png}
+    \caption{Distributions of height, trunk circumference, and crown diameter by city
+    (capped at 99th percentile for readability). Note that Vienna height values are
+    category codes, not metres.}
+    \label{fig:size_histogram}
+\end{figure}
 
 A minor data quality issue was identified within Vienna's height column: it stores ordinal category codes from 1 to 8, representing height ranges from 0--5\,m up to
 \textgreater35\,m, rather than continuous metre values. As a result the raw mean
