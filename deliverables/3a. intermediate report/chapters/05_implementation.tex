@@ -10,22 +10,21 @@ For data import and preprocessing the libraries rasterio and pyproj were used.
 
 \subsection{Data Preprocessing for Model}
 
-In order to get the data into a usable shape for the U-Net model the following preprocessing steps were applied.
+In order to get the data into a usable shape for the U-Net model the following preprocessing steps were applied.\\
 \\
 The Sentinel-2 images are patched into smaller 256 pixels wide quadratic images and a stride of around 128 pixels is used so that the final patches are overlapping and more training data can be extracted from the images.
 The four color channels red, green, blue and near-infrared are used and the patches from different months of the year but from the same location are stacked on top of each other.
 We used data from April, August and November (except for Paris where data from November was too cloudy and we had to use October).
-The satellite imagery was transformed into structured numerical arrays, resulting in a data representation with the dimensions N x T x C x H x W, where N denotes the number of image patches, T the number of temporal observations (months), C the number of spectral channels, and H and W the spatial dimensions (height and width) respectively.
+The satellite imagery was transformed into structured numerical arrays, resulting in a data representation with the dimensions N x T x C x H x W, where N denotes the number of image patches, T the number of temporal observations (months), C the number of spectral channels, and H and W the spatial dimensions (height and width) respectively.\\
 \\
 For the prediction labels patches at the same geographical locations as the Sentinel-2 patches were created and filled with the number of trees per pixel. 
 This data was derived from the local tree registries which provide the exact coordinates of the trees in the corresponding city.
-\\
 The data was then split into a train, validation and test sample.
 
 \subsection{Model Training, Testing and Hyperparameters}
 The model was built according to the description in the chapter methodology, although the depth of the model is limited due to computational restraints. 
 At the bottleneck where the feature space is the richest and the attention algorithm is deployed the U-Net had 64 feature channels, before down-sampling 32 and after up-sampling 16.
-The attention mechanism uses 8 attention heads, the QKV vectors have 8 dimensions the embedding vectors 64.
+The attention mechanism uses 8 attention heads, the QKV vectors have 8 dimensions the embedding vectors 64.\\
 \\
 The used learning rate is 0.001 and training ran for ten epochs on around 100 batches each containing four data points.
 5-fold cross-validation is used to train five different models. 

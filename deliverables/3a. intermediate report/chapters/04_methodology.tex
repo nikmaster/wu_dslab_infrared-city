@@ -5,13 +5,12 @@ For this tree detection task we implemented a U-Net regression architecture with
 \subsection{Model}
 
 Former papers suggest that for image segmentation using satellite data the U-Net deep learning model is the most accurate for detecting objects, for example street detection \cite{pesek2024convolution} as well as crop field detection \cite{garnot2021panoptic}. 
-Furthermore, last year's \textit{infrared.city} project also tried implementing a U-Net architecture but failed to yield promising results, also the data coaches deem it a well-fitting model.
+Furthermore, last year's \textit{infrared.city} project also tried implementing a U-Net architecture but failed to yield promising results, also the data coaches deem it a well-fitting model. \\
 \\
 The U-Net model is a special type of Convolutional Neural Network and consists of a contracting path and an expanding path.
 First, the satellite image is put through an input convolution so it has the correct structure for further processing.
 It is then passed into the contracting path to down-sample the data in the convolution and pooling layers, which are used to extract features from the original imagery. 
-Our model uses four convolutional layers where during contraction for each layer the image size gets smaller due to pooling meanwhile evermore features are extracted from the images. The same process happens vice versa for the expansionary path. 
-The expanding path consists of the same structure of convolution and pooling layers but this time used to up-sample the before contracted imagery \cite{aramendia2024}. 
+Our model uses four convolutional layers where during contraction for each layer the image size gets smaller due to pooling meanwhile evermore features are extracted from the images. The same process happens vice versa for the expansionary path. The expanding path consists of the same structure of convolution and pooling layers but this time used to up-sample the before contracted imagery \cite{aramendia2024}. 
 To get the final prediction of the number of trees per pixel another convolutional layer is deployed. 
 As suggested in similar work this project will use skip connections between the expanding and contracting path as well as a temporal attention algorithm to prioritize more meaningful images \cite{garnot2021panoptic} and take advantage of the seasonality and changing vegetation of trees.
 The model uses smoothed L1 loss (also called Huber loss) and the tree registry data as a ground truth.

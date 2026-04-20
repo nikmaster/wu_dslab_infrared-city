@@ -4,6 +4,8 @@ The preliminary results of this project consist of an exploratory data analysis 
 
 \subsection{Baumkataster Analysis}
 
+This section contains some analysis on the Baumkataster data sets.
+
 \subsubsection{Dataset Overview and Tree Counts}
 
 The cleaned Baumkataster data contain 226,998 trees for Vienna, 217,454 for Paris, 233,505 for Hamburg and 43,367 for Barcelona, as shown in Figure~\ref{fig:tree_counts}. Vienna, Paris, and Hamburg are roughly balanced in size and are suitable as training cities. However, Barcelona lacks size attributes and a geometry column and  therefore it will only be used as point locations for cross-city generalization testing.
@@ -63,22 +65,22 @@ European street tree species. Paris is dominated by \textit{Platanus x hispanica
 
 \subsection{Sentinel-2 Analysis}
 
-All 12 city-season combinations were successfully loaded. Band statistics were computed across the seven available channels: B02 (blue), B03 (green), B04 (red), B08 (NIR), NDVI, EVI, and SAVI.
-
+All 12 city-season combinations were successfully loaded. Band statistics were computed across the seven available channels: B02 (blue), B03 (green), B04 (red), B08 (NIR), NDVI, EVI, and SAVI.\\
+\\
 NDVI values are highest in summer (August) across all cities, with Hamburg
 reaching a mean of 0.42 compared to approximately 0.29 in spring and autumn.
 This confirms that summer imagery carries the strongest vegetation signal. The
 seasonal contrast between summer and autumn NDVI is particularly valuable for
 distinguishing deciduous trees from other permanently green surfaces such as
-grass or artificial turf.
-
+grass or artificial turf.\\
+\\
 Another data quality issue was identified with the SAVI indices. EVI values
 exceed 1.0 for all cities in summer, which is false as EVI is bounded between $-1$ and $+1$. This is a systematic issue across all cities. The root cause of this is that the index the formulas were applied to the raw pixel values stored in the satellite files, which are large integers, instead of the actual light reflectance values they represent. Converting raw values to reflectance requires dividing by 10,000. NDVI is unaffected here because its formula divides two numbers, so the scale cancels out either way. EVI is more complex and returns incorrect results when the input values are not in the expected range.
 
 \subsection{OSM Analysis}
 
-The OSM layers were loaded for all four cities across four feature types: roads, buildings, landuse, and water. Road networks are dominated by \texttt{footway}, \texttt{service}, and \texttt{residential} classes across all cities. Hamburg's OSM extract is noticeably sparser than the other cities, with 24,184 road features compared to 161,378 for Vienna, which will be investigated before using Hamburg as a training city.
-
+The OSM layers were loaded for all four cities across four feature types: roads, buildings, landuse, and water. Road networks are dominated by \texttt{footway}, \texttt{service}, and \texttt{residential} classes across all cities. Hamburg's OSM extract is noticeably sparser than the other cities, with 24,184 road features compared to 161,378 for Vienna, which will be investigated before using Hamburg as a training city.\\
+\\
 Building footprints are present for all cities and will serve as reliable negative
 labels during training mask generation, as no trees are expected on rooftop
 surfaces. Road classes such as \texttt{footway}, \texttt{path}, \texttt{steps},
