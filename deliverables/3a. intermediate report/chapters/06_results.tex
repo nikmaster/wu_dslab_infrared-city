@@ -28,8 +28,7 @@ Figure~\ref{fig:size_histogram} shows the distributions of height, circumference
     \centering
     \includegraphics[width=\textwidth]{images/fig_01.png}
     \caption{Distributions of height, trunk circumference, and crown diameter by city
-    (capped at 99th percentile for readability). Note that Vienna height and crown diameter values are
-    category codes, not metres.}
+    (capped at 99th percentile for readability).}
     \label{fig:size_histogram}
 \end{figure}
 
@@ -40,9 +39,7 @@ Species diversity is high across all cities, with 670 unique species in Vienna, 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{images/fig_03.png}
-    \caption{Top 10 most common tree species per city. Species composition differs
-    substantially between climate zones, with Barcelona showing subtropical species
-    absent from the other cities.}
+    \caption{Top 10 most common tree species per city.}
     \label{fig:species}
 \end{figure}
 
@@ -53,7 +50,7 @@ Figure~\ref{fig:spatial_scatter} shows the spatial scatter of labeled tree locat
 \begin{figure}[H]
 \centering
 \includegraphics[width=\textwidth]{images/fig_04.png}
-\caption{Spatial distribution of labeled tree locations. Each point represents one tree; samples of 30,000 trees are shown for performance.}
+\caption{Spatial distribution of labeled tree locations. Samples of 30,000 trees are shown for performance.}
 \label{fig:spatial_scatter}
 \end{figure}
 
@@ -62,7 +59,7 @@ The hexbin density maps in Figure~\ref{fig:density} further show that tree label
 \begin{figure}[H]
 \centering
 \includegraphics[width=\textwidth]{images/fig_05.png}
-\caption{Tree density heatmaps per city. Darker cells indicate a higher number of trees per hexagonal cell.}
+\caption{Tree density heatmaps per city.}
 \label{fig:density}
 \end{figure}
 
@@ -73,7 +70,7 @@ A spatial cross-check between the Baumkataster and OSM landuse polygons revealed
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.6\textwidth]{images/fig_13.png}
-\caption{Percentage of sampled trees located inside green OSM landuse zones per city. Hamburg's low value indicates a much stronger street-tree pattern than in Vienna or Paris.}
+\caption{Percentage of sampled trees located inside green OSM landuse zones per city.}
 \label{fig:green_zones}
 \end{figure}
 
@@ -102,7 +99,7 @@ Figure~\ref{fig:ndvi_seasonal} shows the seasonal NDVI curves with 5th--95th per
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.85\textwidth]{images/fig_09.png}
-\caption{Mean NDVI per season and city with shaded 5th--95th percentile bands. Paris uses October for the autumn time point, while Barcelona shows only weak seasonal variation.}
+\caption{Mean NDVI per season and city with shaded 5th--95th percentile bands.}
 \label{fig:ndvi_seasonal}
 \end{figure}
 
@@ -117,8 +114,7 @@ Figure~\ref{fig:false_color} shows false-color composites for all four cities in
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{images/fig_10.png}
-    \caption{False-color composites (NIR/Red/Green) for all cities in summer.
-    Bright red areas indicate healthy vegetation. Rivers are visible as dark lines.}
+    \caption{False-color composites (NIR/Red/Green) for all cities in summer.}
     \label{fig:false_color}
 \end{figure}
 
@@ -126,9 +122,24 @@ Figure~\ref{fig:false_color} shows false-color composites for all four cities in
 
 The OSM layers were loaded for all four cities across four feature types: roads, buildings, landuse, and water. Road networks are dominated by \texttt{footway}, \texttt{service}, and \texttt{residential} classes across all cities. Hamburg's OSM extract is noticeably sparser than the other cities, with 24,184 road features compared to 161,378 for Vienna, which will be investigated before using Hamburg as a training city.\\
 \\
-Building footprints are present for all cities and will serve as reliable negative
-labels during training mask generation, as no trees are expected on rooftop
-surfaces. Road classes such as \texttt{footway}, \texttt{path}, \texttt{steps},
-and \texttt{track} will not be used as hard negative masks, as these routes
-frequently pass through parks alongside trees and would introduce false negatives
-into the training labels.
+Building footprints are present for all cities and will serve as reliable negative labels during training mask generation, since no trees are expected on rooftop surfaces. Road classes such as \texttt{footway}, \texttt{path}, \texttt{steps} and \texttt{track} will not be used as hard negative masks, because these routes can pass through parks alongside trees and would introduce false negatives into the training labels.\\
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{images/fig_12.png}
+    \caption{Road type distribution per city as a percentage of total road features.}
+    \label{fig:roads}
+\end{figure}
+
+Figure~\ref{fig:roads} shows the road type composition per city. Footway is the largest road class in Barcelona, Paris, and Vienna, but not in Hamburg, where \texttt{service} roads are more frequent than \texttt{footway}. Only wider road classes such as \texttt{primary}, \texttt{secondary}, and \texttt{motorway} are more suitable candidates for reliable tree-free zones.
+
+\subsubsection{Landuse Distribution}
+
+Figure~\ref{fig:landuse} shows the landuse distribution by area for each city. Vienna and Paris contain large mapped green areas, while Hamburg’s OSM layers are substantially sparser than those of Vienna and Paris. While part of this difference may reflect a smaller study area, the discrepancy is large relative to Hamburg’s comparable tree-label count, so OSM coverage and preprocessing consistency should be checked before using Hamburg heavily as a training city.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{images/fig_11.png}
+\caption{Landuse distribution by area per city.}
+\label{fig:landuse}
+\end{figure}
