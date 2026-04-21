@@ -1,0 +1,145 @@
+\section{Results}
+
+The preliminary results of this project consist of an exploratory data analysis conducted across all three data sources: the Baumkataster, the Sentinel-2 satellite imagery and the OpenStreetMap (OSM) urban context layers. The goal of the analysis was to assess data quality, learn feature distributions and identify which indicators are likely to be useful for training the U-Net model.
+
+\subsection{Baumkataster Analysis}
+
+This section contains some analysis on the Baumkataster data sets.
+
+\subsubsection{Dataset Overview and Tree Counts}
+
+The cleaned Baumkataster data contain 226,998 trees for Vienna, 217,454 for Paris, 233,505 for Hamburg and 43,367 for Barcelona, as shown in Figure~\ref{fig:tree_counts}. Vienna, Paris, and Hamburg are roughly balanced in size and are suitable as training cities. However, Barcelona lacks size attributes and a geometry column and therefore it will only be used as point locations for cross-city generalization testing.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/fig_00.png}
+    \caption{Number of labeled trees per city (left) and their relative share of the
+    total dataset (right).}
+    \label{fig:tree_counts}
+\end{figure}
+
+\subsubsection{Tree Size Distributions}
+
+The available size attributes differ across cities. Vienna provides height categories, trunk circumference, and crown diameter. Paris provides height and circumference. Hamburg provides circumference and crown diameter.\\
+\\
+Figure~\ref{fig:size_histogram} shows the distributions of height, circumference, and crown diameter across cities. The histograms reveal two data-definition issues specific to Vienna. First, the \texttt{height} column stores ordinal category codes from 1 to 8, representing height ranges from 0--5\,m up to \textgreater35\,m, rather than continuous values in meters. This is confirmed by the raw mean of 2.21, which is not interpretable as a physical mean height in meters, but as the average of category codes. Second, the Vienna \texttt{crown\_diameter} variable is also stored as ordinal category codes linked to crown-diameter intervals, and is therefore not directly comparable to continuous crown-diameter measurements from other cities. By contrast, Paris height values are stored in meters and show a realistic distribution with a median around 8\,m. The planned fix is to decode the Vienna height and crown-diameter classes to approximate interval midpoints before model training. 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/fig_01.png}
+    \caption{Distributions of height, trunk circumference, and crown diameter by city
+    (capped at 99th percentile for readability).}
+    \label{fig:size_histogram}
+\end{figure}
+
+\subsubsection{Species Composition}
+
+Species diversity is high across all cities, with 670 unique species in Vienna, 996 in Paris, 354 in Hamburg, and 330 in Barcelona. This reflects different urban planting contexts and climates. Across all four cities, 86 species are shared, predominantly from the \textit{Abies} and \textit{Acer} genera. Species identity will not be used as a direct model input, but the diversity and climate-specific composition inform expectations about canopy shape and size variations across cities. Figure~\ref{fig:species} shows the ten most common species in each city. Vienna is dominated by \textit{Acer platanoides} (Norway maple, 19,244 trees) and \textit{Aesculus hippocastanum} (horse chestnut, 11,661 trees), both classic central European street tree species. Paris is dominated by \textit{Platanus x hispanica} (London plane, 38,113 trees). Hamburg is dominated by \textit{Quercus robur} (English oak, 42,965 trees) and \textit{Tilia x europaea} (European lime, 33,852 trees). Barcelona shows a different composition with subtropical species such as \textit{Tipuana tipu} and \textit{Pinus pinea}, reflecting its Mediterranean climate. 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/fig_03.png}
+    \caption{Top 10 most common tree species per city.}
+    \label{fig:species}
+\end{figure}
+
+\subsubsection{Spatial Distribution}
+
+Figure~\ref{fig:spatial_scatter} shows the spatial scatter of labeled tree locations for each city. The scatter plots indicate that tree locations are distributed unevenly across urban space rather than uniformly across each study area. This is relevant for downstream model development because raw patch sampling would otherwise overrepresent dense clusters and underrepresent sparser parts of the cities.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/fig_04.png}
+    \caption{Spatial distribution of labeled tree locations. Samples of 30,000 trees are shown for performance.}
+    \label{fig:spatial_scatter}
+\end{figure}
+
+The hexbin density maps in Figure~\ref{fig:density} further show that tree labels are spatially clustered within each city. For modelling, this implies that the label distribution is spatially imbalanced and that the patch-sampling strategy should account for this imbalance rather than sampling purely in proportion to raw tree density.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/fig_05.png}
+    \caption{Tree density heatmaps per city.}
+    \label{fig:density}
+\end{figure}
+
+\subsubsection{Street Trees vs. Park Trees}
+
+A spatial cross-check between the Baumkataster and OSM land use polygons revealed a strong difference in tree placement patterns across cities, as shown in Figure~\ref{fig:green_zones}. Importantly, these percentages were computed on sampled trees rather than on the full tree population. In the sampled data, 52.3\% of Vienna trees, 42.2\% of Paris trees, and 2.6\% of Hamburg trees fall inside green land use zones. This suggests that Hamburg is much more strongly characterized by street-planted trees, whereas Vienna and Paris contain a substantially larger share of trees inside parks and other green land use classes. For training, this means the model cannot rely on green space alone as a proxy for tree presence.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{images/fig_13.png}
+    \caption{Percentage of sampled trees located inside green OSM land use zones per city.}
+    \label{fig:green_zones}
+\end{figure}
+
+\subsection{Sentinel-2 Analysis}
+
+All 12 city-season combinations were successfully loaded. Band statistics were computed across the seven available channels: B02 (blue), B03 (green), B04 (red), B08 (NIR), NDVI, EVI, and SAVI. The mean NDVI values per season and city are summarised in Table~\ref{tab:ndvi_stats}. Note that the autumn value for Paris corresponds to October imagery rather than November, because November imagery was not available for Paris in the scraping workflow. 
+
+\begin{table}[H]
+    \centering
+    \caption{Mean NDVI by city and season. For Paris, the autumn value corresponds to October rather than November.}
+    \label{tab:ndvi_stats}
+    \begin{tabular}{lrrr}
+        \toprule
+        City & Spring (Apr) & Summer (Aug) & Autumn (Oct/Nov) \\
+        \midrule
+        Vienna & 0.56 & 0.58 & 0.46 \\
+        Paris & 0.37 & 0.40 & 0.48 \\
+        Hamburg & 0.29 & 0.42 & 0.35 \\
+        Barcelona & 0.28 & 0.29 & 0.29 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+Figure~\ref{fig:ndvi_seasonal} shows the seasonal NDVI curves with 5th--95th percentile confidence bands. The seasonal pattern is city-specific rather than uniform across all study areas. Vienna and Hamburg show their highest mean NDVI in summer, Paris reaches its highest mean in the autumn and Barcelona remains nearly flat across all three seasons. These results still support the usefulness of seasonal information, but they do not support the claim of NDVI peaking in summer for every city.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{images/fig_09.png}
+    \caption{Mean NDVI per season and city with shaded 5th--95th percentile bands.}
+    \label{fig:ndvi_seasonal}
+\end{figure}
+
+\subsubsection{EVI and SAVI Scaling}
+
+Another data quality issue was identified within the EVI and SAVI indices. EVI values exceed 1.0 for all cities in summer, which is false as EVI is bounded between $-1$ and $+1$. This is a systematic issue across all cities. The same issue could affect SAVI, although it is not clearly visible in the results, where SAVI values remain within the bounds. The root cause of this is that the index formulas were applied to the raw pixel values stored in the satellite files, which are large integers, instead of the actual light reflectance values they represent. Converting raw values to reflectance requires dividing by 10,000. NDVI is unaffected here because its formula divides two numbers, so the scale cancels out either way. Since the raw bands are preserved in the TIF stacks, no rescraping is required. The planned fix is to divide the raw band values by 10,000 before recomputing EVI and SAVI. Until this is done, only NDVI will be used as a vegetation index input channel.
+
+\subsubsection{False-Color Composites}
+
+Figure~\ref{fig:false_color} shows false-color composites for all four cities in summer, rendered using NIR as the red channel, red as the green channel, and green as the blue channel. In this representation, healthy vegetation appears bright red, built surfaces appear grey-blue, and water appears near-black. The images confirm that the Sentinel-2 data is correctly georeferenced and that vegetation is clearly distinguishable from urban surfaces across all cities.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/fig_10.png}
+    \caption{False-color composites (NIR/Red/Green) for all cities in summer.}
+    \label{fig:false_color}
+\end{figure}
+
+\subsection{OSM Analysis}
+
+The OSM layers were loaded for all four cities across four feature types: roads, buildings, land use, and water. Road networks are dominated by \texttt{footway}, \texttt{service}, and \texttt{residential} classes across all cities. Hamburg's OSM extract is noticeably sparser than the other cities, with 24,184 road features compared to 161,378 for Vienna, which will be investigated before using Hamburg as a training city.\\
+\\
+Building footprints are present for all cities and will serve as reliable negative labels during training mask generation, since no trees are expected on rooftop surfaces. Road classes such as \texttt{footway}, \texttt{path}, \texttt{steps} and \texttt{track} will not be used as hard negative masks, because these routes can pass through parks alongside trees and would introduce false negatives into the training labels.\\
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{images/fig_12.png}
+    \caption{Road type distribution per city as a percentage of total road features.}
+    \label{fig:roads}
+\end{figure}
+
+Figure~\ref{fig:roads} shows the road type composition per city. Footway is the largest road class in Barcelona, Paris, and Vienna, but not in Hamburg, where \texttt{service} roads are more frequent than \texttt{footway}. Only wider road classes such as \texttt{primary}, \texttt{secondary}, and \texttt{motorway} are more suitable candidates for reliable tree-free zones.
+
+\subsubsection{Land use Distribution}
+
+Figure~\ref{fig:landuse} shows the land use distribution by area for each city. Vienna and Paris contain large mapped green areas, while Hamburg’s OSM layers are substantially sparser than those of Vienna and Paris. While part of this difference may reflect a smaller study area, the discrepancy is large relative to Hamburg’s comparable tree-label count, so OSM coverage and preprocessing consistency should be checked before using Hamburg heavily as a training city.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/fig_11.png}
+    \caption{Land use distribution by area per city.}
+    \label{fig:landuse}
+\end{figure}
