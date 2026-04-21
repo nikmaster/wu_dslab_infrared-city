@@ -8,6 +8,7 @@
 \usepackage{float}
 \usepackage{booktabs} 
 \usepackage{hyperref}
+\usepackage[title]{appendix}
 \titleformat{\section}{\normalfont\large\bfseries}{\thesection}{1em}{}
 \newcommand{\sectionbreak}{\clearpage}
 %nina note: strg,alt,b to build
@@ -80,15 +81,21 @@
 \addcontentsline{toc}{section}{\listfigurename}
 \listoffigures  
 
-% \clearpage
-% \phantomsection
-% \addcontentsline{toc}{section}{\listtablename}
-% \listoftables
+\clearpage
+\phantomsection
+\addcontentsline{toc}{section}{\listtablename}
+\listoftables
 
 \clearpage
-\appendix
-\pagenumbering{arabic} 
-\renewcommand{\thepage}{\thesection-\arabic{page}}
-\include{chapters/10_appendix}
+\begin{appendices}
+\renewcommand{\thepage}{\Alph{section}-\arabic{page}} 
+\let\oldsection\section
+\renewcommand{\section}[1]{
+  \oldsection{#1}   
+  \setcounter{page}{1} 
+}
+
+\include{chapters/appendix/01_gantt}
+\end{appendices}
 
 \end{document}
