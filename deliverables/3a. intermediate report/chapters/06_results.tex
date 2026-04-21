@@ -48,19 +48,19 @@ Species diversity is high across all cities, with 670 unique species in Vienna, 
 Figure~\ref{fig:spatial_scatter} shows the spatial scatter of labeled tree locations for each city. The scatter plots indicate that tree locations are distributed unevenly across urban space rather than uniformly across each study area. This is relevant for downstream model development because raw patch sampling would otherwise overrepresent dense clusters and underrepresent sparser parts of the cities.
 
 \begin{figure}[H]
-\centering
-\includegraphics[width=\textwidth]{images/fig_04.png}
-\caption{Spatial distribution of labeled tree locations. Samples of 30,000 trees are shown for performance.}
-\label{fig:spatial_scatter}
+    \centering
+    \includegraphics[width=\textwidth]{images/fig_04.png}
+    \caption{Spatial distribution of labeled tree locations. Samples of 30,000 trees are shown for performance.}
+    \label{fig:spatial_scatter}
 \end{figure}
 
 The hexbin density maps in Figure~\ref{fig:density} further show that tree labels are spatially clustered within each city. For modelling, this implies that the label distribution is spatially imbalanced and that the patch-sampling strategy should account for this imbalance rather than sampling purely in proportion to raw tree density.
 
 \begin{figure}[H]
-\centering
-\includegraphics[width=\textwidth]{images/fig_05.png}
-\caption{Tree density heatmaps per city.}
-\label{fig:density}
+    \centering
+    \includegraphics[width=\textwidth]{images/fig_05.png}
+    \caption{Tree density heatmaps per city.}
+    \label{fig:density}
 \end{figure}
 
 \subsubsection{Street Trees vs. Park Trees}
@@ -68,10 +68,10 @@ The hexbin density maps in Figure~\ref{fig:density} further show that tree label
 A spatial cross-check between the Baumkataster and OSM landuse polygons revealed a strong difference in tree placement patterns across cities, as shown in Figure~\ref{fig:green_zones}. Importantly, these percentages were computed on sampled trees rather than on the full tree population. In the sampled data, 52.3\% of Vienna trees, 42.2\% of Paris trees, and 2.6\% of Hamburg trees fall inside green landuse zones. This suggests that Hamburg is much more strongly characterized by street-planted trees, whereas Vienna and Paris contain a substantially larger share of trees inside parks and other green landuse classes. For training, this means the model cannot rely on green space alone as a proxy for tree presence.
 
 \begin{figure}[H]
-\centering
-\includegraphics[width=0.6\textwidth]{images/fig_13.png}
-\caption{Percentage of sampled trees located inside green OSM landuse zones per city.}
-\label{fig:green_zones}
+    \centering
+    \includegraphics[width=0.6\textwidth]{images/fig_13.png}
+    \caption{Percentage of sampled trees located inside green OSM landuse zones per city.}
+    \label{fig:green_zones}
 \end{figure}
 
 \subsection{Sentinel-2 Analysis}
@@ -96,10 +96,10 @@ Barcelona & 0.28 & 0.29 & 0.29 \\
 Figure~\ref{fig:ndvi_seasonal} shows the seasonal NDVI curves with 5th--95th percentile confidence bands. The seasonal pattern is city-specific rather than uniform across all study areas. Vienna and Hamburg show their highest mean NDVI in summer, Paris reaches its highest mean in the autumn and Barcelona remains nearly flat across all three seasons. These results still support the usefulness of seasonal information, but they do not support the claim of NDVI peaking in summer for every city.
 
 \begin{figure}[H]
-\centering
-\includegraphics[width=0.85\textwidth]{images/fig_09.png}
-\caption{Mean NDVI per season and city with shaded 5th--95th percentile bands.}
-\label{fig:ndvi_seasonal}
+    \centering
+    \includegraphics[width=0.85\textwidth]{images/fig_09.png}
+    \caption{Mean NDVI per season and city with shaded 5th--95th percentile bands.}
+    \label{fig:ndvi_seasonal}
 \end{figure}
 
 \subsubsection{EVI and SAVI Scaling}
@@ -137,8 +137,8 @@ Figure~\ref{fig:roads} shows the road type composition per city. Footway is the 
 Figure~\ref{fig:landuse} shows the landuse distribution by area for each city. Vienna and Paris contain large mapped green areas, while Hamburg’s OSM layers are substantially sparser than those of Vienna and Paris. While part of this difference may reflect a smaller study area, the discrepancy is large relative to Hamburg’s comparable tree-label count, so OSM coverage and preprocessing consistency should be checked before using Hamburg heavily as a training city.
 
 \begin{figure}[H]
-\centering
-\includegraphics[width=\textwidth]{images/fig_11.png}
-\caption{Landuse distribution by area per city.}
-\label{fig:landuse}
+    \centering
+    \includegraphics[width=\textwidth]{images/fig_11.png}
+    \caption{Landuse distribution by area per city.}
+    \label{fig:landuse}
 \end{figure}
