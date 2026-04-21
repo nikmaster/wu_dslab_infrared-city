@@ -1,6 +1,6 @@
 \section{Preliminary Results}
 
-The preliminary results of this project consist of an exploratory data analysis conducted across all three data sources: the Baumkataster, the Sentinel-2 satellite imagery and the OpensStreetMap (OSM) urban context layers. The goal of the analysis was to asses data quality, learn feature distributions and identify which indicators are likely to be useful for training the U-Net model.
+The preliminary results of this project consist of an exploratory data analysis conducted across all three data sources: the Baumkataster, the Sentinel-2 satellite imagery and the OpensStreetMap (OSM) urban context layers. The goal of the analysis was to asses data quality, learnnfeature distributions and identify which indicators are likely to be useful for training the U-Net model.
 
 \subsection{Baumkataster Analysis}
 
@@ -35,16 +35,7 @@ Figure~\ref{fig:size_histogram} shows the distributions of height, circumference
 
 \subsubsection{Species Composition}
 
-Species diversity is high across all cities, with 670 unique species in Vienna,
-996 in Paris, 354 in Hamburg, and 330 in Barcelona. Across all four cities,
-86 species are shared, predominantly from the \textit{Abies} and \textit{Acer} genera.
-Species identity will not be used as a direct model input, but the diversity and
-climate-specific composition inform expectations about canopy shape and size variation
-across cities. Figure~\ref{fig:species} shows the ten most common species in each city.
-Vienna is dominated by \textit{Acer platanoides} (Norway maple, 19,244 trees) and
-\textit{Aesculus hippocastanum} (horse chestnut, 11,661 trees), both classic central
-European street tree species. Paris is dominated by \textit{Platanus x hispanica}
-(London plane, 38,113 trees). Hamburg is dominated by \textit{Quercus robur} (English oak, 42,965 trees) and \textit{Tilia x europaea} (European lime, 33,852 trees). Barcelona shows a different composition with subtropical species such as \textit{Tipuana tipu} and \textit{Pinus pinea}, reflecting its Mediterranean climate. 
+Species diversity is high across all cities, with 670 unique species in Vienna, 996 in Paris, 354 in Hamburg, and 330 in Barcelona. This reflects different urban planting contexts and climates. Across all four cities, 86 species are shared, predominantly from the \textit{Abies} and \textit{Acer} genera. Species identity will not be used as a direct model input, but the diversity and climate-specific composition inform expectations about canopy shape and size variation across cities. Figure~\ref{fig:species} shows the ten most common species in each city. Vienna is dominated by \textit{Acer platanoides} (Norway maple, 19,244 trees) and \textit{Aesculus hippocastanum} (horse chestnut, 11,661 trees), both classic central European street tree species. Paris is dominated by \textit{Platanus x hispanica} (London plane, 38,113 trees). Hamburg is dominated by \textit{Quercus robur} (English oak, 42,965 trees) and \textit{Tilia x europaea} (European lime, 33,852 trees). Barcelona shows a different composition with subtropical species such as \textit{Tipuana tipu} and \textit{Pinus pinea}, reflecting its Mediterranean climate. 
 
 \begin{figure}[H]
     \centering
@@ -55,19 +46,81 @@ European street tree species. Paris is dominated by \textit{Platanus x hispanica
     \label{fig:species}
 \end{figure}
 
+\subsubsection{Spatial Distribution}
+
+Figure~\ref{fig:spatial_scatter} shows the spatial scatter of labeled tree locations for each city. The scatter plots indicate that tree locations are distributed unevenly across urban space rather than uniformly across each study area. This is relevant for downstream model development because raw patch sampling would otherwise overrepresent dense clusters and underrepresent sparser parts of the cities.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{images/fig_04.png}
+\caption{Spatial distribution of labeled tree locations. Each point represents one tree; samples of 30,000 trees are shown for performance.}
+\label{fig:spatial_scatter}
+\end{figure}
+
+The hexbin density maps in Figure~\ref{fig:density} further show that tree labels are spatially clustered within each city. For modelling, this implies that the label distribution is spatially imbalanced and that the patch-sampling strategy should account for this imbalance rather than sampling purely in proportion to raw tree density.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{images/fig_05.png}
+\caption{Tree density heatmaps per city. Darker cells indicate a higher number of trees per hexagonal cell.}
+\label{fig:density}
+\end{figure}
+
+\subsubsection{Street Trees vs. Park Trees}
+
+A spatial cross-check between the Baumkataster and OSM landuse polygons revealed a strong difference in tree placement patterns across cities, as shown in Figure~\ref{fig:green_zones}. Importantly, these percentages were computed on sampled trees rather than on the full tree population. In the sampled data, 52.3% of Vienna trees, 42.2% of Paris trees, and 2.6% of Hamburg trees fall inside green landuse zones. This suggests that Hamburg is much more strongly characterized by street-planted trees, whereas Vienna and Paris contain a substantially larger share of trees inside parks and other green landuse classes. For training, this means the model cannot rely on green space alone as a proxy for tree presence.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.6\textwidth]{images/fig_13.png}
+\caption{Percentage of sampled trees located inside green OSM landuse zones per city. Hamburg's low value indicates a much stronger street-tree pattern than in Vienna or Paris.}
+\label{fig:green_zones}
+\end{figure}
+
 \subsection{Sentinel-2 Analysis}
 
-All 12 city-season combinations were successfully loaded. Band statistics were computed across the seven available channels: B02 (blue), B03 (green), B04 (red), B08 (NIR), NDVI, EVI, and SAVI.\\
-\\
-NDVI values are highest in summer (August) across all cities, with Hamburg
-reaching a mean of 0.42 compared to approximately 0.29 in spring and autumn.
-This confirms that summer imagery carries the strongest vegetation signal. The
-seasonal contrast between summer and autumn NDVI is particularly valuable for
-distinguishing deciduous trees from other permanently green surfaces such as
-grass or artificial turf.\\
-\\
-Another data quality issue was identified with the SAVI indices. EVI values
-exceed 1.0 for all cities in summer, which is false as EVI is bounded between $-1$ and $+1$. This is a systematic issue across all cities. The root cause of this is that the index the formulas were applied to the raw pixel values stored in the satellite files, which are large integers, instead of the actual light reflectance values they represent. Converting raw values to reflectance requires dividing by 10,000. NDVI is unaffected here because its formula divides two numbers, so the scale cancels out either way. EVI is more complex and returns incorrect results when the input values are not in the expected range.
+All 12 city-season combinations were successfully loaded. Band statistics were computed across the seven available channels: B02 (blue), B03 (green), B04 (red), B08 (NIR), NDVI, EVI, and SAVI.The mean NDVI values per season and city are summarised in Table~\ref{tab:ndvi_stats}. Note that the autumn value for Paris corresponds to October imagery rather than November, because November imagery was not available for Paris in the scraping workflow. 
+
+\begin{table}[H]
+\centering
+\caption{Mean NDVI by city and season. For Paris, the autumn value corresponds to October rather than November.}
+\label{tab:ndvi_stats}
+\begin{tabular}{lrrr}
+\toprule
+City & Spring (Apr) & Summer (Aug) & Autumn (Oct/Nov) \
+\midrule
+Vienna & 0.56 & 0.58 & 0.46 \
+Paris & 0.37 & 0.40 & 0.48 \
+Hamburg & 0.29 & 0.42 & 0.35 \
+Barcelona & 0.28 & 0.29 & 0.29 \
+\bottomrule
+\end{tabular}
+\end{table}
+
+Figure~\ref{fig:ndvi_seasonal} shows the seasonal NDVI curves with 5th--95th percentile confidence bands. The seasonal pattern is city-specific rather than uniform across all study areas. Vienna and Hamburg show their highest mean NDVI in summer, Paris reaches its highest mean in the autumn and Barcelona remains nearly flat across all three seasons. These results still support the usefulness of seasonal information, but they do not support the claim of NDVI peaking in summer for every city.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\textwidth]{images/fig_09.png}
+\caption{Mean NDVI per season and city with shaded 5th--95th percentile bands. Paris uses October for the autumn time point, while Barcelona shows only weak seasonal variation.}
+\label{fig:ndvi_seasonal}
+\end{figure}
+
+\subsubsection{EVI and SAVI Scaling}
+
+Another data quality issue was identified within the EVI and SAVI indices. EVI values exceed 1.0 for all cities in summer, which is false as EVI is bounded between $-1$ and $+1$. This is a systematic issue across all cities. The same issue could affects SAVI, although it is not clearly visible in the results, where SAVI values remain within the bounds. The root cause of this is that the index the formulas were applied to the raw pixel values stored in the satellite files, which are large integers, instead of the actual light reflectance values they represent. Converting raw values to reflectance requires dividing by 10,000. NDVI is unaffected here because its formula divides two numbers, so the scale cancels out either way. ince the raw bands are preserved in the TIF stacks, no rescraping is required. The planned fix is to divide the raw band values by 10,000 before recomputing EVI and SAVI. Until this is done, only NDVI will be used as a vegetation index input channel.
+
+subsubsection{False-Color Composites}
+
+Figure~\ref{fig:false_color} shows false-color composites for all four cities in summer, rendered using NIR as the red channel, red as the green channel, and green as the blue channel. In this representation, healthy vegetation appears bright red, built surfaces appear grey-blue, and water appears near-black. The images confirm that the Sentinel-2 data is correctly georeferenced and that vegetation is clearly distinguishable from urban surfaces across all cities.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/fig_10.png}
+    \caption{False-color composites (NIR/Red/Green) for all cities in summer.
+    Bright red areas indicate healthy vegetation. Rivers are visible as dark lines.}
+    \label{fig:false_color}
+\end{figure}
 
 \subsection{OSM Analysis}
 
