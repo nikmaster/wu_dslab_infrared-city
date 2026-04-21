@@ -19,7 +19,4 @@ The project uses seasonal satellite imagery for spring, summer, and autumn, main
 \subsection{OpenStreetMap urban features}
 We also collect urban context layers from OpenStreetMap. These data come from Geofabrik downloads \cite{geofabrikeurope} in GeoPackage format. Separate regional files are used for Austria, Île-de-France, Catalonia, and Hamburg. From each source, we read four thematic layers: roads, buildings, land use, and water.\\
 \\
-After loading the OSM layers and converting them to EPSG:4326 \cite{epsg4326}, they are clipped to the same city bounding boxes derived from the cleaned tree-cadastre data. This keeps the cadastre data, Sentinel-2 imagery, and OSM layers spatially aligned within the same study areas. At this stage, the OSM data are only lightly cleaned. We also check geometry validity and empty geometries, but no strong filtering of feature classes is applied yet to preserve flexibility for later modelling. The cleaned layers are saved for reuse in GeoPackage and Parquet format and are prepared for exploratory data analysis.
-
-
-
+After loading the OSM layers and converting them to EPSG:4326 \cite{epsg4326}, they are clipped to the same city bounding boxes derived from the cleaned tree-cadastre data. This keeps the tree cadastre data, Sentinel-2 imagery, and OSM layers spatially aligned within the same study areas. At this stage, the OSM data are only lightly cleaned. We also check geometry validity and empty geometries, but no strong filtering of feature classes is applied yet to preserve flexibility for later modelling. The cleaned layers are saved for reuse in GeoPackage and Parquet format and are prepared for exploratory data analysis.
