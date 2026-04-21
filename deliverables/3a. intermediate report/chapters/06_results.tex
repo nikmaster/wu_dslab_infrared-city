@@ -1,6 +1,6 @@
 \section{Preliminary Results}
 
-The preliminary results of this project consist of an exploratory data analysis conducted across all three data sources: the Baumkataster, the Sentinel-2 satellite imagery and the OpensStreetMap (OSM) urban context layers. The goal of the analysis was to asses data quality, learnnfeature distributions and identify which indicators are likely to be useful for training the U-Net model.
+The preliminary results of this project consist of an exploratory data analysis conducted across all three data sources: the Baumkataster, the Sentinel-2 satellite imagery and the OpenStreetMap (OSM) urban context layers. The goal of the analysis was to assess data quality, learn feature distributions and identify which indicators are likely to be useful for training the U-Net model.
 
 \subsection{Baumkataster Analysis}
 
@@ -79,19 +79,20 @@ A spatial cross-check between the Baumkataster and OSM landuse polygons revealed
 All 12 city-season combinations were successfully loaded. Band statistics were computed across the seven available channels: B02 (blue), B03 (green), B04 (red), B08 (NIR), NDVI, EVI, and SAVI.The mean NDVI values per season and city are summarised in Table~\ref{tab:ndvi_stats}. Note that the autumn value for Paris corresponds to October imagery rather than November, because November imagery was not available for Paris in the scraping workflow. 
 
 \begin{table}[H]
-\centering
-\caption{Mean NDVI by city and season. For Paris, the autumn value corresponds to October rather than November.}
-\label{tab:ndvi_stats}
-\begin{tabular}{lrrr}
-\toprule
-City & Spring (Apr) & Summer (Aug) & Autumn (Oct/Nov) \\
-\midrule
-Vienna & 0.56 & 0.58 & 0.46 \\
-Paris & 0.37 & 0.40 & 0.48 \\
-Hamburg & 0.29 & 0.42 & 0.35 \\
-Barcelona & 0.28 & 0.29 & 0.29 \\
-\bottomrule
-\end{tabular}
+    \centering
+    \caption{Mean NDVI by city and season. For Paris, the autumn value corresponds to October rather than November.}
+    \label{tab:ndvi_stats}
+    \begin{tabular}{lrrr}
+        \toprule
+        City & Spring (Apr) & Summer (Aug) & Autumn (Oct/Nov) \\
+        \midrule
+        Vienna & 0.56 & 0.58 & 0.46 \\
+        Paris & 0.37 & 0.40 & 0.48 \\
+        Hamburg & 0.29 & 0.42 & 0.35 \\
+        Barcelona & 0.28 & 0.29 & 0.29 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
 
 Figure~\ref{fig:ndvi_seasonal} shows the seasonal NDVI curves with 5th--95th percentile confidence bands. The seasonal pattern is city-specific rather than uniform across all study areas. Vienna and Hamburg show their highest mean NDVI in summer, Paris reaches its highest mean in the autumn and Barcelona remains nearly flat across all three seasons. These results still support the usefulness of seasonal information, but they do not support the claim of NDVI peaking in summer for every city.
 
@@ -104,7 +105,7 @@ Figure~\ref{fig:ndvi_seasonal} shows the seasonal NDVI curves with 5th--95th per
 
 \subsubsection{EVI and SAVI Scaling}
 
-Another data quality issue was identified within the EVI and SAVI indices. EVI values exceed 1.0 for all cities in summer, which is false as EVI is bounded between $-1$ and $+1$. This is a systematic issue across all cities. The same issue could affects SAVI, although it is not clearly visible in the results, where SAVI values remain within the bounds. The root cause of this is that the index the formulas were applied to the raw pixel values stored in the satellite files, which are large integers, instead of the actual light reflectance values they represent. Converting raw values to reflectance requires dividing by 10,000. NDVI is unaffected here because its formula divides two numbers, so the scale cancels out either way. ince the raw bands are preserved in the TIF stacks, no rescraping is required. The planned fix is to divide the raw band values by 10,000 before recomputing EVI and SAVI. Until this is done, only NDVI will be used as a vegetation index input channel.
+Another data quality issue was identified within the EVI and SAVI indices. EVI values exceed 1.0 for all cities in summer, which is false as EVI is bounded between $-1$ and $+1$. This is a systematic issue across all cities. The same issue could affect SAVI, although it is not clearly visible in the results, where SAVI values remain within the bounds. The root cause of this is that the index the formulas were applied to the raw pixel values stored in the satellite files, which are large integers, instead of the actual light reflectance values they represent. Converting raw values to reflectance requires dividing by 10,000. NDVI is unaffected here because its formula divides two numbers, so the scale cancels out either way. ince the raw bands are preserved in the TIF stacks, no rescraping is required. The planned fix is to divide the raw band values by 10,000 before recomputing EVI and SAVI. Until this is done, only NDVI will be used as a vegetation index input channel.
 
 \subsubsection{False-Color Composites}
 
