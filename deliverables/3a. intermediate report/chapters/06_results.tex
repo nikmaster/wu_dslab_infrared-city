@@ -65,7 +65,7 @@ The hexbin density maps in Figure~\ref{fig:density} further show that tree label
 
 \subsubsection{Street Trees vs. Park Trees}
 
-A spatial cross-check between the Baumkataster and OSM landuse polygons revealed a strong difference in tree placement patterns across cities, as shown in Figure~\ref{fig:green_zones}. Importantly, these percentages were computed on sampled trees rather than on the full tree population. In the sampled data, 52.3% of Vienna trees, 42.2% of Paris trees, and 2.6% of Hamburg trees fall inside green landuse zones. This suggests that Hamburg is much more strongly characterized by street-planted trees, whereas Vienna and Paris contain a substantially larger share of trees inside parks and other green landuse classes. For training, this means the model cannot rely on green space alone as a proxy for tree presence.
+A spatial cross-check between the Baumkataster and OSM landuse polygons revealed a strong difference in tree placement patterns across cities, as shown in Figure~\ref{fig:green_zones}. Importantly, these percentages were computed on sampled trees rather than on the full tree population. In the sampled data, 52.3\% of Vienna trees, 42.2\% of Paris trees, and 2.6\% of Hamburg trees fall inside green landuse zones. This suggests that Hamburg is much more strongly characterized by street-planted trees, whereas Vienna and Paris contain a substantially larger share of trees inside parks and other green landuse classes. For training, this means the model cannot rely on green space alone as a proxy for tree presence.
 
 \begin{figure}[H]
 \centering
@@ -106,7 +106,7 @@ Figure~\ref{fig:ndvi_seasonal} shows the seasonal NDVI curves with 5th--95th per
 
 Another data quality issue was identified within the EVI and SAVI indices. EVI values exceed 1.0 for all cities in summer, which is false as EVI is bounded between $-1$ and $+1$. This is a systematic issue across all cities. The same issue could affects SAVI, although it is not clearly visible in the results, where SAVI values remain within the bounds. The root cause of this is that the index the formulas were applied to the raw pixel values stored in the satellite files, which are large integers, instead of the actual light reflectance values they represent. Converting raw values to reflectance requires dividing by 10,000. NDVI is unaffected here because its formula divides two numbers, so the scale cancels out either way. ince the raw bands are preserved in the TIF stacks, no rescraping is required. The planned fix is to divide the raw band values by 10,000 before recomputing EVI and SAVI. Until this is done, only NDVI will be used as a vegetation index input channel.
 
-subsubsection{False-Color Composites}
+\subsubsection{False-Color Composites}
 
 Figure~\ref{fig:false_color} shows false-color composites for all four cities in summer, rendered using NIR as the red channel, red as the green channel, and green as the blue channel. In this representation, healthy vegetation appears bright red, built surfaces appear grey-blue, and water appears near-black. The images confirm that the Sentinel-2 data is correctly georeferenced and that vegetation is clearly distinguishable from urban surfaces across all cities.
 
