@@ -1,2 +1,0 @@
-next week: ask datacoaches regarding end product 
--->  The end product you are looking for is a 'Baumkataster'-style database for other cities? 
