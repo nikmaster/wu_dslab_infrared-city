@@ -25,7 +25,7 @@ After loading and converting the layers to EPSG:4326 \cite{epsg4326}, they were 
 
 \subsection{Additional Viennese Context Data}
 
-Tree cadastre only contains publicly managed trees, while private trees remain unknown and are therefore not available as ground truth. Additionally, OSM data is community-driven and can be spatially incomplete. Since Vienna has particularly good and complete open data provision, three additional official datasets were collected specifically for Vienna to provide richer spatial context for modelling.To help the model learn the distinction between public and potentially private tree locations, the following official datasets were fetched:\\
+However, OSM data is community-driven and can be spatially incomplete. Since Vienna has particularly good and complete open data provision, three additional official datasets were collected specifically for Vienna to provide richer spatial context for modelling.To help the model learn the distinction between public and potentially private tree locations, the following official datasets were fetched:\\
 \\
 RNK Land Use Data \cite{landuse} provides official Vienna land-use polygons covering 30 land-use categories grouped into built-up area, green space, and transport. The top-level grouping was used, as it is simpler and more suitable for modelling. German category names were translated to English, and polygon centroids were converted to WGS84.\\
 \\
