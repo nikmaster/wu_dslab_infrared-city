@@ -9,7 +9,7 @@ This project aims to take a step toward better tree coverage in urban areas by b
 
 ## Data Sources
 1. **Sentinel-2 Satellite Imagery**: Publicly available satellite images with a 10-meter spatial resolution and four color channels (red, green, blue, and near-infrared) provided by the European Space Agency (Copernicus Programme). Imagery from different seasons is used to account for the impact of seasonality on the appearance of trees.
-2. **Baumkataster (Tree Cadastre) Vienna**: A publicly available dataset containing the exact location of every documented tree in the city of Vienna, used to train and test our model on exact tree locations.
+2. **Tree Cadastre of different cities**: A publicly available dataset containing the exact location of every documented tree used to train and test our model on exact tree locations.
 
 ## Model Architecture
 The project utilizes a **U-Net deep learning model**, a type of Convolutional Neural Network (CNN) highly effective for image segmentation tasks. 
