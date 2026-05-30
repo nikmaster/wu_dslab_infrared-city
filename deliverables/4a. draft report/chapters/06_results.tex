@@ -143,3 +143,31 @@ Figure~\ref{fig:landuse} shows the land use distribution by area for each city. 
     \caption{Land use distribution by area per city.}
     \label{fig:landuse}
 \end{figure}
+
+\subsection{Model Results}
+On first sight the model overall achieves poor results with precision around 30% and recall around 40% and MAE of a bit higher than 1.1. Most of this can be attributed to the model having difficulties detecting single trees at a very low resolution where each pixel is 10m wide. Also, the imperfect ground truth with missing trees on private property makes it hard for the model to achieve good results. Other factors like trees being cut down during the year or small clouds which are difficult to detect for the model may also have an impact on model performance but are very negligible. 
+\\
+Better results can be seen when checking the actual predicted trees of the model manually, either by tediously checking for each tree on Google Earth or similar sites or by comparing the input image to the output image with the expected trees. So here are some representative examples both from Barcelona which was test data and from those parts of Vienna which were used for validation. 
+\\
+In those pictures we can see some very interesting phenomena. Firstly, that the model predicts a lot more trees than are in the ground truth which is a good thing, as we know that a lot of trees are not labeled. Furthermore, it also detects trees in areas where no trees are in the ground truth, so the model learns how a tree looks and can implement this knowledge also on wrongly labeled pixels. 
+
+\begin{figure}[H] 
+    \centering
+    \includegraphics[width=\textwidth]{images/vie_img.png}
+    \caption{RGB image of Vienna in August 2025}
+\end{figure}
+\begin{figure}[H] 
+    \centering
+    \includegraphics[width=\textwidth]{images/vie_pred.png}
+    \caption{Model predictions for Vienna}
+\end{figure}
+\begin{figure}[H] 
+    \centering
+    \includegraphics[width=\textwidth]{images/bar_img.png}
+    \caption{RGB image of Barcelona in August 2025}
+\end{figure}
+\begin{figure}[H] 
+    \centering
+    \includegraphics[width=\textwidth]{images/bar_pred.png}
+    \caption{Model predictions for Barcelona}
+\end{figure}

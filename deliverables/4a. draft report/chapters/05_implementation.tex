@@ -1,32 +1,25 @@
 \section{Implementation}
-
-This chapter describes the workflow and hyperparameters used for data preprocessing and model training.
-
+This chapter describes the workflow and hyperparameters used for data preprocessing for machine learning as well as the final model training, testing and predicting.
 \subsection{Tools}
-
-This model was implemented using the programming language Python and the deep learning library PyTorch. 
-To store the data in an easily machine-readable format suited for machine learning tasks the library NumPy was used and the data stored as NumPy arrays.
-For data import and preprocessing the libraries Rasterio and PyProj were used. 
-
-\subsection{Data Preprocessing for Model}
-
-In order to get the data into a usable shape for the U-Net model the following preprocessing steps were applied.\\
+This model was implemented using the programming language python and the deep learning library pytorch. To store the data in an easily machine-readable format suited for machine learning tasks the library numpy was used and the data stored as numpy arrays. To read the .geojson files and to convert the final predictions back into this file format the library geopandas was used. For data preprocessing the libraries rasterio and pyproj were used. 
+\subsection{Data Preprocessing for ML}
+In the preprocessing pipeline the following steps and hyperparameters were used. All of them were decided upon after testing different alternatives. The decisions were mostly based on the metrics described in the next chapter Model Training, Testing and Predictions.
 \\
-The Sentinel-2 images are patched into smaller 256 pixels wide quadratic images and a stride of around 128 pixels is used so that the final patches are overlapping and more training data can be extracted from the images.
-The four color channels red, green, blue and near-infrared are used and the patches from different months of the year but from the same location are stacked on top of each other.
-We used data from April, August and November (except for Paris where data from November was too cloudy and we had to use October).
-The satellite imagery was transformed into structured numerical arrays, resulting in a data representation with the dimensions N x T x C x H x W, where N denotes the number of image patches, T the number of temporal observations (months), C the number of spectral channels, and H and W the spatial dimensions (height and width) respectively.\\
+For the final patches we decided to have a height and width of 256 pixels and a stride of 128 pixels. We also only used the five color bands red, green, blue, near infrared and NDVI as the other two bands did not improve model performance meaningfully but increased the needed training time significantly. These patches were then created for all three months used which were normally April, August and November but for some cities October was used instead of November as data was too cloudy. The patches for the months were then stacked on top of each other to end up with tensors of shape N x T = 3 x C = 5 x H = 256 x W = 256 where N is the amount of patches in the city, T the number of temporal observations (months), C the number of spectral channels, and H and W the spatial dimensions (height and width) respectively.
 \\
-For the prediction labels patches at the same geographical locations as the Sentinel-2 patches were created and filled with the number of trees per pixel. 
-This data was derived from the local tree registries which provide the exact coordinates of the trees in the corresponding city.
-The data was then split into a train, validation and test sample.
+The data from the tree cadasters was then geographically aligned with the Sentinel-2 patches to get the ground truth containing the amount of trees per pixel. Patches with less than ten trees were then dropped to decrease sparsity. Overall, we ended up with around 1400 usable patches.
+\\
+The final step was to implement the algorithm to determine which parts of each patch should be used for training the model. We ended up using all pixels which had a tree in a five pixel radius as this was a good approximation of what area is correctly labeled in the ground truth and what area is not. 
+\\
+The data was then split into a train, validation and test sample. Where the training and validation data were six cities where each city was split into 15% validation data and 85% training data. For testing we wanted to have a city where not even parts were used for the training process as this would also be the case for cities we wanted to do predictions on. We chose Barcelona, which is our southernmost city, as a city for testing as this would also allow us to see if the model could generalize on cities which were a bit different than our training data. 
+\\
+The data we used for our final predictions was preprocessed in a similar way, of course excluding the non-existent tree cadaster and without defining a usable area as we want predictions on the whole batch. 
 
-\subsection{Model Training, Testing and Hyperparameters}
-The model was built according to the description in the chapter methodology, although the depth of the model is limited due to computational restraints. 
-At the bottleneck where the feature space is the richest and the attention algorithm is deployed the U-Net had 64 feature channels, before down-sampling 32 and after up-sampling 16.
-The attention mechanism uses 8 attention heads, the QKV vectors have 8 dimensions, and the embedding vectors 64.\\
+\subsection{Model Training, Testing and Predictions}
+The model was built according to the description in the chapter methodology, although the depth of the model is limited due to computational restraints. All hyperparameters listed here were chosen as to optimize the final loss, the MAE, recall and precision.
 \\
-The used learning rate is 0.001 and training ran for ten epochs on around 100 batches each containing four data points.
-5-fold cross-validation is used to train five different models. 
-To evaluate the best of these which will be saved for further use and testing the loss, RMSE and R-squared values are calculated. 
-The chosen model was then tested on unseen data from a city which was not used in the training process.
+At the bottleneck where the feature space is the richest and the attention algorithm is deployed the U-Net had 64 feature channels, before down-sampling 32 and after up-sampling 32. The attention mechanism uses 4 attention heads, the QKV vectors have 8 dimensions, the embedding vectors 32. At the bottleneck the attention algorithm combines the three images for each month into one image using the scaled dot-product of the learned query vectors and adds positional encodings. This step ensures that the most important features from each month are included in the final image. 
+\\
+As described in the chapter Methodology the model uses two heads where one predicts the probability of a pixel containing trees and the other the number of trees per pixel. The probability head uses BCE loss where pixels containing trees are weighted twice as much as pixels containing no trees. This is due to the fact that we can say that if our ground truth contains a tree this is correct but we cannot be as sure if the ground truth contains no tree. The results of the count head are put through a softplus activation function to ensure they are positive. Once again, the positive pixels are weighted more than the negative, here by a factor of ten. Of course both losses are only calculated on pixels which were deemed usable in the data preprocessing. The losses are then summed where the loss of the probability head is weighted five times more than the loss of the count head. 
+\\
+The used learning rate is 0.0001 and training ran for five epochs with a batch size of 4. To reduce the likelihood of overfitting all images were randomly rotated and flipped for each epoch. To evaluate the overall model the final loss was used. To evaluate the results of the probability head its own loss, precision and recall were calculated, the threshold was 0.5. For the results of the count head the MAE for each pixel was calculated. The model was then tested on the data from the unseen city. 
