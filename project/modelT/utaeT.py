@@ -1,95 +1,51 @@
-"""
-U-TAE Implementation
-Author: Vivien Sainte Fare Garnot (github/VSainteuf)
-License: MIT
-"""
+#This notebook is based on the code of:
+#V. S. F. Garnot and L. Landrieu, “Panoptic Segmentation of Satellite Image Time Series with Convolutional Temporal Attention Networks,” in Proceedings of the IEEE/CVF International Conference on Computer Vision (ICCV), 2021, pp. 4872–4881, doi: 10.1109/ICCV48922.2021.00483.
+
 import torch
 import torch.nn as nn
+import torch.nn.functional as F
 
 from ltaeT import LTAE2d
 
 
 class UTAE(nn.Module):
-    '''def __init__(
-        self,
-        input_dim,
-        encoder_widths=[64, 64, 64, 128],
-        decoder_widths=[32, 32, 64, 128],
-        out_conv=1, ## not strictly needed may be removed
-        str_conv_k=4,
-        str_conv_s=2,
-        str_conv_p=1,
-        agg_mode="att_group",
-        encoder_norm="group",
-        n_head=16,
-        d_model=256,
-        d_k=4,
-        encoder=False,
-        return_maps=False,
-        pad_value=0,
-        padding_mode="reflect",
-    ):'''
-
-    """
-        U-TAE architecture for spatio-temporal encoding of satellite image time series.
-        Args:
-            input_dim (int): Number of channels in the input images.
-            encoder_widths (List[int]): List giving the number of channels of the successive encoder_widths of the convolutional encoder.
-            This argument also defines the number of encoder_widths (i.e. the number of downsampling steps +1)
-            in the architecture.
-            The number of channels are given from top to bottom, i.e. from the highest to the lowest resolution.
-            decoder_widths (List[int], optional): Same as encoder_widths but for the decoder. The order in which the number of
-            channels should be given is also from top to bottom. If this argument is not specified the decoder
-            will have the same configuration as the encoder.
-            out_conv (List[int]): Number of channels of the successive convolutions for the
-            str_conv_k (int): Kernel size of the strided up and down convolutions.
-            str_conv_s (int): Stride of the strided up and down convolutions.
-            str_conv_p (int): Padding of the strided up and down convolutions.
-            agg_mode (str): Aggregation mode for the skip connections. Can either be:
-                - att_group (default) : Attention weighted temporal average, using the same
-                channel grouping strategy as in the LTAE. The attention masks are bilinearly
-                resampled to the resolution of the skipped feature maps.
-                - att_mean : Attention weighted temporal average,
-                 using the average attention scores across heads for each date.
-                - mean : Temporal average excluding padded dates.
-            encoder_norm (str): Type of normalisation layer to use in the encoding branch. Can either be:
-                - group : GroupNorm (default)
-                - batch : BatchNorm
-                - instance : InstanceNorm
-            n_head (int): Number of heads in LTAE.
-            d_model (int): Parameter of LTAE
-            d_k (int): Key-Query space dimension
-            encoder (bool): If true, the feature maps instead of the class scores are returned (default False)
-            return_maps (bool): If true, the feature maps instead of the class scores are returned (default False)
-            pad_value (float): Value used by the dataloader for temporal padding.
-            padding_mode (str): Spatial padding strategy for convolutional layers (passed to nn.Conv2d).
-    """
+    # Main architecture with encoder, temporal attention and decoder
 
     def __init__(self,config):
         super(UTAE, self).__init__()
+
+        # Get number of encoder/decoder stages
         self.n_stages = len(config.encoder_widths)
+
+        # Channel sizes for encoder/decoder
         self.encoder_widths = config.encoder_widths
         self.decoder_widths = config.decoder_widths
-        self.enc_dim = (
-            config.decoder_widths[0] if config.decoder_widths is not None else config.encoder_widths[0]
-        )
-        self.stack_dim = (
-            sum(config.decoder_widths) if config.decoder_widths is not None else sum(config.encoder_widths)
-        )
+
+        # Dimension of encoder input
+        self.enc_dim = (config.decoder_widths[0] if config.decoder_widths is not None else config.encoder_widths[0])
+
+        # Total stacked feature dim
+        self.stack_dim = (sum(config.decoder_widths) if config.decoder_widths is not None else sum(config.encoder_widths))
+
+        # Temporal padding value
         self.pad_value = config.pad_value
 
+        # Validate that encoder and decoder are compatible
         if config.decoder_widths is not None:
             assert len(config.encoder_widths) == len(config.decoder_widths)
             assert config.encoder_widths[-1] == config.decoder_widths[-1]
         else:
             config.decoder_widths = config.encoder_widths
 
+        # Initial convolution block
         self.in_conv = ConvBlock(
             nkernels=[config.input_dim] + [config.encoder_widths[0], config.encoder_widths[0]],
             pad_value=config.pad_value,
             norm=config.encoder_norm,
             padding_mode=config.padding_mode,
         )
+
+        # Encoder
         self.down_blocks = nn.ModuleList(
             DownConvBlock(
                 d_in=config.encoder_widths[i],
@@ -103,6 +59,8 @@ class UTAE(nn.Module):
             )
             for i in range(self.n_stages - 1)
         )
+
+        # Decoder
         self.up_blocks = nn.ModuleList(
             UpConvBlock(
                 d_in=config.decoder_widths[i],
@@ -116,6 +74,8 @@ class UTAE(nn.Module):
             )
             for i in range(self.n_stages - 1, 0, -1)
         )
+
+        # Temporal attention decoder, processes temporal sequence at bottleneck
         self.temporal_encoder = LTAE2d(
             in_channels=config.encoder_widths[-1],
             d_model=config.d_model,
@@ -124,47 +84,56 @@ class UTAE(nn.Module):
             return_att=True,
             d_k=config.d_k,
         )
+
+        # Temporal aggregation for skip connections
         self.temporal_aggregator = Temporal_Aggregator(mode=config.agg_mode)
-        self.out_conv = ConvBlock(nkernels=[config.decoder_widths[0]] + [config.out_conv], padding_mode=config.padding_mode)
+
+        # Binary presence prediction head
+        self.presence_head = ConvBlock(nkernels=[config.decoder_widths[0], 1],padding_mode=config.padding_mode,last_relu=False)
+
+        # Count prediction head
+        self.count_head = ConvBlock(nkernels=[config.decoder_widths[0], 1],padding_mode=config.padding_mode,last_relu=False)
 
     def forward(self, input, batch_positions=None, return_att=False):
+        # Forward pass
+
+        # Identify padded temporal frames
         pad_mask = (
             (input == self.pad_value).all(dim=-1).all(dim=-1).all(dim=-1)
-        )  # BxT pad mask
+        )
+
+        # Initial convolution and store encoder feature maps for skip connections
         out = self.in_conv.smart_forward(input)
         feature_maps = [out]
-        # SPATIAL ENCODER
+
+        # Spatial encoder
         for i in range(self.n_stages - 1):
             out = self.down_blocks[i].smart_forward(feature_maps[-1])
             feature_maps.append(out)
 
-        # TEMPORAL ENCODER
+        # Temporal encoder
         out, att = self.temporal_encoder(
             feature_maps[-1], batch_positions=batch_positions, pad_mask=pad_mask
         )
 
-        # SPATIAL DECODER
+        # Spatial decoder
         for i in range(self.n_stages - 1):
             skip = self.temporal_aggregator(
                 feature_maps[-(i + 2)], pad_mask=pad_mask, attn_mask=att
             )
             out = self.up_blocks[i](out, skip)
 
-        out = self.out_conv(out)
-        #out = torch.nn.functional.softplus(out)
-        if return_att:
-            return out, att
-        else:
-            return out
+        # Prediction heads
+        presence_logits = self.presence_head(out)
+        count_logits = self.count_head(out)
 
+        if return_att:
+            return presence_logits, count_logits, att
+        else:
+            return presence_logits, count_logits
 
 class TemporallySharedBlock(nn.Module):
-    """
-    Helper module for convolutional encoding blocks that are shared across a sequence.
-    This module adds the self.smart_forward() method the the block.
-    smart_forward will combine the batch and temporal dimension of an input tensor
-    if it is 5-D and apply the shared convolutions to all the (batch x temp) positions.
-    """
+    # Help combine the batch and temporal dimension
 
     def __init__(self, pad_value=None):
         super(TemporallySharedBlock, self).__init__()
@@ -172,37 +141,47 @@ class TemporallySharedBlock(nn.Module):
         self.pad_value = pad_value
 
     def smart_forward(self, input):
+        # Can handle 4D as well as 5D tensors
+
+        # If already 4D process normally
         if len(input.shape) == 4:
             return self.forward(input)
         else:
+            # Input shape
             b, t, c, h, w = input.shape
 
+            # Compute output tensor
             if self.pad_value is not None:
                 dummy = torch.zeros(input.shape, device=input.device).float()
                 self.out_shape = self.forward(dummy.view(b * t, c, h, w)).shape
-
+            
+            # Merge batch and temporal dimensions
             out = input.view(b * t, c, h, w)
+
             if self.pad_value is not None:
+                # Detect padded frames
                 pad_mask = (out == self.pad_value).all(dim=-1).all(dim=-1).all(dim=-1)
                 if pad_mask.any():
-                    temp = (
-                        torch.ones(
-                            self.out_shape, device=input.device, requires_grad=False
-                        )
-                        * self.pad_value
-                    )
+                    # Create padded output tensor
+                    temp = (torch.ones(self.out_shape, device=input.device, requires_grad=False) * self.pad_value)
+
+                    # Process only frames which are not padded
                     temp[~pad_mask] = self.forward(out[~pad_mask])
                     out = temp
                 else:
                     out = self.forward(out)
             else:
                 out = self.forward(out)
+
+            # Restore temporal dimension
             _, c, h, w = out.shape
             out = out.view(b, t, c, h, w)
             return out
 
 
 class ConvLayer(nn.Module):
+    # Basic convolutional layer
+
     def __init__(
         self,
         nkernels,
@@ -216,17 +195,14 @@ class ConvLayer(nn.Module):
     ):
         super(ConvLayer, self).__init__()
         layers = []
+
+        # Check which normalization should be used
         if norm == "batch":
-            nl = nn.BatchNorm2d
-        elif norm == "instance":
-            nl = nn.InstanceNorm2d
-        elif norm == "group":
-            nl = lambda num_feats: nn.GroupNorm(
-                num_channels=num_feats,
-                num_groups=n_groups,
-            )
+                nl = lambda c: nn.GroupNorm(num_groups=min(8, c),num_channels=c)
         else:
             nl = None
+
+        # Build convolutional stack
         for i in range(len(nkernels) - 1):
             layers.append(
                 nn.Conv2d(
@@ -238,9 +214,12 @@ class ConvLayer(nn.Module):
                     padding_mode=padding_mode,
                 )
             )
+
+            # Normalization
             if nl is not None:
                 layers.append(nl(nkernels[i + 1]))
 
+            # Activation
             if last_relu:
                 layers.append(nn.ReLU())
             elif i < len(nkernels) - 2:
@@ -252,6 +231,8 @@ class ConvLayer(nn.Module):
 
 
 class ConvBlock(TemporallySharedBlock):
+    # Convolutional block
+
     def __init__(
         self,
         nkernels,
@@ -273,6 +254,8 @@ class ConvBlock(TemporallySharedBlock):
 
 
 class DownConvBlock(TemporallySharedBlock):
+    # Downsampling convolutional block
+
     def __init__(
         self,
         d_in,
@@ -285,6 +268,8 @@ class DownConvBlock(TemporallySharedBlock):
         padding_mode="reflect",
     ):
         super(DownConvBlock, self).__init__(pad_value=pad_value)
+
+        # Downsampling convolution
         self.down = ConvLayer(
             nkernels=[d_in, d_in],
             norm=norm,
@@ -293,11 +278,15 @@ class DownConvBlock(TemporallySharedBlock):
             p=p,
             padding_mode=padding_mode,
         )
+
+        # Feature expansion
         self.conv1 = ConvLayer(
             nkernels=[d_in, d_out],
             norm=norm,
             padding_mode=padding_mode,
         )
+
+        # Residual refinement
         self.conv2 = ConvLayer(
             nkernels=[d_out, d_out],
             norm=norm,
@@ -305,6 +294,8 @@ class DownConvBlock(TemporallySharedBlock):
         )
 
     def forward(self, input):
+        # Forward pass
+
         out = self.down(input)
         out = self.conv1(out)
         out = out + self.conv2(out)
@@ -312,31 +303,35 @@ class DownConvBlock(TemporallySharedBlock):
 
 
 class UpConvBlock(nn.Module):
-    def __init__(
-        self, d_in, d_out, k, s, p, norm="batch", d_skip=None, padding_mode="reflect"
-    ):
+    # Upsampling convolutional block
+
+    def __init__(self, d_in, d_out, k, s, p, norm="batch", d_skip=None, padding_mode="reflect"):
         super(UpConvBlock, self).__init__()
+
+        # Skip feature dimension
         d = d_out if d_skip is None else d_skip
         self.skip_conv = nn.Sequential(
             nn.Conv2d(in_channels=d, out_channels=d, kernel_size=1),
-            nn.BatchNorm2d(d),
+            nn.GroupNorm(min(8, d), d),
             nn.ReLU(),
         )
+
+        # Transposed convolution upsampling
         self.up = nn.Sequential(
             nn.ConvTranspose2d(
                 in_channels=d_in, out_channels=d_out, kernel_size=k, stride=s, padding=p
             ),
-            nn.BatchNorm2d(d_out),
+            nn.GroupNorm(min(8, d_out), d_out),
             nn.ReLU(),
         )
-        self.conv1 = ConvLayer(
-            nkernels=[d_out + d, d_out], norm=norm, padding_mode=padding_mode
-        )
-        self.conv2 = ConvLayer(
-            nkernels=[d_out, d_out], norm=norm, padding_mode=padding_mode
-        )
+
+        # Feature fusion convolutions
+        self.conv1 = ConvLayer(nkernels=[d_out + d, d_out], norm=norm, padding_mode=padding_mode)
+        self.conv2 = ConvLayer(nkernels=[d_out, d_out], norm=norm, padding_mode=padding_mode)
 
     def forward(self, input, skip):
+        # Forward pass
+
         out = self.up(input)
         out = torch.cat([out, self.skip_conv(skip)], dim=1)
         out = self.conv1(out)
@@ -345,16 +340,23 @@ class UpConvBlock(nn.Module):
 
 
 class Temporal_Aggregator(nn.Module):
+    # Aggregates temporal feature maps
+
     def __init__(self, mode="mean"):
         super(Temporal_Aggregator, self).__init__()
         self.mode = mode
 
     def forward(self, x, pad_mask=None, attn_mask=None):
+
         if pad_mask is not None and pad_mask.any():
+            # Handle padded sequences
+
+            # Attention aggregation per head
             if self.mode == "att_group":
                 n_heads, b, t, h, w = attn_mask.shape
                 attn = attn_mask.view(n_heads * b, t, h, w)
 
+                # Resize attention to match feature map resolution
                 if x.shape[-2] > w:
                     attn = nn.Upsample(
                         size=x.shape[-2:], mode="bilinear", align_corners=False
@@ -363,26 +365,47 @@ class Temporal_Aggregator(nn.Module):
                     attn = nn.AvgPool2d(kernel_size=w // x.shape[-2])(attn)
 
                 attn = attn.view(n_heads, b, t, *x.shape[-2:])
+
+                # Mask padded timestamps
                 attn = attn * (~pad_mask).float()[None, :, :, None, None]
 
+                # Split channels by attention head
                 out = torch.stack(x.chunk(n_heads, dim=2))  # hxBxTxC/hxHxW
+
+                # Weighted temporal aggregation
                 out = attn[:, :, :, None, :, :] * out
                 out = out.sum(dim=2)  # sum on temporal dim -> hxBxC/hxHxW
+
+                # Concatenate heads
                 out = torch.cat([group for group in out], dim=1)  # -> BxCxHxW
                 return out
+            
             elif self.mode == "att_mean":
-                attn = attn_mask.mean(dim=0)  # average over heads -> BxTxHxW
+                # Mean attention aggregation
+
+                # Average attention over heads
+                attn = attn_mask.mean(dim=0)  # -> BxTxHxW
                 attn = nn.Upsample(
                     size=x.shape[-2:], mode="bilinear", align_corners=False
                 )(attn)
+
+                # Remove padded frames
                 attn = attn * (~pad_mask).float()[:, :, None, None]
+
+                # Weighted sum
                 out = (x * attn[:, :, None, :, :]).sum(dim=1)
                 return out
+            
             elif self.mode == "mean":
+                # Simple temporal mean
+
                 out = x * (~pad_mask).float()[:, :, None, None, None]
                 out = out.sum(dim=1) / (~pad_mask).sum(dim=1)[:, None, None, None]
                 return out
+            
         else:
+            # Similar procedure but without padded frames
+
             if self.mode == "att_group":
                 n_heads, b, t, h, w = attn_mask.shape
                 attn = attn_mask.view(n_heads * b, t, h, w)
