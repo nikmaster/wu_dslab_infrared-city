@@ -1,1 +1,33 @@
 \section{Discussion}
+
+In this project, our main goal was to build a working machine learning model that can find trees in cities. We used Sentinel-2 satellite images and open tree data from the cities. During our work and the exploratory data analysis (EDA), we found out some interesting things about the data and also ran into some problems, especially because we did not have perfect ground truth data. 
+
+\subsection{Ground Truth}
+
+When you first look at our evaluation metrics, the precision is only around 30\%. Normally, this looks like a really bad model. But we have to understand why this happens. Our main dataset for the ground truth is the tree catastre. This dataset is from the city government, which means it only has trees that are on public streets or in public parks. Trees in private gardens or backyards are just missing. 
+
+Because of this, our ground truth is not complete. When our model finds a real tree in a private garden, the evaluation script says it is a "false positive" and our score goes down. But when we looked at the predictions by eye (for example in Vienna and Barcelona) and compared them with Google Maps, we saw that the model is actually right. The U-Net learned how a tree looks like from the satellite data and can find trees even if they are not in the city data. So, the 30\% precision is more a problem of the missing data, and not because our model is bad.
+
+\subsection{Different Seasons and NDVI}
+
+We thought from the beginning that using different seasons is a good idea to find trees. The data showed us that this is true, but it also surprised us. In remote sensing, people often say that the NDVI is highest in summer. But our data showed different patterns for each city. Vienna and Hamburg had the peak in summer, like expected. But in Paris, the highest NDVI was in autumn, and for Barcelona the curve was almost flat all year. 
+
+This shows exactly why our temporal attention mechanism in the U-Net is so important. If we only used one image from summer, the model would not work well for cities like Barcelona where it is too hot and dry in August. With the attention layers, the model can choose itself which month is the most important one to look at.
+
+\subsection{Parks vs. Street Trees}
+
+We also used OpenStreetMap (OSM) to get more context and saw big differences between the cities. In Vienna and Paris, a lot of the labeled trees (around 50\% and 40\%) are inside green spaces like parks or forests. But in Hamburg, only 2.6\% are in parks, and almost all of them are street trees. 
+
+This was a big problem for training. If a model just learns that "green polygon = trees", it will miss all the street trees in Hamburg. But our model still managed to find single trees in areas with a lot of buildings. This means it really learned the shape and color of the trees and did not just copy the green areas from OSM.
+
+\subsection{Data Mistakes and Problems}
+
+When you work with real open data, there are always problems. One big mistake we made was with the EVI and SAVI index calculations. The pixel values we got from Sentinel-2 are big numbers, and we forgot to divide them by 10,000 to get normal reflectance values between 0 and 1. Because of this, our calculated EVI values were over 1.0, which is physically wrong. So we had to drop EVI and SAVI for now and only used NDVI for the training. 
+
+Also, the different city datasets were hard to mix. For example, Vienna has the tree height saved as categories (classes 1 to 8), but Paris has the real height in meters. This made it very hard to build one big dataset for everything.
+
+\subsection{Why we used the Dual-Head U-Net}
+
+In the end, our data has a lot of pixels with zero trees. If you just use a normal model, it will often just predict zero everywhere because that is the easiest way to get a low loss. That is why we decided to use a dual-head U-Net. 
+
+One head of the model just predicts if there is a tree or not (probability), and the second head predicts how many trees there are (count). We also masked the training data so the model only learns from areas near known trees. Multiplying the outputs of both heads helped a lot to stop the model from predicting trees inside houses or streets. This architecture was a very good idea to handle the noisy and incomplete ground truth.
