@@ -2,8 +2,8 @@
 This chapter describes the workflow and hyperparameters used for data preprocessing for machine learning as well as the final model training, testing and predicting.
 \subsection{Tools}
 This model was implemented using the programming language python and the deep learning library pytorch. To store the data in an easily machine-readable format suited for machine learning tasks the library numpy was used and the data stored as numpy arrays. To read the .geojson files and to convert the final predictions back into this file format the library geopandas was used. For data preprocessing the libraries rasterio and pyproj were used. 
-\subsection{Data Preprocessing for ML}
-In the preprocessing pipeline the following steps and hyperparameters were used. All of them were decided upon after testing different alternatives. The decisions were mostly based on the metrics described in the next chapter Model Training, Testing and Predictions.
+\subsection{Data Pipeline for ML}
+In the preprocessing pipeline for the U-Net model the following steps and hyperparameters were used. All of them were decided upon after testing different alternatives. The decisions were mostly based on the metrics described in the next chapter Model Training, Testing and Predictions.
 \\
 For the final patches we decided to have a height and width of 256 pixels and a stride of 128 pixels. We also only used the five color bands red, green, blue, near infrared and NDVI as the other two bands did not improve model performance meaningfully but increased the needed training time significantly. These patches were then created for all three months used which were normally April, August and November but for some cities October was used instead of November as data was too cloudy. The patches for the months were then stacked on top of each other to end up with tensors of shape N x T = 3 x C = 5 x H = 256 x W = 256 where N is the amount of patches in the city, T the number of temporal observations (months), C the number of spectral channels, and H and W the spatial dimensions (height and width) respectively.
 \\

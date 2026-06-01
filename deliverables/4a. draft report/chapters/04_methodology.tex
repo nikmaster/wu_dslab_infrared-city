@@ -11,7 +11,7 @@ The first methodological step was fetching the different datasets on Sentinel-2 
     \label{fig:overview_beam}
 \end{figure}
 
-\subsection{Data Preprocessing for ML}
+\subsection{Data Pipeline for ML}
 Through our EDA and some manual checking we were able to find some important properties about our data which influence the needed preprocessing pipeline and the model architecture. The most important aspects were that only around 4% of pixels contained trees in the ground truth and that most trees on private property were missing in our ground truth. 
 \\
 The first step in our preprocessing pipeline for the machine learning part of our process was to split the Sentinel-2 images into smaller patches which were easier to load into memory and to process for our model. To end up with more patches we also implemented stride, so patches were overlapping. 
