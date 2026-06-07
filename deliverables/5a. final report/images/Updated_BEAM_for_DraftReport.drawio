@@ -1,0 +1,359 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Page-1" id="-j0SVRU-94Z1_q4_tfh1">
+    <mxGraphModel dx="1549" dy="373" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="880" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <object label="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;System: Tree detection&lt;br&gt;&lt;/h1&gt;&lt;p&gt;A model that predicts tree locations in urban areas using Sentinel-2 satellite imagery and a U-Net segmentation model trained on labeled tree location data from Vienna’s Baumkataster. The dataset is split into training and evaluation subsets.&lt;/p&gt;" element="system_description" id="vMBFEMnZm2C9mBhno8qI-1">
+          <mxCell parent="1" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;strokeColor=#82b366;fillColor=#F0FFED;" vertex="1">
+            <mxGeometry height="120" width="360" x="-788.9999877929688" y="50.00335571289065" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="Internal Model Evaluation" element="container" sensitive="False" id="vMBFEMnZm2C9mBhno8qI-2">
+          <mxCell parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;startSize=40;" vertex="1">
+            <mxGeometry height="380" width="160" x="-200" y="200" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="Predicted Tree Locations Data (= Database)" element="data" sensitive="False" id="vMBFEMnZm2C9mBhno8qI-5">
+          <mxCell parent="vMBFEMnZm2C9mBhno8qI-2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#cdeb8b;strokeColor=#97D077;" vertex="1">
+            <mxGeometry height="40" width="140" x="10" y="190" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="" element="workflow_connector" sensitive="False" id="vMBFEMnZm2C9mBhno8qI-7">
+          <mxCell edge="1" parent="vMBFEMnZm2C9mBhno8qI-2" source="vMBFEMnZm2C9mBhno8qI-4" style="endArrow=classic;html=1;rounded=0;ignoreEdge=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="vMBFEMnZm2C9mBhno8qI-5">
+            <mxGeometry height="50" relative="1" width="50" as="geometry">
+              <mxPoint x="-140" y="360" as="sourcePoint" />
+              <mxPoint x="-140" y="380" as="targetPoint" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object label="" element="workflow_connector" sensitive="False" id="vMBFEMnZm2C9mBhno8qI-85">
+          <mxCell edge="1" parent="vMBFEMnZm2C9mBhno8qI-2" source="vMBFEMnZm2C9mBhno8qI-68" style="endArrow=classic;html=1;rounded=0;ignoreEdge=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="vMBFEMnZm2C9mBhno8qI-4">
+            <mxGeometry height="50" relative="1" width="50" as="geometry">
+              <mxPoint x="-190" y="310.6700000000001" as="sourcePoint" />
+              <mxPoint x="-110" y="270.6700000000001" as="targetPoint" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object label="Context, OSM &amp;amp; Tree Cadastres Data" element="data" sensitive="False" id="vMBFEMnZm2C9mBhno8qI-94">
+          <mxCell parent="vMBFEMnZm2C9mBhno8qI-2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#cdeb8b;strokeColor=#97D077;" vertex="1">
+            <mxGeometry height="50" width="140" x="10" y="320" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="&lt;div&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;Sentinel-&lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;2 &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;Satellite &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;Images&amp;nbsp;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;(Unseen Test Dataset)&lt;/span&gt;&lt;/div&gt;" element="data" sensitive="False" id="vMBFEMnZm2C9mBhno8qI-68">
+          <mxCell parent="vMBFEMnZm2C9mBhno8qI-2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#cdeb8b;strokeColor=#97D077;" vertex="1">
+            <mxGeometry height="50" width="140" x="10" y="60.67000000000007" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="Predict Tree Locations" element="inference" sensitive="False" id="vMBFEMnZm2C9mBhno8qI-4">
+          <mxCell parent="vMBFEMnZm2C9mBhno8qI-2" style="rounded=1;whiteSpace=wrap;html=1;arcSize=50;fillColor=#F4F5E4;strokeColor=#e5a50a;treeFolding=0;" vertex="1">
+            <mxGeometry height="40" width="120" x="20" y="130" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="vMBFEMnZm2C9mBhno8qI-93" edge="1" parent="vMBFEMnZm2C9mBhno8qI-2" style="endArrow=classic;html=1;rounded=0;ignoreEdge=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;strokeColor=none;" target="vMBFEMnZm2C9mBhno8qI-92" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="90.00000000000023" y="233" as="sourcePoint" />
+            <mxPoint x="-38" y="530.67" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <object label="Evaluate with Model Metrics" element="engineering" sensitive="False" id="vMBFEMnZm2C9mBhno8qI-92">
+          <mxCell parent="vMBFEMnZm2C9mBhno8qI-2" style="rounded=1;whiteSpace=wrap;html=1;arcSize=50;fillColor=#D6ABDF;strokeColor=#9673a6;" vertex="1">
+            <mxGeometry height="50" width="120" x="20" y="250" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="" element="workflow_connector" sensitive="False" id="vMBFEMnZm2C9mBhno8qI-97">
+          <mxCell edge="1" parent="vMBFEMnZm2C9mBhno8qI-2" source="vMBFEMnZm2C9mBhno8qI-94" style="endArrow=classic;html=1;rounded=0;ignoreEdge=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" target="vMBFEMnZm2C9mBhno8qI-92">
+            <mxGeometry height="50" relative="1" width="50" as="geometry">
+              <mxPoint x="-220" y="420" as="sourcePoint" />
+              <mxPoint x="-140" y="380" as="targetPoint" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object label="ML Model Architecture" element="container" sensitive="False" id="vMBFEMnZm2C9mBhno8qI-8">
+          <mxCell parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;startSize=40;" vertex="1">
+            <mxGeometry height="290.67" width="160" x="-389" y="200" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="&lt;div&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;Trained&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;U-&lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;Net &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;Segmentation &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;Model&lt;/span&gt;&lt;/div&gt;" element="stat_model" sensitive="False" id="vMBFEMnZm2C9mBhno8qI-9">
+          <mxCell parent="vMBFEMnZm2C9mBhno8qI-8" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;fillColor=#b1ddf0;strokeColor=#10739e;" vertex="1">
+            <mxGeometry height="60" width="140" x="10" y="120.00000000000001" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="Fetching Training Data" element="container" sensitive="False" id="vMBFEMnZm2C9mBhno8qI-10">
+          <mxCell parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;startSize=40;" vertex="1">
+            <mxGeometry height="290.67" width="160" x="-789" y="200" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;Sentinel-&lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;2 &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;Satellite &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;Images&lt;/span&gt;" element="data" sensitive="False" id="vMBFEMnZm2C9mBhno8qI-11">
+          <mxCell parent="vMBFEMnZm2C9mBhno8qI-10" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#cdeb8b;strokeColor=#97D077;" vertex="1">
+            <mxGeometry height="40" width="140" x="10" y="60" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;OpenStreetMap &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;Urban &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;Features&lt;/span&gt;" element="data" sensitive="False" id="vMBFEMnZm2C9mBhno8qI-12">
+          <mxCell parent="vMBFEMnZm2C9mBhno8qI-10" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#cdeb8b;strokeColor=#97D077;" vertex="1">
+            <mxGeometry height="40" width="140" x="10" y="120" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;Urban Tree Cadastres&lt;/span&gt;&lt;div&gt;(Training Dataset)&lt;/div&gt;" element="data" sensitive="False" id="vMBFEMnZm2C9mBhno8qI-13">
+          <mxCell parent="vMBFEMnZm2C9mBhno8qI-10" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#cdeb8b;strokeColor=#97D077;" vertex="1">
+            <mxGeometry height="40" width="140" x="10" y="180" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="Additional Viennese Context Data" element="data" sensitive="False" id="vMBFEMnZm2C9mBhno8qI-42">
+          <mxCell parent="vMBFEMnZm2C9mBhno8qI-10" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#cdeb8b;strokeColor=#97D077;" vertex="1">
+            <mxGeometry height="40" width="140" x="10" y="232.6699999999999" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="New-City Prediction + Evaluation" element="container" sensitive="False" id="vMBFEMnZm2C9mBhno8qI-14">
+          <mxCell parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;startSize=40;" vertex="1">
+            <mxGeometry height="320" width="160" x="-388" y="520" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="Evaluate with Model Metrics" element="engineering" sensitive="False" id="vMBFEMnZm2C9mBhno8qI-16">
+          <mxCell parent="vMBFEMnZm2C9mBhno8qI-14" style="rounded=1;whiteSpace=wrap;html=1;arcSize=50;fillColor=#D6ABDF;strokeColor=#9673a6;" vertex="1">
+            <mxGeometry height="45" width="120" x="20" y="215" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="Predicted Tree Locations&lt;div&gt;Data (= Database)&lt;/div&gt;" element="data" sensitive="False" id="vMBFEMnZm2C9mBhno8qI-18">
+          <mxCell parent="vMBFEMnZm2C9mBhno8qI-14" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#cdeb8b;strokeColor=#97D077;" vertex="1">
+            <mxGeometry height="40" width="140" x="10" y="150" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="" element="workflow_connector" sensitive="False" id="vMBFEMnZm2C9mBhno8qI-19">
+          <mxCell edge="1" parent="vMBFEMnZm2C9mBhno8qI-14" source="vMBFEMnZm2C9mBhno8qI-18" style="endArrow=classic;html=1;rounded=0;ignoreEdge=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="vMBFEMnZm2C9mBhno8qI-16">
+            <mxGeometry height="50" relative="1" width="50" as="geometry">
+              <mxPoint x="120" y="110" as="sourcePoint" />
+              <mxPoint x="120" y="90" as="targetPoint" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object label="Predict Tree Locations" element="inference" sensitive="False" id="vMBFEMnZm2C9mBhno8qI-74">
+          <mxCell parent="vMBFEMnZm2C9mBhno8qI-14" style="rounded=1;whiteSpace=wrap;html=1;arcSize=50;fillColor=#F4F5E4;strokeColor=#e5a50a;treeFolding=0;" vertex="1">
+            <mxGeometry height="40" width="120" x="20" y="90" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="" element="workflow_connector" sensitive="False" id="vMBFEMnZm2C9mBhno8qI-76">
+          <mxCell edge="1" parent="vMBFEMnZm2C9mBhno8qI-14" source="vMBFEMnZm2C9mBhno8qI-74" style="endArrow=classic;html=1;rounded=0;ignoreEdge=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="vMBFEMnZm2C9mBhno8qI-18">
+            <mxGeometry height="50" relative="1" width="50" as="geometry">
+              <mxPoint x="-170" y="250" as="sourcePoint" />
+              <mxPoint x="-90" y="210" as="targetPoint" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object label="Training Process" element="container" sensitive="False" id="vMBFEMnZm2C9mBhno8qI-20">
+          <mxCell parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;startSize=40;" vertex="1">
+            <mxGeometry height="290.67" width="160" x="-589" y="200" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="Train U-Net Model" element="training" sensitive="False" id="vMBFEMnZm2C9mBhno8qI-80">
+          <mxCell parent="vMBFEMnZm2C9mBhno8qI-20" style="rounded=1;whiteSpace=wrap;html=1;arcSize=50;fillColor=#EAD0ED;strokeColor=#9673a6;" vertex="1">
+            <mxGeometry height="40" width="130" x="15" y="130.67" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="" element="workflow_connector" sensitive="False" id="vMBFEMnZm2C9mBhno8qI-23">
+          <mxCell edge="1" parent="1" source="vMBFEMnZm2C9mBhno8qI-11" style="endArrow=classic;html=1;rounded=0;ignoreEdge=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="vMBFEMnZm2C9mBhno8qI-80">
+            <mxGeometry height="50" relative="1" width="50" as="geometry">
+              <mxPoint x="-438.9999877929688" y="400.0033557128906" as="sourcePoint" />
+              <mxPoint x="-571.5" y="360.67" as="targetPoint" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object label="" element="workflow_connector" sensitive="False" id="vMBFEMnZm2C9mBhno8qI-24">
+          <mxCell edge="1" parent="1" source="vMBFEMnZm2C9mBhno8qI-12" style="endArrow=classic;html=1;rounded=0;ignoreEdge=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="vMBFEMnZm2C9mBhno8qI-80">
+            <mxGeometry height="50" relative="1" width="50" as="geometry">
+              <mxPoint x="-438.9999877929688" y="400.0033557128906" as="sourcePoint" />
+              <mxPoint x="-571.5" y="360.67" as="targetPoint" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object label="" element="workflow_connector" sensitive="False" id="vMBFEMnZm2C9mBhno8qI-25">
+          <mxCell edge="1" parent="1" source="vMBFEMnZm2C9mBhno8qI-13" style="endArrow=classic;html=1;rounded=0;ignoreEdge=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="vMBFEMnZm2C9mBhno8qI-80">
+            <mxGeometry height="50" relative="1" width="50" as="geometry">
+              <mxPoint x="-438.9999877929688" y="400.0033557128906" as="sourcePoint" />
+              <mxPoint x="-571.5" y="360.67" as="targetPoint" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object label="Risk Control:&amp;nbsp;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;Multi-&lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;Season &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;Training &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;Data&lt;/span&gt;" element="risk_control" sensitive="False" id="vMBFEMnZm2C9mBhno8qI-26">
+          <mxCell parent="1" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1">
+            <mxGeometry height="120" width="160" x="-589" y="510" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;Using &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;multi-&lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;season &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;satellite &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;images could&amp;nbsp;&lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;improve&amp;nbsp;&lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;tree &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;detection&lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;. &lt;b&gt;Loss metrics&lt;/b&gt; and &lt;b&gt;validation data&lt;/b&gt;&amp;nbsp;are used to monitor model performance during training.&lt;/span&gt;" element="list_item" id="vMBFEMnZm2C9mBhno8qI-27">
+          <mxCell parent="vMBFEMnZm2C9mBhno8qI-26" style="text;strokeColor=#82B366;fillColor=default;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1">
+            <mxGeometry height="90" width="160" y="30" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="Risk:&amp;nbsp;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;Incorrect &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;Tree &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;Detection&lt;/span&gt;" element="risk" sensitive="False" id="vMBFEMnZm2C9mBhno8qI-28">
+          <mxCell parent="1" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1">
+            <mxGeometry height="120" width="160" x="-588.9999877929688" y="670.6733557128904" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;The &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;model &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;may &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;misclassify &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;or &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;miss &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;trees &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;in &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;dense &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;urban &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;areas.&lt;/span&gt;" element="list_item" id="vMBFEMnZm2C9mBhno8qI-29">
+          <mxCell parent="vMBFEMnZm2C9mBhno8qI-28" style="text;strokeColor=#D79B00;fillColor=default;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1">
+            <mxGeometry height="90" width="160" y="30" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="Risk Source: Satellite Image Quality" element="risk_source" sensitive="False" id="vMBFEMnZm2C9mBhno8qI-31">
+          <mxCell parent="1" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#FBFFD1;strokeColor=#b46504;" vertex="1">
+            <mxGeometry height="120" width="160" x="-788.9999877929688" y="510.00335571289054" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;Sentinel-&lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;2 &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;imagery &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;may &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;contain &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;clouds &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;or &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;seasonal &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;effects &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;that &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;reduce &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;tree &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;visibility.&lt;/span&gt;" element="list_item" id="vMBFEMnZm2C9mBhno8qI-32">
+          <mxCell parent="vMBFEMnZm2C9mBhno8qI-31" style="text;strokeColor=#B46504;fillColor=default;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1">
+            <mxGeometry height="90" width="160" y="30" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;Context: Infrared.city project&amp;nbsp;&lt;br&gt;&lt;/h1&gt;&lt;p&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;The &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;system &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;operates &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;in &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;the &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;context &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;of &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;urban &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;environmental &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;analysis &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;and &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;uses &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;Sentinel-&lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;2 &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;multispectral &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;satellite &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;imagery &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;together &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;with &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;urban &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;geometry &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;data &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;from &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;OpenStreetMap &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;such &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;as &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;buildings&amp;nbsp;&lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;and&amp;nbsp;&lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;roads&amp;nbsp;&lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;information.&lt;/span&gt;&lt;/p&gt;" element="context_description" id="vMBFEMnZm2C9mBhno8qI-33">
+          <mxCell parent="1" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;strokeColor=#666666;fillColor=#f5f5f5;fontColor=#333333;" vertex="1">
+            <mxGeometry height="120" width="348" x="-388" y="50" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="" element="annotation_connector" sensitive="False" id="vMBFEMnZm2C9mBhno8qI-34">
+          <mxCell edge="1" parent="1" source="vMBFEMnZm2C9mBhno8qI-26" style="endArrow=oval;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;rounded=0;endFill=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" target="vMBFEMnZm2C9mBhno8qI-80">
+            <mxGeometry height="50" relative="1" width="50" as="geometry">
+              <mxPoint x="-459" y="460.00334350585933" as="sourcePoint" />
+              <mxPoint x="-508.9999999999998" y="380.67" as="targetPoint" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object label="" element="annotation_connector" sensitive="False" id="vMBFEMnZm2C9mBhno8qI-35">
+          <mxCell edge="1" parent="1" source="vMBFEMnZm2C9mBhno8qI-32" style="endArrow=oval;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;rounded=0;endFill=1;exitX=-0.005;exitY=0.393;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="vMBFEMnZm2C9mBhno8qI-11">
+            <mxGeometry height="50" relative="1" width="50" as="geometry">
+              <Array as="points">
+                <mxPoint x="-809" y="574.67" />
+                <mxPoint x="-809" y="280.0033435058594" />
+              </Array>
+              <mxPoint x="-459" y="460.00334350585933" as="sourcePoint" />
+              <mxPoint x="-379" y="420.0033435058594" as="targetPoint" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object label="" element="workflow_connector" sensitive="False" id="vMBFEMnZm2C9mBhno8qI-37">
+          <mxCell edge="1" parent="1" source="vMBFEMnZm2C9mBhno8qI-80" style="endArrow=classic;html=1;rounded=0;ignoreEdge=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="vMBFEMnZm2C9mBhno8qI-9">
+            <mxGeometry height="50" relative="1" width="50" as="geometry">
+              <mxPoint x="-446.4999999999998" y="360.67" as="sourcePoint" />
+              <mxPoint x="-379" y="320.0033435058594" as="targetPoint" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object label="Fetching New Testing Data" element="container" sensitive="False" id="vMBFEMnZm2C9mBhno8qI-57">
+          <mxCell parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;startSize=40;" vertex="1">
+            <mxGeometry height="241.67" width="160" x="-200" y="598.33" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;Sentinel-&lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;2 &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;Satellite &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;Images&lt;/span&gt;" element="data" sensitive="False" id="vMBFEMnZm2C9mBhno8qI-58">
+          <mxCell parent="vMBFEMnZm2C9mBhno8qI-57" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#cdeb8b;strokeColor=#97D077;" vertex="1">
+            <mxGeometry height="40" width="140" x="10" y="61.67" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;OpenStreetMap &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;Urban &lt;/span&gt;&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;Features&lt;/span&gt;" element="data" sensitive="False" id="vMBFEMnZm2C9mBhno8qI-59">
+          <mxCell parent="vMBFEMnZm2C9mBhno8qI-57" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#cdeb8b;strokeColor=#97D077;" vertex="1">
+            <mxGeometry height="40" width="140" x="10" y="121.67000000000002" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="&lt;span class=&quot;BZ_Pyq_fadeIn&quot;&gt;Urban Tree Cadastres&lt;/span&gt;" element="data" sensitive="False" id="vMBFEMnZm2C9mBhno8qI-60">
+          <mxCell parent="vMBFEMnZm2C9mBhno8qI-57" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#cdeb8b;strokeColor=#97D077;" vertex="1">
+            <mxGeometry height="40" width="140" x="10" y="181.67000000000002" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="" element="workflow_connector" sensitive="False" id="vMBFEMnZm2C9mBhno8qI-67">
+          <mxCell edge="1" parent="1" source="vMBFEMnZm2C9mBhno8qI-42" style="endArrow=classic;html=1;rounded=0;ignoreEdge=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="vMBFEMnZm2C9mBhno8qI-80">
+            <mxGeometry height="50" relative="1" width="50" as="geometry">
+              <mxPoint x="-368" y="500.66999999999996" as="sourcePoint" />
+              <mxPoint x="-571.5" y="360.67" as="targetPoint" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object label="" element="workflow_connector" sensitive="False" id="vMBFEMnZm2C9mBhno8qI-77">
+          <mxCell edge="1" parent="1" source="vMBFEMnZm2C9mBhno8qI-58" style="endArrow=classic;html=1;rounded=0;ignoreEdge=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="vMBFEMnZm2C9mBhno8qI-74">
+            <mxGeometry height="50" relative="1" width="50" as="geometry">
+              <Array as="points">
+                <mxPoint x="-210" y="680" />
+                <mxPoint x="-210" y="630" />
+              </Array>
+              <mxPoint x="-368" y="450.66999999999996" as="sourcePoint" />
+              <mxPoint x="-288" y="410.67" as="targetPoint" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object label="" element="workflow_connector" sensitive="False" id="vMBFEMnZm2C9mBhno8qI-78">
+          <mxCell edge="1" parent="1" source="vMBFEMnZm2C9mBhno8qI-59" style="endArrow=classic;html=1;rounded=0;ignoreEdge=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="vMBFEMnZm2C9mBhno8qI-16">
+            <mxGeometry height="50" relative="1" width="50" as="geometry">
+              <mxPoint x="-368" y="450.66999999999996" as="sourcePoint" />
+              <mxPoint x="-68" y="400.67" as="targetPoint" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object label="" element="workflow_connector" sensitive="False" id="vMBFEMnZm2C9mBhno8qI-79">
+          <mxCell edge="1" parent="1" source="vMBFEMnZm2C9mBhno8qI-60" style="endArrow=classic;html=1;rounded=0;ignoreEdge=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="vMBFEMnZm2C9mBhno8qI-16">
+            <mxGeometry height="50" relative="1" width="50" as="geometry">
+              <mxPoint x="-368" y="450.66999999999996" as="sourcePoint" />
+              <mxPoint x="-288" y="410.67" as="targetPoint" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object label="" element="workflow_connector" sensitive="False" id="vMBFEMnZm2C9mBhno8qI-82">
+          <mxCell edge="1" parent="1" source="vMBFEMnZm2C9mBhno8qI-28" style="endArrow=classic;html=1;rounded=0;ignoreEdge=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.499;entryY=0.995;entryDx=0;entryDy=0;entryPerimeter=0;" target="vMBFEMnZm2C9mBhno8qI-27">
+            <mxGeometry height="50" relative="1" width="50" as="geometry">
+              <mxPoint x="-368" y="630.67" as="sourcePoint" />
+              <mxPoint x="-288" y="590.67" as="targetPoint" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object label="" element="workflow_connector" sensitive="False" id="vMBFEMnZm2C9mBhno8qI-87">
+          <mxCell edge="1" parent="1" source="vMBFEMnZm2C9mBhno8qI-9" style="endArrow=classic;html=1;rounded=0;ignoreEdge=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="vMBFEMnZm2C9mBhno8qI-4">
+            <mxGeometry height="50" relative="1" width="50" as="geometry">
+              <mxPoint x="-368" y="460.66999999999996" as="sourcePoint" />
+              <mxPoint x="-288" y="420.67" as="targetPoint" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object label="" element="workflow_connector" sensitive="False" id="vMBFEMnZm2C9mBhno8qI-91">
+          <mxCell edge="1" parent="1" source="vMBFEMnZm2C9mBhno8qI-9" style="endArrow=classic;html=1;rounded=0;ignoreEdge=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="vMBFEMnZm2C9mBhno8qI-74">
+            <mxGeometry height="50" relative="1" width="50" as="geometry">
+              <Array as="points">
+                <mxPoint x="-310" y="410" />
+                <mxPoint x="-400" y="410" />
+                <mxPoint x="-400" y="630" />
+              </Array>
+              <mxPoint x="-458" y="530.67" as="sourcePoint" />
+              <mxPoint x="-378" y="490.66999999999996" as="targetPoint" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object label="" element="workflow_connector" sensitive="False" id="vMBFEMnZm2C9mBhno8qI-98">
+          <mxCell edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;ignoreEdge=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="vMBFEMnZm2C9mBhno8qI-92">
+            <mxGeometry height="50" relative="1" width="50" as="geometry">
+              <mxPoint x="-120" y="430" as="sourcePoint" />
+              <mxPoint x="-340" y="580" as="targetPoint" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object label="" element="annotation_connector" sensitive="False" id="vMBFEMnZm2C9mBhno8qI-99">
+          <mxCell edge="1" parent="1" source="vMBFEMnZm2C9mBhno8qI-29" style="endArrow=oval;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;rounded=0;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;">
+            <mxGeometry height="50" relative="1" width="50" as="geometry">
+              <Array as="points">
+                <mxPoint x="-410" y="746" />
+                <mxPoint x="-410" y="500" />
+              </Array>
+              <mxPoint x="-420" y="550" as="sourcePoint" />
+              <mxPoint x="-200" y="500" as="targetPoint" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object label="" element="workflow_connector" sensitive="False" id="vMBFEMnZm2C9mBhno8qI-100">
+          <mxCell edge="1" parent="1" source="vMBFEMnZm2C9mBhno8qI-31" style="endArrow=classic;html=1;rounded=0;ignoreEdge=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.012;entryY=0.39;entryDx=0;entryDy=0;entryPerimeter=0;" target="vMBFEMnZm2C9mBhno8qI-29">
+            <mxGeometry height="50" relative="1" width="50" as="geometry">
+              <Array as="points">
+                <mxPoint x="-709" y="736" />
+              </Array>
+              <mxPoint x="-420" y="550" as="sourcePoint" />
+              <mxPoint x="-340" y="510" as="targetPoint" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

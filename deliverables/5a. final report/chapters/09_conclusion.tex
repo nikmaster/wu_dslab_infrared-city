@@ -1,0 +1,11 @@
+\section{Conclusion}
+
+In this project, we wanted to build a machine learning model that can find trees in cities. This is very important for our partner \textit{infrared.city} because they need to know where trees are to simulate how hot cities get in the summer. We used free Sentinel-2 satellite pictures and open tree data from different cities to train a special U-Net model.
+
+The most important result is that our model actually works very well, even if the evaluation numbers do not look like it at first. Because the city data only has public trees, our precision score was bad when the model found trees in private gardens. But when we checked the images ourselves, the model was mostly right. It really learned how a tree looks like from the satellite data, and it can find them everywhere, not just on public streets. 
+
+Also, using pictures from three different seasons was a very good idea. In our data analysis, we saw that the greenness (NDVI) changes a lot depending on the city. Because of our temporal attention layers, the model could learn this and choose the best month for each city itself. 
+
+The dual-head U-Net was the right choice for this problem. Because our maps have so many pixels with zero trees, a normal model would often just guess "zero" all the time to get a low error. By splitting the model into two parts---one that guesses if there is a tree, and one that counts how many---we got much better results and less false predictions on buildings or streets.
+
+Of course, there is still work to do for the future. We also need to test the model more on cities with a different climate, like Barcelona. But in the end, we built a working prototype. In the future, the results from our model can be put into temperature models to see exactly where trees give shade and help to cool down the city.

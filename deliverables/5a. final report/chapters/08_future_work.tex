@@ -1,0 +1,19 @@
+\section{Future Work}
+
+Even though our U-Net model already works quite well for finding trees, there are still a lot of things we can improve. Because of time and computer limits, we had to keep some things simple. Here are the most important ideas on what to do next.
+
+\subsection{Putting Trees and Temperature Together}
+
+Right now, we only predict where trees are. But other people in the \textit{infrared.city} project are predicting the temperature in the city (LST). Trees make the city cooler because they give shade and water evaporates from their leaves. In the future, we should put our tree maps directly into the temperature models. If the temperature model knows exactly where the trees are, it can simulate the heat islands much better. 
+
+\subsection{Using More Colors (Bands) from Sentinel-2}
+
+For our model, we only used four normal colors from the satellite: Red, Green, Blue, and Near-Infrared. We did this to reduce our calculation effort while handling the data during training. But Sentinel-2 actually has many more channels, like the "Red-Edge" and "SWIR" bands. Other researchers like Freudenberg et al. \cite{freudenberg2025sentinel2} showed that these extra bands are very good to see if a tree is healthy or what kind of tree it is. If we use all bands in the future, our model will probably make fewer mistakes and maybe even tell us if it is a needle tree or a leaf tree.
+
+\subsection{Dealing with Clouds (Using Radar Data)}
+
+The biggest problem with Sentinel-2 is that it is just a camera. If there are clouds, we cannot see the trees. For example, in Paris we had to use October pictures because November was too cloudy. To fix this, we could use Sentinel-1 data in the future \cite{torres2012sentinel}. Sentinel-1 uses Radar, and Radar can just look through the clouds. It also bounces off the tree trunks and branches. If we mix the optical pictures with the Radar data, we can always map the trees, even if the weather is bad.
+
+\subsection{Testing other Climates}
+
+Right now, our model only knows cities in the middle of Europe with a normal climate (temperate zone). We have data for Barcelona, but we did not use it for training yet because the file formats were weird and some columns were missing. In the future, someone has to clean the Barcelona data so we can use it. Trees in the south, like \textit{Pinus pinea}, look very different from our trees, and their leaves do not get as green in the summer. We need to train the model on different climates so it works everywhere in the world.
