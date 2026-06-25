@@ -335,6 +335,9 @@ Figure~\ref{fig:species-innsbruck-linz-combined} shows the species distributions
     \label{fig:species-innsbruck-linz-combined}
 \end{figure}
 
+
+\clearpage
+
 \subsubsection{Morphological Features and Data Quality: Linz}
 \label{sec:morphology-linz}
 Figure~\ref{fig:linz-morphology} presents the distributions of trunk circumference versus height for Linz, together with species-level boxplots.
@@ -416,7 +419,7 @@ the risk is lower in the Austrian context where OSM norms are more consistent.
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.5\textwidth]{images/eda_p3_fig14_b.png}
+\includegraphics[width=0.4\textwidth]{images/eda_p3_fig14_b.png}
 \caption{Median polygon area by group.}
 \label{fig:combined-corpus-b}
 \end{figure}
@@ -481,6 +484,9 @@ At first sight, the model overall achieves poor results with precision around 30
 Better results can be seen when checking the actual predicted trees of the model manually, either by tediously checking for each tree on \textit{Google Earth} or similar sites or by comparing the input image to the output image with the expected trees. So here are some representative examples both from Barcelona which was test data and from those parts of Vienna which were used for validation. Figure~\ref{fig:predictions-vienna} and Figure~\ref{fig:predictions-barcelona} directly compare the RGB satellite imagery with the corresponding model predictions for Vienna and Barcelona, respectively.
 
 In those pictures we can see some very interesting phenomena. Firstly, that the model predicts a lot more trees than are in the ground truth which is a good thing, as we know that a lot of trees are not labeled. Furthermore, it also detects trees in areas where no trees are in the ground truth, so the model learns how a tree looks and can implement this knowledge also on wrongly labeled pixels. 
+
+
+\clearpage
 
 \begin{figure}[htbp]
     \centering
